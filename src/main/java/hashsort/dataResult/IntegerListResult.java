@@ -1,4 +1,4 @@
-package hashsort.data_result;
+package hashsort.dataResult;
 
 import java.util.Arrays;
 import java.util.StringJoiner;

@@ -1,6 +1,6 @@
 package hashsort;
 
-import hashsort.data_result.DataResult;
+import hashsort.dataResult.DataResult;
 
 import java.util.HashMap;
 import java.util.Map;

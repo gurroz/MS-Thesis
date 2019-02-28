@@ -1,4 +1,4 @@
-package hashsort.hash_functions;
+package hashsort.hashFunctions;
 
 import hashsort.dataList.ElementDataList;
 

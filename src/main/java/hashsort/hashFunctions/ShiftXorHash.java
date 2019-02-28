@@ -1,18 +1,19 @@
-package hashsort.hash_functions;
+package hashsort.hashFunctions;
 
 import hashsort.dataList.ElementDataList;
 
-public class AdditiveHash implements HashFunction {
+public class ShiftXorHash implements HashFunction {
 
     @Override
     public String getSignature(ElementDataList dataList) {
-        long sum = 0;
+        long hash = 0L;
         Object elm = dataList.getNextElementData();
         while(elm != null) {
-            sum += (Integer)elm;
+            hash ^= (hash << 5) + (hash >> 2) + (Integer)elm;
+
             elm = dataList.getNextElementData();
         }
 
-        return String.valueOf(sum);
+        return String.valueOf(hash);
     }
 }

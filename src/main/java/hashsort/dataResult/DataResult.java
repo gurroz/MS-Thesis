@@ -1,4 +1,4 @@
-package hashsort.data_result;
+package hashsort.dataResult;
 
 public abstract class DataResult {
 }

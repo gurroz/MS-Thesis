@@ -1,18 +1,18 @@
-package hashsort.hash_functions;
+package hashsort.hashFunctions;
 
 import hashsort.dataList.ElementDataList;
 
-public class PrimeAdditiveHash implements HashFunction {
+public class AdditiveHash implements HashFunction {
 
     @Override
     public String getSignature(ElementDataList dataList) {
-        long hash = 17L;
+        long sum = 0;
         Object elm = dataList.getNextElementData();
         while(elm != null) {
-            hash = hash * 19 + (Integer)elm;
+            sum += (Integer)elm;
             elm = dataList.getNextElementData();
         }
 
-        return String.valueOf(hash);
+        return String.valueOf(sum);
     }
 }

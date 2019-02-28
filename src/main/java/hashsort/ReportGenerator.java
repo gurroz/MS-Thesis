@@ -69,7 +69,6 @@ public class ReportGenerator {
                     record.append(",");
                 }
                 record.append("\r\n");
-//                writer.write(line.getKey() + ", Nano: " + line.getValue() + ", Mili: " + mili + ", Sec: " +seconds +"\r\n");
                 writer.write(record.toString());
             }
             writer.close();
@@ -95,7 +94,6 @@ public class ReportGenerator {
                     record.append(",");
                 }
                 record.append("\r\n");
-//                writer.write(line.getKey() + ", Nano: " + line.getValue() + ", Mili: " + mili + ", Sec: " +seconds +"\r\n");
                 writer.write(record.toString());
             }
             writer.close();

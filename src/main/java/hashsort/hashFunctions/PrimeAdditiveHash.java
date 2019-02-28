@@ -1,24 +1,17 @@
-package hashsort.hash_functions;
+package hashsort.hashFunctions;
 
 import hashsort.dataList.ElementDataList;
 
-public class OneTimeHash implements HashFunction {
+public class PrimeAdditiveHash implements HashFunction {
 
     @Override
     public String getSignature(ElementDataList dataList) {
-        long hash = 0L;
+        long hash = 17L;
         Object elm = dataList.getNextElementData();
         while(elm != null) {
-            hash += (Integer)elm;
-            hash += (hash << 10);
-            hash ^= (hash >> 6);
-
+            hash = hash * 19 + (Integer)elm;
             elm = dataList.getNextElementData();
         }
-
-        hash += (hash << 3);
-        hash ^= (hash >> 11);
-        hash += (hash << 15);
 
         return String.valueOf(hash);
     }

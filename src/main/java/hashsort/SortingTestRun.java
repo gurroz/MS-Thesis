@@ -2,7 +2,7 @@ package hashsort;
 
 import hashsort.dataList.DataList;
 import hashsort.dataList.ElementDataList;
-import hashsort.data_result.IntegerListResult;
+import hashsort.dataResult.IntegerListResult;
 import hashsort.sortAlgorithm.SortAlgorithm;
 
 public class SortingTestRun {
@@ -16,18 +16,21 @@ public class SortingTestRun {
         this.sortAlgorithm = configuration.getSortAlgorithm();
     }
 
-    public void run(int i) {
+    public IntegerListResult run(int i) {
         ElementDataList elementList =  dataList.getNextData();
         reportGenerator.beginRecord("Rec_SORTING_" + this.sortAlgorithm.getName());
 
+        IntegerListResult result = null;
         while(elementList != null) {
             Object[] unsortedArray = elementList.toArray();
-            new IntegerListResult((Integer[]) this.sortAlgorithm.sort(unsortedArray));
+            result = new IntegerListResult((Integer[]) this.sortAlgorithm.sort(unsortedArray));
 
             elementList = dataList.getNextData();
         }
         long duration = reportGenerator.endRecord("Rec_SORTING_" + this.sortAlgorithm.getName());
         reportGenerator.addRecordValue(i, duration);
+
+        return result;
     }
 
 }

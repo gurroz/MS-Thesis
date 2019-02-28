@@ -2,9 +2,9 @@ package hashsort;
 
 import hashsort.dataList.DataList;
 import hashsort.dataList.ElementDataList;
-import hashsort.data_result.DataResult;
-import hashsort.data_result.IntegerListResult;
-import hashsort.hash_functions.HashFunction;
+import hashsort.dataResult.DataResult;
+import hashsort.dataResult.IntegerListResult;
+import hashsort.hashFunctions.HashFunction;
 import hashsort.sortAlgorithm.SortAlgorithm;
 
 public class TestRun {
@@ -19,10 +19,10 @@ public class TestRun {
 
     public TestRun(ReportGenerator reportGenerator, Configuration configuration, DataList dataList, int runNum){
         this.reportGenerator = reportGenerator;
-        sortTable = new SortTable();
+        this.sortTable = new SortTable();
         this.configuration = configuration;
         this.dataList = dataList;
-        runNumber = runNum;
+        this.runNumber = runNum;
         this.hashFunction = configuration.getHashFunction();
         this.sortAlgorithm = configuration.getSortAlgorithm();
     }
@@ -51,16 +51,18 @@ public class TestRun {
         reportGenerator.addRecordValue(runNumber, duration);
     }
 
-    private void hashRun() {
+    private String hashRun() {
         ElementDataList elementList =  dataList.getNextData();
         reportGenerator.beginRecord("Rec_"+runNumber+"_HASH_SIGNATURE");
 
+        String result = null; // This is to return something so the signature is not considered dead code
         while(elementList != null) {
-            hashFunction.getSignature(elementList);
+            result = hashFunction.getSignature(elementList);
             elementList = dataList.getNextData();
         }
         long duration = reportGenerator.endRecord("Rec_"+runNumber+"_HASH_SIGNATURE");
         reportGenerator.addRecordValue(runNumber, duration);
+        return result;
     }
 
     private void hashSortRun() {

@@ -1,8 +1,9 @@
 package hashsort;
 
 import hashsort.dataList.DataDistributionEnum;
+import hashsort.dataList.DataOrderEnum;
 import hashsort.dataList.DataSparcityEnum;
-import hashsort.hash_functions.HashFunction;
+import hashsort.hashFunctions.HashFunction;
 import hashsort.sortAlgorithm.SortAlgorithm;
 
 public class Configuration {
@@ -14,9 +15,10 @@ public class Configuration {
     private HashFunction hashFunction;
     private int maxElementValue;
     private SortAlgorithm sortAlgorithm;
+    private DataOrderEnum order;
 
     public Configuration(int listAmount, int listSize, DataSparcityEnum sparcity, DataDistributionEnum distribution,
-                         HashFunction hashFunction, int maxElementValue, SortAlgorithm sortAlgorithm) {
+                         HashFunction hashFunction, int maxElementValue, SortAlgorithm sortAlgorithm, DataOrderEnum order) {
         this.listAmount = listAmount;
         this.listSize = listSize;
         this.sparcity = sparcity;
@@ -24,6 +26,7 @@ public class Configuration {
         this.hashFunction = hashFunction;
         this.maxElementValue = maxElementValue;
         this.sortAlgorithm = sortAlgorithm;
+        this.order = order;
     }
 
     public int getListAmount() {
@@ -80,5 +83,13 @@ public class Configuration {
 
     public void setSortAlgorithm(SortAlgorithm sortAlgorithm) {
         this.sortAlgorithm = sortAlgorithm;
+    }
+
+    public DataOrderEnum getOrder() {
+        return order;
+    }
+
+    public void setOrder(DataOrderEnum order) {
+        this.order = order;
     }
 }
