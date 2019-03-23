@@ -17,16 +17,11 @@
 #include "PrimeHashFunction.hpp"
 #include "XorHashFunction.hpp"
 
-#include "InsertionOptimizedSort.hpp"
-#include "MergeOptimizedSort.hpp"
-
 using namespace std;
 
-// #define TOTAL_LIST_NUMBER 1036800
-#define TOTAL_LIST_NUMBER 4
+#define TOTAL_LIST_NUMBER 1036800
+// #define TOTAL_LIST_NUMBER 4
 #define TOTAL_TEST 1
-#define DISTRIBUTION 0 // 0: Unifor, 1: Normal
-#define LIST_ORDER 0 // 0: RAND, 1: ASC, 2: DESC
 
 
 void runSortFunction(int** data, int arrayLength, SortFunction& sortFunction){
@@ -205,10 +200,12 @@ void copyMatrix(int** original, int** newArr, int arrayLength) {
 }
 
 void runSortOptimizedFunction(int** data, int arrayLength, SortFunction& sortFunction){
+	unordered_map<string, int> signaturesMap;
+
 	for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
-		int index = sortFunction.sort(data[j], arrayLength);
+		int index = sortFunction.optimizedSort(data[j], arrayLength, signaturesMap, j);
 		if(index > 0) {
-			cout << "Found Sorted before:"<< index << endl; 
+			// cout << "Found Sorted before:"<< index << endl; 
 		}
 	}
 }
@@ -257,8 +254,8 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 	long totalInsertion = 0;
 	long totalMerge = 0;
 
-	InsertionOptimizedSort insertionSort;
-	MergeOptimizedSort mergeSort;
+	InsertionSort insertionSort;
+	MergeSort mergeSort;
 
 	for(int i=0; i < TOTAL_TEST; i++) {
 		int** originalData = new int*[TOTAL_LIST_NUMBER];
@@ -267,8 +264,6 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 		generateData(originalData, arrayLength, uniqueness, distribution, listOrder, copiedElements);
 		copyMatrix(originalData, copiedData, arrayLength);
 		
-		printArray(1, originalData, arrayLength);
-
 		auto start = std::chrono::high_resolution_clock::now();
 		runSortOptimizedFunction(originalData, arrayLength, insertionSort);
 		auto finish = std::chrono::high_resolution_clock::now();
@@ -281,6 +276,9 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 		finish = std::chrono::high_resolution_clock::now();
 		int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
 		totalMerge = totalMerge + int_ms.count();
+
+		// printArray(1, originalData, arrayLength);
+		// printArray(2, copiedData, arrayLength);
 
 	}
 

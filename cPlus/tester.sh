@@ -52,43 +52,81 @@ echo "SORTS"
 # ./main 256 0 1.0 3
 # ./main 512 0 1.0 3
 
-# # UNIFORM DIST RAND
-echo "UNIFORM DIST RAND NORMAL"
+# OPTIMIZED SORT DIST RAND NORMAL
+echo "OPTIMIZED SORT DIST RAND NORMAL"
 
-./main 16 0 0.0 3
-./main 32 0 0.0 3
-./main 64 0 0.0 3
-./main 128 0 0.0 3
-./main 256 0 0.0 3
-./main 512 0 0.0 3
+./main 16 0 0.0 3 1.0
+./main 32 0 0.0 3 1.0
+./main 64 0 0.0 3 1.0
+./main 128 0 0.0 3 1.0
+./main 256 0 0.0 3 1.0
+./main 512 0 0.0 3 1.0
 
-./main 16 0 0.25 3
-./main 32 0 0.25 3
-./main 64 0 0.25 3
-./main 128 0 0.25 3
-./main 256 0 0.25 3
-./main 512 0 0.25 3
+./main 16 0 0.25 3 1.0
+./main 32 0 0.25 3 1.0
+./main 64 0 0.25 3 1.0
+./main 128 0 0.25 3 1.0
+./main 256 0 0.25 3 1.0
+./main 512 0 0.25 3 1.0
 
-./main 16 0 0.5 3
-./main 32 0 0.5 3
-./main 64 0 0.5 3
-./main 128 0 0.5 3
-./main 256 0 0.5 3
-./main 512 0 0.5 3
+./main 16 0 0.5 3 1.0
+./main 32 0 0.5 3 1.0
+./main 64 0 0.5 3 1.0
+./main 128 0 0.5 3 1.0
+./main 256 0 0.5 3 1.0
+./main 512 0 0.5 3 1.0
 
-./main 16 0 0.75 3
-./main 32 0 0.75 3
-./main 64 0 0.75 3
-./main 128 0 0.75 3
-./main 256 0 0.75 3
-./main 512 0 0.75 3
+./main 16 0 0.75 3 1.0
+./main 32 0 0.75 3 1.0
+./main 64 0 0.75 3 1.0
+./main 128 0 0.75 3 1.0
+./main 256 0 0.75 3 1.0
+./main 512 0 0.75 3 1.0
 
-./main 16 0 1.0 3
-./main 32 0 1.0 3
-./main 64 0 1.0 3
-./main 128 0 1.0 3
-./main 256 0 1.0 3
-./main 512 0 1.0 3
+./main 16 0 1.0 3 1.0
+./main 32 0 1.0 3 1.0
+./main 64 0 1.0 3 1.0
+./main 128 0 1.0 3 1.0
+./main 256 0 1.0 3 1.0
+./main 512 0 1.0 3 1.0
+
+# # # UNIFORM DIST RAND
+# echo "UNIFORM DIST RAND NORMAL"
+
+# ./main 16 0 0.0 3
+# ./main 32 0 0.0 3
+# ./main 64 0 0.0 3
+# ./main 128 0 0.0 3
+# ./main 256 0 0.0 3
+# ./main 512 0 0.0 3
+
+# ./main 16 0 0.25 3
+# ./main 32 0 0.25 3
+# ./main 64 0 0.25 3
+# ./main 128 0 0.25 3
+# ./main 256 0 0.25 3
+# ./main 512 0 0.25 3
+
+# ./main 16 0 0.5 3
+# ./main 32 0 0.5 3
+# ./main 64 0 0.5 3
+# ./main 128 0 0.5 3
+# ./main 256 0 0.5 3
+# ./main 512 0 0.5 3
+
+# ./main 16 0 0.75 3
+# ./main 32 0 0.75 3
+# ./main 64 0 0.75 3
+# ./main 128 0 0.75 3
+# ./main 256 0 0.75 3
+# ./main 512 0 0.75 3
+
+# ./main 16 0 1.0 3
+# ./main 32 0 1.0 3
+# ./main 64 0 1.0 3
+# ./main 128 0 1.0 3
+# ./main 256 0 1.0 3
+# ./main 512 0 1.0 3
 
 # # UNIFORM DIST RAND
 # echo "UNIFORM DIST RAND"
