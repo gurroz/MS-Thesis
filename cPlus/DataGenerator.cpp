@@ -33,8 +33,6 @@ void DataGenerator::generateRandomUniformArray(int* result, int length) {
 void DataGenerator::generateRandomNormalArray(int* result, int length) {
 	double average = 1000.0;
 	double stdDev = 250.0;
-
-	default_random_engine generator;
   	normal_distribution<double> distribution(average, stdDev);
 
 	for(int i = 0; i < length; i++) {
