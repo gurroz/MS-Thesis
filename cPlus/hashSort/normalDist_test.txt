@@ -1,0 +1,275 @@
+SORTS
+UNIFORM DIST RAND NORMAL
+********************************************
+Array_Length: 16 Distribution: 0 Uniq: 0 Order: 3
+********************************************
+PrimeHashFunction average time: 173
+PrimeHashFunction HashSortInsert average time: 175
+PrimeHashFunction HashSortMerge average time: 177
+XorHashFunction average time: 183
+XorHashFunction HashSortInsert average time: 170
+XorHashFunction HashSortMerge average time: 172
+********************************************
+Array_Length: 32 Distribution: 0 Uniq: 0 Order: 3
+********************************************
+PrimeHashFunction average time: 191
+PrimeHashFunction HashSortInsert average time: 182
+PrimeHashFunction HashSortMerge average time: 185
+XorHashFunction average time: 206
+XorHashFunction HashSortInsert average time: 204
+XorHashFunction HashSortMerge average time: 204
+********************************************
+Array_Length: 64 Distribution: 0 Uniq: 0 Order: 3
+********************************************
+PrimeHashFunction average time: 228
+PrimeHashFunction HashSortInsert average time: 221
+PrimeHashFunction HashSortMerge average time: 243
+XorHashFunction average time: 244
+XorHashFunction HashSortInsert average time: 237
+XorHashFunction HashSortMerge average time: 265
+********************************************
+Array_Length: 128 Distribution: 0 Uniq: 0 Order: 3
+********************************************
+PrimeHashFunction average time: 307
+PrimeHashFunction HashSortInsert average time: 294
+PrimeHashFunction HashSortMerge average time: 316
+XorHashFunction average time: 346
+XorHashFunction HashSortInsert average time: 337
+XorHashFunction HashSortMerge average time: 346
+********************************************
+Array_Length: 256 Distribution: 0 Uniq: 0 Order: 3
+********************************************
+PrimeHashFunction average time: 466
+PrimeHashFunction HashSortInsert average time: 450
+PrimeHashFunction HashSortMerge average time: 478
+XorHashFunction average time: 544
+XorHashFunction HashSortInsert average time: 515
+XorHashFunction HashSortMerge average time: 549
+********************************************
+Array_Length: 512 Distribution: 0 Uniq: 0 Order: 3
+********************************************
+PrimeHashFunction average time: 832
+PrimeHashFunction HashSortInsert average time: 773
+PrimeHashFunction HashSortMerge average time: 836
+XorHashFunction average time: 1028
+XorHashFunction HashSortInsert average time: 892
+XorHashFunction HashSortMerge average time: 1035
+********************************************
+Array_Length: 16 Distribution: 0 Uniq: 0.25 Order: 3
+********************************************
+PrimeHashFunction average time: 426
+PrimeHashFunction HashSortInsert average time: 450
+PrimeHashFunction HashSortMerge average time: 554
+XorHashFunction average time: 394
+XorHashFunction HashSortInsert average time: 425
+XorHashFunction HashSortMerge average time: 559
+********************************************
+Array_Length: 32 Distribution: 0 Uniq: 0.25 Order: 3
+********************************************
+PrimeHashFunction average time: 500
+PrimeHashFunction HashSortInsert average time: 598
+PrimeHashFunction HashSortMerge average time: 830
+XorHashFunction average time: 606
+XorHashFunction HashSortInsert average time: 558
+XorHashFunction HashSortMerge average time: 759
+********************************************
+Array_Length: 64 Distribution: 0 Uniq: 0.25 Order: 3
+********************************************
+PrimeHashFunction average time: 500
+PrimeHashFunction HashSortInsert average time: 748
+PrimeHashFunction HashSortMerge average time: 1250
+XorHashFunction average time: 538
+XorHashFunction HashSortInsert average time: 949
+XorHashFunction HashSortMerge average time: 1274
+********************************************
+Array_Length: 128 Distribution: 0 Uniq: 0.25 Order: 3
+********************************************
+PrimeHashFunction average time: 597
+PrimeHashFunction HashSortInsert average time: 1529
+PrimeHashFunction HashSortMerge average time: 2230
+XorHashFunction average time: 607
+XorHashFunction HashSortInsert average time: 1557
+XorHashFunction HashSortMerge average time: 2280
+********************************************
+Array_Length: 256 Distribution: 0 Uniq: 0.25 Order: 3
+********************************************
+PrimeHashFunction average time: 779
+PrimeHashFunction HashSortInsert average time: 3823
+PrimeHashFunction HashSortMerge average time: 4254
+XorHashFunction average time: 836
+XorHashFunction HashSortInsert average time: 3879
+XorHashFunction HashSortMerge average time: 4367
+********************************************
+Array_Length: 512 Distribution: 0 Uniq: 0.25 Order: 3
+********************************************
+PrimeHashFunction average time: 1153
+PrimeHashFunction HashSortInsert average time: 11501
+PrimeHashFunction HashSortMerge average time: 8280
+XorHashFunction average time: 1352
+XorHashFunction HashSortInsert average time: 11643
+XorHashFunction HashSortMerge average time: 8516
+
+********************************************
+Array_Length: 16 Distribution: 0 Uniq: 0.5 Order: 3
+********************************************
+PrimeHashFunction average time: 649
+PrimeHashFunction HashSortInsert average time: 703
+PrimeHashFunction HashSortMerge average time: 916
+XorHashFunction average time: 646
+XorHashFunction HashSortInsert average time: 711
+XorHashFunction HashSortMerge average time: 921
+********************************************
+Array_Length: 32 Distribution: 0 Uniq: 0.5 Order: 3
+********************************************
+PrimeHashFunction average time: 657
+PrimeHashFunction HashSortInsert average time: 821
+PrimeHashFunction HashSortMerge average time: 1287
+XorHashFunction average time: 660
+XorHashFunction HashSortInsert average time: 832
+XorHashFunction HashSortMerge average time: 1303
+********************************************
+Array_Length: 64 Distribution: 0 Uniq: 0.5 Order: 3
+********************************************
+PrimeHashFunction average time: 692
+PrimeHashFunction HashSortInsert average time: 1206
+PrimeHashFunction HashSortMerge average time: 2077
+XorHashFunction average time: 707
+XorHashFunction HashSortInsert average time: 1223
+XorHashFunction HashSortMerge average time: 2094
+********************************************
+Array_Length: 128 Distribution: 0 Uniq: 0.5 Order: 3
+********************************************
+PrimeHashFunction average time: 774
+PrimeHashFunction HashSortInsert average time: 2447
+PrimeHashFunction HashSortMerge average time: 3824
+XorHashFunction average time: 805
+XorHashFunction HashSortInsert average time: 2488
+XorHashFunction HashSortMerge average time: 3860
+********************************************
+Array_Length: 256 Distribution: 0 Uniq: 0.5 Order: 3
+********************************************
+PrimeHashFunction average time: 955
+PrimeHashFunction HashSortInsert average time: 6670
+PrimeHashFunction HashSortMerge average time: 7582
+XorHashFunction average time: 1023
+XorHashFunction HashSortInsert average time: 6743
+XorHashFunction HashSortMerge average time: 7683
+********************************************
+Array_Length: 512 Distribution: 0 Uniq: 0.5 Order: 3
+********************************************
+PrimeHashFunction average time: 1299
+PrimeHashFunction HashSortInsert average time: 22062
+PrimeHashFunction HashSortMerge average time: 15584
+XorHashFunction average time: 1428
+XorHashFunction HashSortInsert average time: 22188
+XorHashFunction HashSortMerge average time: 15737
+
+********************************************
+Array_Length: 16 Distribution: 0 Uniq: 0.75 Order: 3
+********************************************
+PrimeHashFunction average time: 790
+PrimeHashFunction HashSortInsert average time: 861
+PrimeHashFunction HashSortMerge average time: 1179
+XorHashFunction average time: 763
+XorHashFunction HashSortInsert average time: 883
+XorHashFunction HashSortMerge average time: 1194
+********************************************
+Array_Length: 32 Distribution: 0 Uniq: 0.75 Order: 3
+********************************************
+PrimeHashFunction average time: 779
+PrimeHashFunction HashSortInsert average time: 1035
+PrimeHashFunction HashSortMerge average time: 1728
+XorHashFunction average time: 775
+XorHashFunction HashSortInsert average time: 1036
+XorHashFunction HashSortMerge average time: 1747
+********************************************
+Array_Length: 64 Distribution: 0 Uniq: 0.75 Order: 3
+********************************************
+PrimeHashFunction average time: 821
+PrimeHashFunction HashSortInsert average time: 1609
+PrimeHashFunction HashSortMerge average time: 2918
+XorHashFunction average time: 811
+XorHashFunction HashSortInsert average time: 1623
+XorHashFunction HashSortMerge average time: 2926
+********************************************
+Array_Length: 128 Distribution: 0 Uniq: 0.75 Order: 3
+********************************************
+PrimeHashFunction average time: 908
+PrimeHashFunction HashSortInsert average time: 3434
+PrimeHashFunction HashSortMerge average time: 5464
+XorHashFunction average time: 913
+XorHashFunction HashSortInsert average time: 3450
+XorHashFunction HashSortMerge average time: 5491
+********************************************
+Array_Length: 256 Distribution: 0 Uniq: 0.75 Order: 3
+********************************************
+PrimeHashFunction average time: 1115
+PrimeHashFunction HashSortInsert average time: 9680
+PrimeHashFunction HashSortMerge average time: 11048
+XorHashFunction average time: 1164
+XorHashFunction HashSortInsert average time: 9746
+XorHashFunction HashSortMerge average time: 11221
+********************************************
+Array_Length: 512 Distribution: 0 Uniq: 0.75 Order: 3
+********************************************
+PrimeHashFunction average time: 1662
+PrimeHashFunction HashSortInsert average time: 32692
+PrimeHashFunction HashSortMerge average time: 23004
+XorHashFunction average time: 1660
+XorHashFunction HashSortInsert average time: 32760
+XorHashFunction HashSortMerge average time: 23145
+
+********************************************
+Array_Length: 16 Distribution: 0 Uniq: 1 Order: 3
+********************************************
+PrimeHashFunction average time: 994
+PrimeHashFunction HashSortInsert average time: 1100
+PrimeHashFunction HashSortMerge average time: 1493
+XorHashFunction average time: 963
+XorHashFunction HashSortInsert average time: 1105
+XorHashFunction HashSortMerge average time: 1560
+********************************************
+Array_Length: 32 Distribution: 0 Uniq: 1 Order: 3
+********************************************
+PrimeHashFunction average time: 999
+PrimeHashFunction HashSortInsert average time: 1332
+PrimeHashFunction HashSortMerge average time: 2253
+XorHashFunction average time: 976
+XorHashFunction HashSortInsert average time: 1338
+XorHashFunction HashSortMerge average time: 2261
+********************************************
+Array_Length: 64 Distribution: 0 Uniq: 1 Order: 3
+********************************************
+PrimeHashFunction average time: 1047
+PrimeHashFunction HashSortInsert average time: 2084
+PrimeHashFunction HashSortMerge average time: 3813
+XorHashFunction average time: 1021
+XorHashFunction HashSortInsert average time: 2086
+XorHashFunction HashSortMerge average time: 3829
+********************************************
+Array_Length: 128 Distribution: 0 Uniq: 1 Order: 3
+********************************************
+PrimeHashFunction average time: 1134
+PrimeHashFunction HashSortInsert average time: 4481
+PrimeHashFunction HashSortMerge average time: 7217
+XorHashFunction average time: 1131
+XorHashFunction HashSortInsert average time: 4497
+XorHashFunction HashSortMerge average time: 7243
+********************************************
+Array_Length: 256 Distribution: 0 Uniq: 1 Order: 3
+********************************************
+PrimeHashFunction average time: 1358
+PrimeHashFunction HashSortInsert average time: 12787
+PrimeHashFunction HashSortMerge average time: 14577
+XorHashFunction average time: 1394
+XorHashFunction HashSortInsert average time: 12844
+XorHashFunction HashSortMerge average time: 14679
+********************************************
+Array_Length: 512 Distribution: 0 Uniq: 1 Order: 3
+********************************************
+PrimeHashFunction average time: 1677
+PrimeHashFunction HashSortInsert average time: 43378
+PrimeHashFunction HashSortMerge average time: 30308
+XorHashFunction average time: 1782
+XorHashFunction HashSortInsert average time: 43364
+XorHashFunction HashSortMerge average time: 30476
