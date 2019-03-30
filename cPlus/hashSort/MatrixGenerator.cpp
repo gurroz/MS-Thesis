@@ -96,6 +96,28 @@ void MatrixGenerator::generateMatrix(int** data, int arrayLength, double uniqueL
     }
 };
 
+
+void MatrixGenerator::generateSegmentedMatrix(int** data, int arrayLength, int dataOrder, double repeatedElementInArray) {
+  // Generate unique arrays of length X. X is the lenth of the array divided by something
+    // fill each array with one of the unique, Y times (Given by parameter: repeatedElementInArray)
+    // Fill the rest of the array with new random data
+    int uniqueSegmentLength = round(arrayLength * repeatedElementInArray);
+    
+    int* seminalArray = new int[uniqueSegmentLength];
+    
+    DataGenerator dataGen;
+    dataGen.generateArray(seminalArray, dataOrder, uniqueSegmentLength);
+    
+    for(int i = 0; i < TOTAL_LIST_NUMBER; i++) {
+        data[i] = new int[arrayLength];
+        dataGen.generateArray(data[i], dataOrder, arrayLength);
+
+        for(int j=0; j < uniqueSegmentLength; j++) {
+            data[i][j] = seminalArray[j];
+        }
+    }
+};
+
 void MatrixGenerator::copyMatrix(int** original, int** newArr, int arrayLength) {
     for(int i=0; i < TOTAL_LIST_NUMBER; i++) {
         newArr[i] = new int[arrayLength];

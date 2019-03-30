@@ -20,6 +20,7 @@ using namespace std;
 class MatrixGenerator {
 public:
     void generateMatrix(int** data, int arrayLength, double uniqueList, int distribuition, int dataOrder, double repeatedElementInArray);
+    void generateSegmentedMatrix(int** data, int arrayLength, int dataOrder, double repeatedElementInArray);
     void copyMatrix(int** original, int** newArr, int arrayLength);
 private:
 };

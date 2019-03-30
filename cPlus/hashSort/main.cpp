@@ -18,10 +18,7 @@
 #include "XorHashFunction.hpp"
 
 using namespace std;
-
-// #define TOTAL_LIST_NUMBER 4
 #define TOTAL_TEST 1
-
 
 void runSortFunction(int** data, int arrayLength, SortFunction& sortFunction){
 	for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
@@ -40,6 +37,15 @@ void printArray(int run, int** originalData, int arrayLength) {
 		}
 		cout << "Ordered" <<  run  <<  ": " <<  arrayList << endl; 
 	}
+}
+
+void copyMatrix(int** original, int** newArr, int arrayLength) {
+    for(int i=0; i < TOTAL_LIST_NUMBER; i++) {
+        newArr[i] = new int[arrayLength];
+        for(int j=0; j < arrayLength; j++) {
+            newArr[i][j] = original[i][j];
+        }
+    }
 }
 
 int runHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, string name) {
@@ -120,10 +126,13 @@ void runSortingTests(int arrayLength, int distribution, double uniqueness, int l
 		int** originalData = new int*[TOTAL_LIST_NUMBER];
 		int** copiedData = new int*[TOTAL_LIST_NUMBER];
 		
-		dataGenerator.generateMatrix(originalData, arrayLength, uniqueness, distribution, listOrder, copiedElements);
-		dataGenerator.copyMatrix(originalData, copiedData, arrayLength);
-		
-//        printArray(1, originalData, arrayLength);
+//        dataGenerator.generateMatrix(originalData, arrayLength, uniqueness, distribution, listOrder, copiedElements);
+        dataGenerator.generateSegmentedMatrix(originalData, arrayLength, listOrder, copiedElements);
+
+        printArray(1, originalData, arrayLength);
+
+		copyMatrix(originalData, copiedData, arrayLength);
+
 
 		auto start = std::chrono::high_resolution_clock::now();
 		runSortFunction(originalData, arrayLength, insertionSort);
@@ -137,7 +146,8 @@ void runSortingTests(int arrayLength, int distribution, double uniqueness, int l
 		finish = std::chrono::high_resolution_clock::now();
 		int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
 		totalMerge = totalMerge + int_ms.count();
-
+        
+        printArray(2, originalData, arrayLength);
 	}
 
 	cout << "********************************************"<< endl; 
@@ -163,7 +173,8 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 		int** copiedData1 = new int*[TOTAL_LIST_NUMBER];
         int** copiedData2 = new int*[TOTAL_LIST_NUMBER];
 		
-		dataGenerator.generateMatrix(originalData, arrayLength, uniqueness, distribution, listOrder, copiedElements);
+        dataGenerator.generateMatrix(originalData, arrayLength, uniqueness, distribution, listOrder, copiedElements);
+//        dataGenerator.generateSegmentedMatrix(originalData, arrayLength, listOrder, copiedElements);
 		dataGenerator.copyMatrix(originalData, copiedData1, arrayLength);
         dataGenerator.copyMatrix(originalData, copiedData2, arrayLength);
 
@@ -190,7 +201,6 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 
 //         printArray(2, copiedData1, arrayLength);
 //         printArray(3, copiedData2, arrayLength);
-
 	}
 
 	cout << "********************************************"<< endl; 
@@ -199,8 +209,7 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 
 	cout << "Insertion average time: " <<  to_string(totalInsertion / TOTAL_TEST) << endl;
     cout << "InsertionOptimized average time: " <<  to_string(totalInsertionOpt / TOTAL_TEST) << endl;
-	cout << "MergeOptimized average time: " <<  to_string(totalMerge / TOTAL_TEST) << endl; 
-
+	cout << "MergeOptimized average time: " <<  to_string(totalMerge / TOTAL_TEST) << endl;
 }
 
 
