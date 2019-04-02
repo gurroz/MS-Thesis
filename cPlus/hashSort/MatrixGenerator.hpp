@@ -15,7 +15,9 @@ using namespace std;
 
 #include "DataGenerator.hpp"
 
-#define TOTAL_LIST_NUMBER 1036800
+//#define TOTAL_LIST_NUMBER 1036800
+#define TOTAL_LIST_NUMBER 4
+
 
 class MatrixGenerator {
 public:
