@@ -201,8 +201,11 @@ void runSortingOptimizedTests(int arrayLength, int distribution, double uniquene
 	cout << "MergeOptimized average time: " <<  to_string(totalMerge / TOTAL_TEST) << endl;
 }
 
-int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength, unordered_map<string, int> signaturesMap) {
-    int** segmentMatrix = new int*[TOTAL_LIST_NUMBER * blockLength];
+int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength) {
+    unordered_map<string, int> signaturesMap;
+    int arraySegments = (arrayLength/blockLength);
+    int totalSegmets = TOTAL_LIST_NUMBER *  arraySegments;
+    int** segmentMatrix = new int*[totalSegmets];
     
     // loop through each array, per block
     // if found copy ordered result of block
@@ -211,54 +214,51 @@ int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, So
     int deadCodeReturn = 0;
     int segmentsIndex = 0;
     for(int i = 0; i < TOTAL_LIST_NUMBER; i++) {
+//        int indexes[arraySegments];
+//        int currentIndex = 0;
         for(int j = 0; j < arrayLength; j = j + blockLength) {
             segmentMatrix[segmentsIndex] = new int[blockLength];
 
-            cout << "blockLength "<< blockLength << " i: " << i << " j: " << j << endl;
+//            cout << "blockLength "<< blockLength << " i: " << i << " j: " << j << endl;
 
             // Copy block
             for(int k = 0; k < blockLength; k++) {
                 segmentMatrix[segmentsIndex][k] = data[i][j + k];
             }
             
-            cout << "After Copy: i:" << i<< " j: "<< j <<endl;
 
             string signature = hashFunc.hash(segmentMatrix[segmentsIndex], blockLength);
             unordered_map<string, int>::const_iterator signatureFinder = signaturesMap.find(signature);
 
-            cout << "Before hash: " << endl;
+//            cout << "Before hash: " << signature << endl;
 
             if(signaturesMap.find(signature) == signaturesMap.end()) {
-                cout << "Before hash sort: " << signature << endl;
-
                 sortFunction.sort(segmentMatrix[segmentsIndex], blockLength);
-                cout << "Before hash pair: " << segmentsIndex <<endl;
+//                cout << "Before hash insert: " << segmentsIndex <<endl;
 
-                pair<string,int> item(signature, segmentsIndex);
-
-                cout << "Before hash insert: " << segmentsIndex <<endl;
-
-                signaturesMap[signature] = segmentsIndex;
-        
-                cout << "After hash insert: " << segmentsIndex <<endl;
-
-                segmentsIndex++;
+                signaturesMap.insert(make_pair(signature, segmentsIndex));
+//                indexes[currentIndex] = segmentsIndex;
+//                cout << "After hash insert: " << segmentsIndex <<endl;
             } else {
                 int originalIndex = signatureFinder->second;
+//                indexes[currentIndex] = originalIndex;
                 for(int k = 0;  k < blockLength; k++) {
                     data[i][j + k] = segmentMatrix[originalIndex][k];
-//                    arrayList = arrayList + std::to_string(data[i][j + k]);
-//                    arrayList = arrayList + ",";
                 }
-                cout << "Copied: " << endl;
             }
+            
+            segmentsIndex++;
+//            currentIndex++;
         }
         
-        cout << "Before sort: " << endl;
 
+        // Merging all segments to data
+//        for(int k = 0; k < arraySegments; k++) {
+//            int segmentsIndex = indexes[k];
+//            segmentMatrix[segmentsIndex];
+//            data[i][dataIndex] =
+//        }
         sortFunction.sort(data[i], arrayLength);
-        cout << "Foinished: " << endl;
-
     }
     
     return deadCodeReturn;
@@ -275,8 +275,6 @@ void runSegmentedTests(int arrayLength, int distribution, double uniqueness, int
     MergeSort mergeSort;
     MatrixGenerator dataGenerator;
     PrimeHashFunction hashFunc1;
-    unordered_map<string, int> signaturesMap1;
-    unordered_map<string, int> signaturesMap2;
     for(int i=0; i < TOTAL_TEST; i++) {
         int** originalData = new int*[TOTAL_LIST_NUMBER];
         int** copiedData1 = new int*[TOTAL_LIST_NUMBER];
@@ -303,16 +301,15 @@ void runSegmentedTests(int arrayLength, int distribution, double uniqueness, int
         int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
         totalMerge = totalMerge + int_ms.count();
         
-
         start = std::chrono::high_resolution_clock::now();
-        runSegmentedHashSort(copiedData2, hashFunc1, arrayLength, insertionSort, blocksLength, signaturesMap1);
+        runSegmentedHashSort(copiedData2, hashFunc1, arrayLength, insertionSort, blocksLength);
         finish = std::chrono::high_resolution_clock::now();
         int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
         totalInsertionSeg = totalInsertionSeg + int_ms.count();
         
         
         start = std::chrono::high_resolution_clock::now();
-        runSegmentedHashSort(copiedData3, hashFunc1, arrayLength, mergeSort, blocksLength, signaturesMap2);
+        runSegmentedHashSort(copiedData3, hashFunc1, arrayLength, mergeSort, blocksLength);
         finish = std::chrono::high_resolution_clock::now();
         int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
         totalMergeSeg = totalMergeSeg + int_ms.count();
