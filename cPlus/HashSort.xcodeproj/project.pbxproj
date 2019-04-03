@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A0ADFAC2254CB3F00763B30 /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0ADFAA2254CB3F00763B30 /* MinHeap.cpp */; };
 		9A38649E22531B2500579127 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A38649D22531B2500579127 /* main.cpp */; };
 		9A3864B822531BC900579127 /* MergeSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864A822531BC800579127 /* MergeSort.cpp */; };
 		9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */; };
@@ -30,6 +31,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A0ADFAA2254CB3F00763B30 /* MinHeap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinHeap.cpp; sourceTree = "<group>"; };
+		9A0ADFAB2254CB3F00763B30 /* MinHeap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinHeap.hpp; sourceTree = "<group>"; };
 		9A38649A22531B2500579127 /* HashSort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HashSort; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A38649D22531B2500579127 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9A3864A422531BC700579127 /* tester.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = tester.sh; sourceTree = "<group>"; };
@@ -105,6 +108,8 @@
 				9A3864B122531BC800579127 /* XorHashFunc.cpp */,
 				9A3864B322531BC800579127 /* XorHashFunction.hpp */,
 				9A38649D22531B2500579127 /* main.cpp */,
+				9A0ADFAA2254CB3F00763B30 /* MinHeap.cpp */,
+				9A0ADFAB2254CB3F00763B30 /* MinHeap.hpp */,
 			);
 			path = HashSort;
 			sourceTree = "<group>";
@@ -172,6 +177,7 @@
 				9A3864B822531BC900579127 /* MergeSort.cpp in Sources */,
 				9A3864BE22531BC900579127 /* InsertionSort.cpp in Sources */,
 				9A38649E22531B2500579127 /* main.cpp in Sources */,
+				9A0ADFAC2254CB3F00763B30 /* MinHeap.cpp in Sources */,
 				9A3864BD22531BC900579127 /* MatrixGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

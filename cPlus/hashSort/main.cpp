@@ -214,56 +214,106 @@ int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, So
     int deadCodeReturn = 0;
     int segmentsIndex = 0;
     for(int i = 0; i < TOTAL_LIST_NUMBER; i++) {
-//        int indexes[arraySegments];
-//        int currentIndex = 0;
+        int indexes[arraySegments];
+        int currentIndex = 0;
         for(int j = 0; j < arrayLength; j = j + blockLength) {
             segmentMatrix[segmentsIndex] = new int[blockLength];
-
-//            cout << "blockLength "<< blockLength << " i: " << i << " j: " << j << endl;
 
             // Copy block
             for(int k = 0; k < blockLength; k++) {
                 segmentMatrix[segmentsIndex][k] = data[i][j + k];
             }
             
-
             string signature = hashFunc.hash(segmentMatrix[segmentsIndex], blockLength);
             unordered_map<string, int>::const_iterator signatureFinder = signaturesMap.find(signature);
 
-//            cout << "Before hash: " << signature << endl;
-
             if(signaturesMap.find(signature) == signaturesMap.end()) {
                 sortFunction.sort(segmentMatrix[segmentsIndex], blockLength);
-//                cout << "Before hash insert: " << segmentsIndex <<endl;
-
                 signaturesMap.insert(make_pair(signature, segmentsIndex));
-//                indexes[currentIndex] = segmentsIndex;
-//                cout << "After hash insert: " << segmentsIndex <<endl;
+                
+                indexes[currentIndex] = segmentsIndex;
             } else {
                 int originalIndex = signatureFinder->second;
-//                indexes[currentIndex] = originalIndex;
+                indexes[currentIndex] = originalIndex;
+            }
+            
+            segmentsIndex++;
+            currentIndex++;
+        }
+        
+        // Merging all segments to data
+        int segmentsLastIndex[arraySegments];
+        for(int k = 0; k < arraySegments; k++) {
+            segmentsLastIndex[k] = 0;
+        }
+        
+        for(int lastDataIndex = 0; lastDataIndex < arrayLength; lastDataIndex++) {
+            int minVal = INT_MAX;
+            int usedSegment = 0;
+            for(int k = 0; k < arraySegments; k++) {
+                int segmentsIndex = indexes[k];
+                int lastIndex = segmentsLastIndex[k];
+                
+                if(lastIndex < blockLength && minVal > segmentMatrix[segmentsIndex][lastIndex]) {
+                    minVal = segmentMatrix[segmentsIndex][lastIndex];
+                    usedSegment = k;
+                }
+            }
+            
+            segmentsLastIndex[usedSegment] = segmentsLastIndex[usedSegment] + 1;
+            data[i][lastDataIndex] = minVal;
+        }
+    
+    }
+    
+    return deadCodeReturn;
+}
+
+
+int runSegmentedHashSortNaive(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength) {
+    unordered_map<string, int> signaturesMap;
+    int arraySegments = (arrayLength/blockLength);
+    int totalSegmets = TOTAL_LIST_NUMBER *  arraySegments;
+    int** segmentMatrix = new int*[totalSegmets];
+    
+    // loop through each array, per block
+    // if found copy ordered result of block
+    // if not found, sort and save signature with block elsewerse
+    //
+    int deadCodeReturn = 0;
+    int segmentsIndex = 0;
+    for(int i = 0; i < TOTAL_LIST_NUMBER; i++) {
+        //        int indexes[arraySegments];
+        //        int currentIndex = 0;
+        for(int j = 0; j < arrayLength; j = j + blockLength) {
+            segmentMatrix[segmentsIndex] = new int[blockLength];
+
+            // Copy block
+            for(int k = 0; k < blockLength; k++) {
+                segmentMatrix[segmentsIndex][k] = data[i][j + k];
+            }
+            
+            string signature = hashFunc.hash(segmentMatrix[segmentsIndex], blockLength);
+            unordered_map<string, int>::const_iterator signatureFinder = signaturesMap.find(signature);
+            
+            if(signaturesMap.find(signature) == signaturesMap.end()) {
+                sortFunction.sort(segmentMatrix[segmentsIndex], blockLength);
+                signaturesMap.insert(make_pair(signature, segmentsIndex));
+            } else {
+                int originalIndex = signatureFinder->second;
                 for(int k = 0;  k < blockLength; k++) {
                     data[i][j + k] = segmentMatrix[originalIndex][k];
                 }
             }
             
             segmentsIndex++;
-//            currentIndex++;
         }
         
-
-        // Merging all segments to data
-//        for(int k = 0; k < arraySegments; k++) {
-//            int segmentsIndex = indexes[k];
-//            segmentMatrix[segmentsIndex];
-//            data[i][dataIndex] =
-//        }
         sortFunction.sort(data[i], arrayLength);
     }
     
     return deadCodeReturn;
 }
-
 
 void runSegmentedTests(int arrayLength, int distribution, double uniqueness, int listOrder, double copiedElements, int blocksLength) {
     long totalInsertion = 0;
@@ -327,6 +377,8 @@ void runSegmentedTests(int arrayLength, int distribution, double uniqueness, int
     cout << "InsertionSegmeted average time: " <<  to_string(totalInsertionSeg / TOTAL_TEST) << endl;
     cout << "MergeSegmented average time: " <<  to_string(totalMergeSeg / TOTAL_TEST) << endl;
 }
+
+
 
 void runHashingTests(int arrayLength, int distribution, double uniqueness, int listOrder) {
 	long totalHash1 = 0;
