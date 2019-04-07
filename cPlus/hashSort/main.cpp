@@ -16,6 +16,8 @@
 #include "AdditiveHashFunction.hpp"
 #include "PrimeHashFunction.hpp"
 #include "XorHashFunction.hpp"
+#include "MinHeap.hpp"
+
 
 using namespace std;
 #define TOTAL_TEST 1
@@ -269,6 +271,95 @@ int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, So
     return deadCodeReturn;
 }
 
+// This function takes an array of arrays as an argument and
+// All arrays are assumed to be sorted. It merges them together
+// and prints the final sorted output.
+public int *mergeKArrays(int** arr, int n, int k) {
+    int *output = new int[n*k]; // To store output array
+    
+    // Create a min heap with k heap nodes. Every heap node
+    // has first element of an array
+    MinHeapNode *harr = new MinHeapNode[k];
+    for (int i = 0; i < k; i++)
+    {
+        harr[i].element = arr[i][0]; // Store the first element
+        harr[i].i = i; // index of array
+        harr[i].j = 1; // Index of next element to be stored from array
+    }
+    MinHeap hp(harr, k); // Create the heap
+    
+    // Now one by one get the minimum element from min
+    // heap and replace it with next element of its array
+    for (int count = 0; count < n*k; count++)
+    {
+        // Get the minimum element and store it in output
+        MinHeapNode root = hp.getMin();
+        output[count] = root.element;
+        
+        // Find the next elelement that will replace current
+        // root of heap. The next element belongs to same
+        // array as the current root.
+        if (root.j < n)
+        {
+            root.element = arr[root.i][root.j];
+            root.j += 1;
+        }
+        // If root was the last element of its array
+        else root.element = INT_MAX; //INT_MAX is for infinite
+        
+        // Replace root with next element of array
+        hp.replaceMin(root);
+    }
+    
+    return output;
+}
+
+int runSegmentedHeapHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength) {
+    unordered_map<string, int> signaturesMap;
+    int arraySegments = (arrayLength/blockLength);
+    int totalSegmets = TOTAL_LIST_NUMBER *  arraySegments;
+    int** segmentMatrix = new int*[totalSegmets];
+    
+    // loop through each array, per block
+    // if found copy ordered result of block
+    // if not found, sort and save signature with block elsewerse
+    //
+    int deadCodeReturn = 0;
+    int segmentsIndex = 0;
+    for(int i = 0; i < TOTAL_LIST_NUMBER; i++) {
+        int indexes[arraySegments];
+        int currentIndex = 0;
+        for(int j = 0; j < arrayLength; j = j + blockLength) {
+            segmentMatrix[segmentsIndex] = new int[blockLength];
+            
+            // Copy block
+            for(int k = 0; k < blockLength; k++) {
+                segmentMatrix[segmentsIndex][k] = data[i][j + k];
+            }
+            
+            string signature = hashFunc.hash(segmentMatrix[segmentsIndex], blockLength);
+            unordered_map<string, int>::const_iterator signatureFinder = signaturesMap.find(signature);
+            
+            if(signaturesMap.find(signature) == signaturesMap.end()) {
+                sortFunction.sort(segmentMatrix[segmentsIndex], blockLength);
+                signaturesMap.insert(make_pair(signature, segmentsIndex));
+                
+                indexes[currentIndex] = segmentsIndex;
+            } else {
+                int originalIndex = signatureFinder->second;
+                indexes[currentIndex] = originalIndex;
+            }
+            
+            segmentsIndex++;
+            currentIndex++;
+        }
+        
+        // Merging all segments to data
+        data[i] = mergeKArrays(, arraySegments);
+    }
+    
+    return deadCodeReturn;
+}
 
 int runSegmentedHashSortNaive(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength) {
     unordered_map<string, int> signaturesMap;
