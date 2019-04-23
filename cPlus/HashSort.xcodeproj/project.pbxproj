@@ -13,6 +13,7 @@
 		9A112D09226F4AF200041141 /* HashingSortTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D03226F4AF200041141 /* HashingSortTest.cpp */; };
 		9A112D0A226F4AF200041141 /* OptSortingTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D07226F4AF200041141 /* OptSortingTest.cpp */; };
 		9A112D0D226F4CBE00041141 /* HashTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D0C226F4CBE00041141 /* HashTest.cpp */; };
+		9A112D14226F4FD400041141 /* SegmentedOptHashTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D13226F4FD400041141 /* SegmentedOptHashTest.cpp */; };
 		9A38649E22531B2500579127 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A38649D22531B2500579127 /* main.cpp */; };
 		9A3864B822531BC900579127 /* MergeSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864A822531BC800579127 /* MergeSort.cpp */; };
 		9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */; };
@@ -50,19 +51,18 @@
 		9A112D07226F4AF200041141 /* OptSortingTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptSortingTest.cpp; sourceTree = "<group>"; };
 		9A112D0B226F4CAE00041141 /* HashTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HashTest.hpp; sourceTree = "<group>"; };
 		9A112D0C226F4CBE00041141 /* HashTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashTest.cpp; sourceTree = "<group>"; };
+		9A112D11226F4F9400041141 /* SegmentedOptHashTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SegmentedOptHashTest.hpp; sourceTree = "<group>"; };
+		9A112D13226F4FD400041141 /* SegmentedOptHashTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedOptHashTest.cpp; sourceTree = "<group>"; };
 		9A38649A22531B2500579127 /* HashSort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HashSort; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A38649D22531B2500579127 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9A3864A422531BC700579127 /* tester.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = tester.sh; sourceTree = "<group>"; };
 		9A3864A522531BC700579127 /* DataGenerator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = DataGenerator.hpp; sourceTree = "<group>"; };
-		9A3864A622531BC800579127 /* testResults02.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = testResults02.txt; sourceTree = "<group>"; };
 		9A3864A722531BC800579127 /* InsertionSort.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = InsertionSort.hpp; sourceTree = "<group>"; };
 		9A3864A822531BC800579127 /* MergeSort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MergeSort.cpp; sourceTree = "<group>"; };
 		9A3864A922531BC800579127 /* MatrixGenerator.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MatrixGenerator.hpp; sourceTree = "<group>"; };
 		9A3864AA22531BC800579127 /* MergeSort.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = MergeSort.hpp; sourceTree = "<group>"; };
-		9A3864AB22531BC800579127 /* optimizedSort.log */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = optimizedSort.log; sourceTree = "<group>"; };
 		9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PrimeHashFunc.cpp; sourceTree = "<group>"; };
 		9A3864AD22531BC800579127 /* HashFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HashFunction.hpp; sourceTree = "<group>"; };
-		9A3864AE22531BC800579127 /* normalDist_test.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = normalDist_test.txt; sourceTree = "<group>"; };
 		9A3864AF22531BC800579127 /* PrimeHashFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PrimeHashFunction.hpp; sourceTree = "<group>"; };
 		9A3864B022531BC800579127 /* SortFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SortFunction.hpp; sourceTree = "<group>"; };
 		9A3864B122531BC800579127 /* XorHashFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XorHashFunc.cpp; sourceTree = "<group>"; };
@@ -116,13 +116,10 @@
 				9A3864A922531BC800579127 /* MatrixGenerator.hpp */,
 				9A3864A822531BC800579127 /* MergeSort.cpp */,
 				9A3864AA22531BC800579127 /* MergeSort.hpp */,
-				9A3864AE22531BC800579127 /* normalDist_test.txt */,
-				9A3864AB22531BC800579127 /* optimizedSort.log */,
 				9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */,
 				9A3864AF22531BC800579127 /* PrimeHashFunction.hpp */,
 				9A3864B022531BC800579127 /* SortFunction.hpp */,
 				9A3864A422531BC700579127 /* tester.sh */,
-				9A3864A622531BC800579127 /* testResults02.txt */,
 				9A3864B122531BC800579127 /* XorHashFunc.cpp */,
 				9A3864B322531BC800579127 /* XorHashFunction.hpp */,
 				9A38649D22531B2500579127 /* main.cpp */,
@@ -137,6 +134,8 @@
 				9A112CFC226F459E00041141 /* SegmentedNaiveTest.hpp */,
 				9A112D00226F47C300041141 /* SegmentedHashTest.cpp */,
 				9A112CFF226F47A300041141 /* SegmentedHashTest.hpp */,
+				9A112D13226F4FD400041141 /* SegmentedOptHashTest.cpp */,
+				9A112D11226F4F9400041141 /* SegmentedOptHashTest.hpp */,
 				9A112D0C226F4CBE00041141 /* HashTest.cpp */,
 				9A112D0B226F4CAE00041141 /* HashTest.hpp */,
 			);
@@ -200,6 +199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */,
+				9A112D14226F4FD400041141 /* SegmentedOptHashTest.cpp in Sources */,
 				9A112D01226F47C300041141 /* SegmentedHashTest.cpp in Sources */,
 				9A3864BA22531BC900579127 /* XorHashFunc.cpp in Sources */,
 				9A112D0D226F4CBE00041141 /* HashTest.cpp in Sources */,

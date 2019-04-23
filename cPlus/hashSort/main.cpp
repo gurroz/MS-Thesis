@@ -9,6 +9,7 @@
 #include "HashingSortTest.hpp"
 #include "SegmentedNaiveTest.hpp"
 #include "SegmentedHashTest.hpp"
+#include "SegmentedOptHashTest.hpp"
 #include "HashTest.hpp"
 
 using namespace std;
@@ -52,8 +53,8 @@ int main (int argc,char* argv[]) {
             break;
         }
         case 5: {
-            SortingTest compTest;
-            compTest.run(configuration);
+            SegmentedOptHashTest segmentedOptHashTest;
+            segmentedOptHashTest.run(configuration);
             break;
         }
     }
