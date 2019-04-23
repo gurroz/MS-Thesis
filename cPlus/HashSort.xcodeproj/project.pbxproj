@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A0ADFAC2254CB3F00763B30 /* MinHeap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A0ADFAA2254CB3F00763B30 /* MinHeap.cpp */; };
+		9A112CFE226F45AE00041141 /* SegmentedNaiveTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112CFD226F45AE00041141 /* SegmentedNaiveTest.cpp */; };
+		9A112D01226F47C300041141 /* SegmentedHashTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D00226F47C300041141 /* SegmentedHashTest.cpp */; };
+		9A112D08226F4AF200041141 /* SortingTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D02226F4AF200041141 /* SortingTest.cpp */; };
+		9A112D09226F4AF200041141 /* HashingSortTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D03226F4AF200041141 /* HashingSortTest.cpp */; };
+		9A112D0A226F4AF200041141 /* OptSortingTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D07226F4AF200041141 /* OptSortingTest.cpp */; };
+		9A112D0D226F4CBE00041141 /* HashTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D0C226F4CBE00041141 /* HashTest.cpp */; };
 		9A38649E22531B2500579127 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A38649D22531B2500579127 /* main.cpp */; };
 		9A3864B822531BC900579127 /* MergeSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864A822531BC800579127 /* MergeSort.cpp */; };
 		9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */; };
@@ -31,8 +36,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9A0ADFAA2254CB3F00763B30 /* MinHeap.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MinHeap.cpp; sourceTree = "<group>"; };
-		9A0ADFAB2254CB3F00763B30 /* MinHeap.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = MinHeap.hpp; sourceTree = "<group>"; };
+		9A112CEC226F2BF700041141 /* Configuration.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Configuration.hpp; sourceTree = "<group>"; };
+		9A112CF2226F34E000041141 /* TestRun.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = TestRun.hpp; sourceTree = "<group>"; };
+		9A112CFC226F459E00041141 /* SegmentedNaiveTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SegmentedNaiveTest.hpp; sourceTree = "<group>"; };
+		9A112CFD226F45AE00041141 /* SegmentedNaiveTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedNaiveTest.cpp; sourceTree = "<group>"; };
+		9A112CFF226F47A300041141 /* SegmentedHashTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SegmentedHashTest.hpp; sourceTree = "<group>"; };
+		9A112D00226F47C300041141 /* SegmentedHashTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedHashTest.cpp; sourceTree = "<group>"; };
+		9A112D02226F4AF200041141 /* SortingTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SortingTest.cpp; sourceTree = "<group>"; };
+		9A112D03226F4AF200041141 /* HashingSortTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashingSortTest.cpp; sourceTree = "<group>"; };
+		9A112D04226F4AF200041141 /* SortingTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SortingTest.hpp; sourceTree = "<group>"; };
+		9A112D05226F4AF200041141 /* OptSortingTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = OptSortingTest.hpp; sourceTree = "<group>"; };
+		9A112D06226F4AF200041141 /* HashingSortTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HashingSortTest.hpp; sourceTree = "<group>"; };
+		9A112D07226F4AF200041141 /* OptSortingTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = OptSortingTest.cpp; sourceTree = "<group>"; };
+		9A112D0B226F4CAE00041141 /* HashTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = HashTest.hpp; sourceTree = "<group>"; };
+		9A112D0C226F4CBE00041141 /* HashTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashTest.cpp; sourceTree = "<group>"; };
 		9A38649A22531B2500579127 /* HashSort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HashSort; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A38649D22531B2500579127 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9A3864A422531BC700579127 /* tester.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = tester.sh; sourceTree = "<group>"; };
@@ -87,6 +104,7 @@
 		9A38649C22531B2500579127 /* HashSort */ = {
 			isa = PBXGroup;
 			children = (
+				9A112CF2226F34E000041141 /* TestRun.hpp */,
 				9A3864B522531BC900579127 /* AdditiveHashFunction.cpp */,
 				9A3864B422531BC900579127 /* AdditiveHashFunction.hpp */,
 				9A3864B222531BC800579127 /* DataGenerator.cpp */,
@@ -108,8 +126,19 @@
 				9A3864B122531BC800579127 /* XorHashFunc.cpp */,
 				9A3864B322531BC800579127 /* XorHashFunction.hpp */,
 				9A38649D22531B2500579127 /* main.cpp */,
-				9A0ADFAA2254CB3F00763B30 /* MinHeap.cpp */,
-				9A0ADFAB2254CB3F00763B30 /* MinHeap.hpp */,
+				9A112CEC226F2BF700041141 /* Configuration.hpp */,
+				9A112D03226F4AF200041141 /* HashingSortTest.cpp */,
+				9A112D06226F4AF200041141 /* HashingSortTest.hpp */,
+				9A112D07226F4AF200041141 /* OptSortingTest.cpp */,
+				9A112D05226F4AF200041141 /* OptSortingTest.hpp */,
+				9A112D02226F4AF200041141 /* SortingTest.cpp */,
+				9A112D04226F4AF200041141 /* SortingTest.hpp */,
+				9A112CFD226F45AE00041141 /* SegmentedNaiveTest.cpp */,
+				9A112CFC226F459E00041141 /* SegmentedNaiveTest.hpp */,
+				9A112D00226F47C300041141 /* SegmentedHashTest.cpp */,
+				9A112CFF226F47A300041141 /* SegmentedHashTest.hpp */,
+				9A112D0C226F4CBE00041141 /* HashTest.cpp */,
+				9A112D0B226F4CAE00041141 /* HashTest.hpp */,
 			);
 			path = HashSort;
 			sourceTree = "<group>";
@@ -171,13 +200,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */,
+				9A112D01226F47C300041141 /* SegmentedHashTest.cpp in Sources */,
 				9A3864BA22531BC900579127 /* XorHashFunc.cpp in Sources */,
+				9A112D0D226F4CBE00041141 /* HashTest.cpp in Sources */,
+				9A112D09226F4AF200041141 /* HashingSortTest.cpp in Sources */,
 				9A3864BB22531BC900579127 /* DataGenerator.cpp in Sources */,
 				9A3864BC22531BC900579127 /* AdditiveHashFunction.cpp in Sources */,
 				9A3864B822531BC900579127 /* MergeSort.cpp in Sources */,
 				9A3864BE22531BC900579127 /* InsertionSort.cpp in Sources */,
+				9A112D08226F4AF200041141 /* SortingTest.cpp in Sources */,
+				9A112D0A226F4AF200041141 /* OptSortingTest.cpp in Sources */,
 				9A38649E22531B2500579127 /* main.cpp in Sources */,
-				9A0ADFAC2254CB3F00763B30 /* MinHeap.cpp in Sources */,
+				9A112CFE226F45AE00041141 /* SegmentedNaiveTest.cpp in Sources */,
 				9A3864BD22531BC900579127 /* MatrixGenerator.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
