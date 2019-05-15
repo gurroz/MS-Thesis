@@ -14,7 +14,7 @@
 #include "MatrixGenerator.hpp"
 
 #include "PrimeHashFunction.hpp"
-
+#include "MemoryUtil.cpp"
 
 using namespace std;
 using hi_res_time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
@@ -23,6 +23,9 @@ string HashingSortTest::run(Configuration conf) {
     long totalHash = 0;
     long totalHashInsertSort = 0;
     long totalHashMergeSort = 0;
+    
+    long memoryInsert = 0;
+    long memoryMerge = 0;
     
     PrimeHashFunction hashFunc;
 //    XorHashFunction hashFunc3;
@@ -44,6 +47,7 @@ string HashingSortTest::run(Configuration conf) {
         printArray(1, hashData1, conf.arrayLength);
     }
     
+    
     // **** HASH 1 ****
     
     // ONLY HASHING
@@ -54,12 +58,16 @@ string HashingSortTest::run(Configuration conf) {
     totalHash = int_ms.count();
     
     
+    int totalMemoryUsed = MemoryUtil::getVirtualMemoryProcess();
     // HASH SORT DINAMIC Intro
     start = std::chrono::high_resolution_clock::now();
     runHashSort(hashData1, hashFunc, conf.arrayLength, insertionSort, "HASH1Insert");
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalHashInsertSort = int_ms.count();
+    if(conf.memoryCheck == 1) {
+        memoryInsert = MemoryUtil::getVirtualMemoryProcess() - totalMemoryUsed;
+    }
     
     // HASH SORT DINAMIC Merge
     start = std::chrono::high_resolution_clock::now();
@@ -68,6 +76,9 @@ string HashingSortTest::run(Configuration conf) {
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalHashMergeSort = int_ms.count();
     
+    if(conf.memoryCheck == 1) {
+        memoryMerge = MemoryUtil::getVirtualMemoryProcess() - memoryInsert;
+    }
         
     if(conf.debug == 1) {
         printArray(2, hashData1, conf.arrayLength);
@@ -77,10 +88,9 @@ string HashingSortTest::run(Configuration conf) {
     cout << conf.toString() <<endl;
     cout << "********************************************"<< endl;
     
-    cout << "PrimeHashFunction average time: " <<  to_string(totalHash) << endl;
-    cout << "PrimeHashFunction HashSortInsert average time: " <<  to_string(totalHashInsertSort) << endl;
-    cout << "PrimeHashFunction HashSortMerge average time: " <<  to_string(totalHashMergeSort) << endl;
-    
+    cout << "Hash: " << to_string(totalHash) << "Insertion: " <<  to_string(totalHashInsertSort) << "Merge: " <<  to_string(totalHashMergeSort) << endl;
+    cout << "MemoryInsertion: " << to_string(memoryInsert) << "MemoryMerge: " <<  to_string(memoryMerge) << endl;
+
     
     return "DONE";
 }

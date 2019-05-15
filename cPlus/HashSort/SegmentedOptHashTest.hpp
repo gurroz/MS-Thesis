@@ -18,6 +18,12 @@
 
 using namespace std;
 
+struct HashAndRange {
+    string hash;
+    int min;
+    int max;
+};
+
 class SegmentedOptHashTest: public TestRun {
 public:
     string run(Configuration conf);

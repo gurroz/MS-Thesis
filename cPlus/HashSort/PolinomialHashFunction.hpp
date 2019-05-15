@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class AdditiveHashFunction: public HashFunction {
+class PolinomialHashFunction: public HashFunction {
 	public:
 		string hash(int list[], int length);
 };
