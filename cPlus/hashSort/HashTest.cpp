@@ -5,81 +5,108 @@
 //  Created by Gonzalo Urroz on 23/4/19.
 //  Copyright © 2019 Gonzalo Urroz. All rights reserved.
 //
-
-#include "HashTest.hpp"
 #include <string>
 
+#include "HashTest.hpp"
 #include "MatrixGenerator.hpp"
+
 #include "PrimeHashFunction.hpp"
-#include "XorHashFunction.hpp"
-#include "AdditiveHashFunction.hpp"
+#include "BenchHash.hpp"
+#include "PolinomialHashFunction.hpp"
+#include "CriptoHashFunction.hpp"
+#include "PairMultiplyShift.hpp"
+#include "MemoryUtil.cpp"
+
 
 using namespace std;
 using hi_res_time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
-
 string HashTest::run(Configuration conf) {
-    long totalInsertion = 0;
-    long totalMerge = 0;
-    long totalInsertionSeg = 0;
-    long totalMergeSeg = 0;
+    long totalhashFunc1 = 0;
+    long totalhashFunc2 = 0;
+    long totalhashFunc3 = 0;
+    long totalhashFunc4 = 0;
+
+    long memoryhashFunc1 = 0;
+    long memoryhashFunc2 = 0;
+    long memoryhashFunc3 = 0;
+    long memoryhashFunc4 = 0;
+    
+    long colissionhashFunc1 = 0;
+    long colissionhashFunc2 = 0;
+    long colissionhashFunc3 = 0;
+    long colissionhashFunc4 = 0;
     
     MatrixGenerator dataGenerator;
+    
     PrimeHashFunction hashFunc1;
+    BenchHash hashFunc2;
+    CriptoHashFunction hashFunc3;
+//    PolinomialHashFunction hashFunc4;
+    PairMultiplyShift hashFunc4;
+
+    long totalMemoryUsed = MemoryUtil::getVirtualMemoryProcess();
     
     int** originalData = new int*[TOTAL_LIST_NUMBER];
-    int** copiedData1 = new int*[TOTAL_LIST_NUMBER];
-    int** copiedData2 = new int*[TOTAL_LIST_NUMBER];
-    int** copiedData3 = new int*[TOTAL_LIST_NUMBER];
-    
-    dataGenerator.generateSegmentedMatrix(originalData, conf.arrayLength, conf.listOrder, conf.copiedElements);
-    dataGenerator.copyMatrix(originalData, copiedData1, conf.arrayLength);
-    dataGenerator.copyMatrix(originalData, copiedData2, conf.arrayLength);
-    dataGenerator.copyMatrix(originalData, copiedData3, conf.arrayLength);
-    
+    dataGenerator.generateMatrix(originalData, conf.arrayLength, conf.uniqueness, conf.distribution, conf.listOrder, conf.copiedElements);
+
     if(conf.debug == 1) {
         printArray(1, originalData, conf.arrayLength);
     }
     
-//    hi_res_time_point start = std::chrono::high_resolution_clock::now();
-//    runSortFunction(originalData, conf.arrayLength, insertionSort);
-//    hi_res_time_point finish = std::chrono::high_resolution_clock::now();
-//    auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-//    totalInsertion = totalInsertion + int_ms.count();
-//
-//
-//    start = std::chrono::high_resolution_clock::now();
-//    runSortFunction(copiedData1, conf.arrayLength, mergeSort);
-//    finish = std::chrono::high_resolution_clock::now();
-//    int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-//    totalMerge = totalMerge + int_ms.count();
-//
-//    start = std::chrono::high_resolution_clock::now();
-//    runSegmentedHashSort(copiedData2, hashFunc1, conf.arrayLength, insertionSort, conf.blocksLength);
-//    finish = std::chrono::high_resolution_clock::now();
-//    int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-//    totalInsertionSeg = totalInsertionSeg + int_ms.count();
-//
-//
-//    start = std::chrono::high_resolution_clock::now();
-//    runSegmentedHashSort(copiedData3, hashFunc1, conf.arrayLength, mergeSort, conf.blocksLength);
-//    finish = std::chrono::high_resolution_clock::now();
-//    int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-//    totalMergeSeg = totalMergeSeg + int_ms.count();
-//
-//    if(conf.debug == 1) {
-//        printArray(2, copiedData1, conf.arrayLength);
-//        printArray(3, copiedData2, conf.arrayLength);
-//    }
+    hi_res_time_point start = std::chrono::high_resolution_clock::now();
+    runHash("hashFunc1", originalData, hashFunc1, conf.arrayLength);
+    hi_res_time_point finish = std::chrono::high_resolution_clock::now();
+    auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
+    totalhashFunc1 = int_ms.count();
+    
+    if(conf.memoryCheck == 1) {
+        memoryhashFunc1 = MemoryUtil::getVirtualMemoryProcess() - totalMemoryUsed;
+    }
+    
+    colissionhashFunc1 = checkColitions(originalData, hashFunc1, conf.arrayLength);
+    
+    start = std::chrono::high_resolution_clock::now();
+    runHash("hashFunc2",originalData, hashFunc2, conf.arrayLength);
+    finish = std::chrono::high_resolution_clock::now();
+    int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
+    totalhashFunc2 = int_ms.count();
+    
+    if(conf.memoryCheck == 1) {
+        memoryhashFunc2 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc1;
+    }
+
+    colissionhashFunc2 = checkColitions(originalData, hashFunc2, conf.arrayLength);
+    
+    start = std::chrono::high_resolution_clock::now();
+    runHash("hashFunc3",originalData, hashFunc3, conf.arrayLength);
+    finish = std::chrono::high_resolution_clock::now();
+    int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
+    totalhashFunc3 = int_ms.count();
+    
+    if(conf.memoryCheck == 1) {
+        memoryhashFunc3 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc2;
+    }
+    colissionhashFunc3 = checkColitions(originalData, hashFunc3, conf.arrayLength);
+    
+    start = std::chrono::high_resolution_clock::now();
+    runHash("hashFunc4",originalData, hashFunc4, conf.arrayLength);
+    finish = std::chrono::high_resolution_clock::now();
+    int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
+    totalhashFunc4 = int_ms.count();
+    
+    if(conf.memoryCheck == 1) {
+        memoryhashFunc4 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc3;
+    }
+    colissionhashFunc4 = checkColitions(originalData, hashFunc4, conf.arrayLength);
     
     cout << "********************************************"<< endl;
     cout << conf.toString() <<endl;
     cout << "********************************************"<< endl;
     
-    cout << "Insertion average time: " <<  to_string(totalInsertion) << endl;
-    cout << "Merge average time: " <<  to_string(totalMerge) << endl;
-    cout << "InsertionSegmeted average time: " <<  to_string(totalInsertionSeg) << endl;
-    cout << "MergeSegmented average time: " <<  to_string(totalMergeSeg) << endl;
+    cout << "H1: " <<  to_string(totalhashFunc1) << ", H2: " <<  to_string(totalhashFunc2) << ", H3: " <<  to_string(totalhashFunc3) << ", H4: " <<  to_string(totalhashFunc4) << endl;
+    cout << "C1: " <<  to_string(colissionhashFunc1) << ", C2: " <<  to_string(colissionhashFunc2) << ", C3: " <<  to_string(colissionhashFunc3) << ", C4: " <<  to_string(colissionhashFunc4) << endl;
+    cout << "M1: " <<  to_string(memoryhashFunc1) << ", M2: " <<  to_string(memoryhashFunc2) << ", M3: " <<  to_string(memoryhashFunc3) << ", M4: " <<  to_string(memoryhashFunc4) << endl;
     
     return "DONE";
 }
@@ -106,4 +133,12 @@ int HashTest::checkColitions(int** data, HashFunction& hashFunc, int arrayLength
     }
     
     return colitions;
+}
+
+void HashTest::runHash(string name, int** data, HashFunction& hashFunc, int arrayLength) {
+    string signature = "";
+    for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
+        signature = hashFunc.hash(data[j], arrayLength);
+//        cout << name << "SIG: " <<  signature << endl;
+    }
 }

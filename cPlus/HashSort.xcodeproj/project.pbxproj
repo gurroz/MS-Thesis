@@ -14,14 +14,19 @@
 		9A112D0A226F4AF200041141 /* OptSortingTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D07226F4AF200041141 /* OptSortingTest.cpp */; };
 		9A112D0D226F4CBE00041141 /* HashTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D0C226F4CBE00041141 /* HashTest.cpp */; };
 		9A112D14226F4FD400041141 /* SegmentedOptHashTest.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D13226F4FD400041141 /* SegmentedOptHashTest.cpp */; };
+		9A112D17227166DF00041141 /* PolinomialHashFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A112D16227166DF00041141 /* PolinomialHashFunction.cpp */; };
+		9A30918222883E38006A46F1 /* MemoryUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A30918122883E38006A46F1 /* MemoryUtil.cpp */; };
+		9A309188228ADB70006A46F1 /* Murmur3.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A309186228ADB70006A46F1 /* Murmur3.cpp */; };
+		9A30918B228ADE33006A46F1 /* BenchHash.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A309189228ADE33006A46F1 /* BenchHash.cpp */; };
+		9A30918D228BD8C8006A46F1 /* PairMultiplyShift.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A30918C228BD8C8006A46F1 /* PairMultiplyShift.cpp */; };
 		9A38649E22531B2500579127 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A38649D22531B2500579127 /* main.cpp */; };
 		9A3864B822531BC900579127 /* MergeSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864A822531BC800579127 /* MergeSort.cpp */; };
 		9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */; };
 		9A3864BA22531BC900579127 /* XorHashFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864B122531BC800579127 /* XorHashFunc.cpp */; };
 		9A3864BB22531BC900579127 /* DataGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864B222531BC800579127 /* DataGenerator.cpp */; };
-		9A3864BC22531BC900579127 /* AdditiveHashFunction.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864B522531BC900579127 /* AdditiveHashFunction.cpp */; };
 		9A3864BD22531BC900579127 /* MatrixGenerator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864B622531BC900579127 /* MatrixGenerator.cpp */; };
 		9A3864BE22531BC900579127 /* InsertionSort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9A3864B722531BC900579127 /* InsertionSort.cpp */; };
+		9ADE0ECD2271B429008C04AA /* CryptoHashFunc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE0ECC2271B429008C04AA /* CryptoHashFunc.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -53,6 +58,15 @@
 		9A112D0C226F4CBE00041141 /* HashTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = HashTest.cpp; sourceTree = "<group>"; };
 		9A112D11226F4F9400041141 /* SegmentedOptHashTest.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = SegmentedOptHashTest.hpp; sourceTree = "<group>"; };
 		9A112D13226F4FD400041141 /* SegmentedOptHashTest.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SegmentedOptHashTest.cpp; sourceTree = "<group>"; };
+		9A112D15227166AC00041141 /* PolinomialHashFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PolinomialHashFunction.hpp; sourceTree = "<group>"; };
+		9A112D16227166DF00041141 /* PolinomialHashFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PolinomialHashFunction.cpp; sourceTree = "<group>"; };
+		9A30918122883E38006A46F1 /* MemoryUtil.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = MemoryUtil.cpp; sourceTree = "<group>"; };
+		9A309186228ADB70006A46F1 /* Murmur3.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = Murmur3.cpp; sourceTree = "<group>"; };
+		9A309187228ADB70006A46F1 /* Murmur3.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = Murmur3.hpp; sourceTree = "<group>"; };
+		9A309189228ADE33006A46F1 /* BenchHash.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = BenchHash.cpp; sourceTree = "<group>"; };
+		9A30918A228ADE33006A46F1 /* BenchHash.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = BenchHash.hpp; sourceTree = "<group>"; };
+		9A30918C228BD8C8006A46F1 /* PairMultiplyShift.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PairMultiplyShift.cpp; sourceTree = "<group>"; };
+		9A30918E228BD8E1006A46F1 /* PairMultiplyShift.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PairMultiplyShift.hpp; sourceTree = "<group>"; };
 		9A38649A22531B2500579127 /* HashSort */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HashSort; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A38649D22531B2500579127 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9A3864A422531BC700579127 /* tester.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = tester.sh; sourceTree = "<group>"; };
@@ -68,10 +82,10 @@
 		9A3864B122531BC800579127 /* XorHashFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = XorHashFunc.cpp; sourceTree = "<group>"; };
 		9A3864B222531BC800579127 /* DataGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DataGenerator.cpp; sourceTree = "<group>"; };
 		9A3864B322531BC800579127 /* XorHashFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = XorHashFunction.hpp; sourceTree = "<group>"; };
-		9A3864B422531BC900579127 /* AdditiveHashFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = AdditiveHashFunction.hpp; sourceTree = "<group>"; };
-		9A3864B522531BC900579127 /* AdditiveHashFunction.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AdditiveHashFunction.cpp; sourceTree = "<group>"; };
 		9A3864B622531BC900579127 /* MatrixGenerator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MatrixGenerator.cpp; sourceTree = "<group>"; };
 		9A3864B722531BC900579127 /* InsertionSort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InsertionSort.cpp; sourceTree = "<group>"; };
+		9ADE0ECB2271B1C3008C04AA /* CriptoHashFunction.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = CriptoHashFunction.hpp; sourceTree = "<group>"; };
+		9ADE0ECC2271B429008C04AA /* CryptoHashFunc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CryptoHashFunc.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,8 +119,6 @@
 			isa = PBXGroup;
 			children = (
 				9A112CF2226F34E000041141 /* TestRun.hpp */,
-				9A3864B522531BC900579127 /* AdditiveHashFunction.cpp */,
-				9A3864B422531BC900579127 /* AdditiveHashFunction.hpp */,
 				9A3864B222531BC800579127 /* DataGenerator.cpp */,
 				9A3864A522531BC700579127 /* DataGenerator.hpp */,
 				9A3864AD22531BC800579127 /* HashFunction.hpp */,
@@ -116,12 +128,20 @@
 				9A3864A922531BC800579127 /* MatrixGenerator.hpp */,
 				9A3864A822531BC800579127 /* MergeSort.cpp */,
 				9A3864AA22531BC800579127 /* MergeSort.hpp */,
-				9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */,
 				9A3864AF22531BC800579127 /* PrimeHashFunction.hpp */,
+				9A3864AC22531BC800579127 /* PrimeHashFunc.cpp */,
+				9A30918E228BD8E1006A46F1 /* PairMultiplyShift.hpp */,
+				9A30918C228BD8C8006A46F1 /* PairMultiplyShift.cpp */,
+				9A112D15227166AC00041141 /* PolinomialHashFunction.hpp */,
+				9A112D16227166DF00041141 /* PolinomialHashFunction.cpp */,
 				9A3864B022531BC800579127 /* SortFunction.hpp */,
 				9A3864A422531BC700579127 /* tester.sh */,
 				9A3864B122531BC800579127 /* XorHashFunc.cpp */,
 				9A3864B322531BC800579127 /* XorHashFunction.hpp */,
+				9A309189228ADE33006A46F1 /* BenchHash.cpp */,
+				9A30918A228ADE33006A46F1 /* BenchHash.hpp */,
+				9ADE0ECB2271B1C3008C04AA /* CriptoHashFunction.hpp */,
+				9ADE0ECC2271B429008C04AA /* CryptoHashFunc.cpp */,
 				9A38649D22531B2500579127 /* main.cpp */,
 				9A112CEC226F2BF700041141 /* Configuration.hpp */,
 				9A112D03226F4AF200041141 /* HashingSortTest.cpp */,
@@ -138,6 +158,9 @@
 				9A112D11226F4F9400041141 /* SegmentedOptHashTest.hpp */,
 				9A112D0C226F4CBE00041141 /* HashTest.cpp */,
 				9A112D0B226F4CAE00041141 /* HashTest.hpp */,
+				9A30918122883E38006A46F1 /* MemoryUtil.cpp */,
+				9A309186228ADB70006A46F1 /* Murmur3.cpp */,
+				9A309187228ADB70006A46F1 /* Murmur3.hpp */,
 			);
 			path = HashSort;
 			sourceTree = "<group>";
@@ -198,6 +221,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A30918D228BD8C8006A46F1 /* PairMultiplyShift.cpp in Sources */,
 				9A3864B922531BC900579127 /* PrimeHashFunc.cpp in Sources */,
 				9A112D14226F4FD400041141 /* SegmentedOptHashTest.cpp in Sources */,
 				9A112D01226F47C300041141 /* SegmentedHashTest.cpp in Sources */,
@@ -205,11 +229,15 @@
 				9A112D0D226F4CBE00041141 /* HashTest.cpp in Sources */,
 				9A112D09226F4AF200041141 /* HashingSortTest.cpp in Sources */,
 				9A3864BB22531BC900579127 /* DataGenerator.cpp in Sources */,
-				9A3864BC22531BC900579127 /* AdditiveHashFunction.cpp in Sources */,
+				9A309188228ADB70006A46F1 /* Murmur3.cpp in Sources */,
 				9A3864B822531BC900579127 /* MergeSort.cpp in Sources */,
+				9A112D17227166DF00041141 /* PolinomialHashFunction.cpp in Sources */,
 				9A3864BE22531BC900579127 /* InsertionSort.cpp in Sources */,
+				9A30918B228ADE33006A46F1 /* BenchHash.cpp in Sources */,
 				9A112D08226F4AF200041141 /* SortingTest.cpp in Sources */,
+				9ADE0ECD2271B429008C04AA /* CryptoHashFunc.cpp in Sources */,
 				9A112D0A226F4AF200041141 /* OptSortingTest.cpp in Sources */,
+				9A30918222883E38006A46F1 /* MemoryUtil.cpp in Sources */,
 				9A38649E22531B2500579127 /* main.cpp in Sources */,
 				9A112CFE226F45AE00041141 /* SegmentedNaiveTest.cpp in Sources */,
 				9A3864BD22531BC900579127 /* MatrixGenerator.cpp in Sources */,

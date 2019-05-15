@@ -14,8 +14,8 @@
 
 using namespace std;
 
-//#define TOTAL_LIST_NUMBER 1036800
-#define TOTAL_LIST_NUMBER 4
+#define TOTAL_LIST_NUMBER 1036800
+//#define TOTAL_LIST_NUMBER 6
 
 struct Configuration
 {
@@ -26,22 +26,23 @@ struct Configuration
     double copiedElements;
     int blocksLength;
     int debug;
+    int memoryCheck;
     
     string toString()
     {
         string str;
         str += "Array_Length: ";
-        str += arrayLength;
+        str += to_string(arrayLength);
         str += " Distribution: ";
-        str += distribution;
+        str += to_string(distribution);
         str += " Uniq: ";
-        str += uniqueness;
+        str += to_string(uniqueness);
         str += " Order: ";
-        str += listOrder;
+        str += to_string(listOrder);
         str += " CopiedElements: ";
-        str += copiedElements;
+        str += to_string(copiedElements);
         str += " blocksLength: ";
-        str += blocksLength;
+        str += to_string(blocksLength);
         
         return str;
     }
