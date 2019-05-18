@@ -13,7 +13,7 @@
 #include "MergeSort.hpp"
 #include "MatrixGenerator.hpp"
 
-#include "PrimeHashFunction.hpp"
+#include "BenchHash.hpp"
 
 using namespace std;
 using hi_res_time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
@@ -28,7 +28,7 @@ string SegmentedNaiveTest::run(Configuration conf) {
     InsertionSort insertionSort;
     MergeSort mergeSort;
     MatrixGenerator dataGenerator;
-    PrimeHashFunction hashFunc1;
+    BenchHash hashFunc1;
     
     int** originalData = new int*[TOTAL_LIST_NUMBER];
     int** copiedData1 = new int*[TOTAL_LIST_NUMBER];
@@ -50,7 +50,6 @@ string SegmentedNaiveTest::run(Configuration conf) {
     auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalInsertion = totalInsertion + int_ms.count();
     
-    
     start = std::chrono::high_resolution_clock::now();
     runSortFunction(copiedData1, conf.arrayLength, mergeSort);
     finish = std::chrono::high_resolution_clock::now();
@@ -62,7 +61,6 @@ string SegmentedNaiveTest::run(Configuration conf) {
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalInsertionSeg = totalInsertionSeg + int_ms.count();
-    
     
     start = std::chrono::high_resolution_clock::now();
     runSegmentedHashSort(copiedData3, hashFunc1, conf.arrayLength, mergeSort, conf.blocksLength);
@@ -79,10 +77,7 @@ string SegmentedNaiveTest::run(Configuration conf) {
     cout << conf.toString() <<endl;
     cout << "********************************************"<< endl;
     
-    cout << "Insertion average time: " <<  to_string(totalInsertion) << endl;
-    cout << "Merge average time: " <<  to_string(totalMerge) << endl;
-    cout << "InsertionSegmeted average time: " <<  to_string(totalInsertionSeg) << endl;
-    cout << "MergeSegmented average time: " <<  to_string(totalMergeSeg) << endl;
+    cout << "InSort: " <<  to_string(totalInsertion) << "MerSort: " <<  to_string(totalMerge) << "InSeg: " <<  to_string(totalInsertionSeg)  << "InSeg: " <<  to_string(totalMergeSeg)  << endl;
     
     return "DONE";
 }

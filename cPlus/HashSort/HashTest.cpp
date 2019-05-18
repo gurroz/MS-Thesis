@@ -12,7 +12,6 @@
 
 #include "PrimeHashFunction.hpp"
 #include "BenchHash.hpp"
-#include "PolinomialHashFunction.hpp"
 #include "CriptoHashFunction.hpp"
 #include "PairMultiplyShift.hpp"
 #include "MemoryUtil.cpp"
@@ -42,14 +41,22 @@ string HashTest::run(Configuration conf) {
     PrimeHashFunction hashFunc1;
     BenchHash hashFunc2;
     CriptoHashFunction hashFunc3;
-//    PolinomialHashFunction hashFunc4;
     PairMultiplyShift hashFunc4;
 
     long totalMemoryUsed = MemoryUtil::getVirtualMemoryProcess();
     
     int** originalData = new int*[TOTAL_LIST_NUMBER];
+    int** hashData1 = new int*[TOTAL_LIST_NUMBER];
+    int** hashData2 = new int*[TOTAL_LIST_NUMBER];
+    int** hashData3 = new int*[TOTAL_LIST_NUMBER];
+
     dataGenerator.generateMatrix(originalData, conf.arrayLength, conf.uniqueness, conf.distribution, conf.listOrder, conf.copiedElements);
 
+    dataGenerator.copyMatrix(originalData, hashData1, conf.arrayLength);
+    dataGenerator.copyMatrix(originalData, hashData2, conf.arrayLength);
+    dataGenerator.copyMatrix(originalData, hashData3, conf.arrayLength);
+
+    
     if(conf.debug == 1) {
         printArray(1, originalData, conf.arrayLength);
     }
@@ -67,7 +74,7 @@ string HashTest::run(Configuration conf) {
     colissionhashFunc1 = checkColitions(originalData, hashFunc1, conf.arrayLength);
     
     start = std::chrono::high_resolution_clock::now();
-    runHash("hashFunc2",originalData, hashFunc2, conf.arrayLength);
+    runHash("hashFunc2",hashData1, hashFunc2, conf.arrayLength);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalhashFunc2 = int_ms.count();
@@ -79,7 +86,7 @@ string HashTest::run(Configuration conf) {
     colissionhashFunc2 = checkColitions(originalData, hashFunc2, conf.arrayLength);
     
     start = std::chrono::high_resolution_clock::now();
-    runHash("hashFunc3",originalData, hashFunc3, conf.arrayLength);
+    runHash("hashFunc3",hashData2, hashFunc3, conf.arrayLength);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalhashFunc3 = int_ms.count();
@@ -87,10 +94,10 @@ string HashTest::run(Configuration conf) {
     if(conf.memoryCheck == 1) {
         memoryhashFunc3 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc2;
     }
-    colissionhashFunc3 = checkColitions(originalData, hashFunc3, conf.arrayLength);
+    colissionhashFunc3 = checkColitions(hashData2, hashFunc3, conf.arrayLength);
     
     start = std::chrono::high_resolution_clock::now();
-    runHash("hashFunc4",originalData, hashFunc4, conf.arrayLength);
+    runHash("hashFunc4",hashData3, hashFunc4, conf.arrayLength);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalhashFunc4 = int_ms.count();
@@ -98,7 +105,7 @@ string HashTest::run(Configuration conf) {
     if(conf.memoryCheck == 1) {
         memoryhashFunc4 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc3;
     }
-    colissionhashFunc4 = checkColitions(originalData, hashFunc4, conf.arrayLength);
+    colissionhashFunc4 = checkColitions(hashData3, hashFunc4, conf.arrayLength);
     
     cout << "********************************************"<< endl;
     cout << conf.toString() <<endl;

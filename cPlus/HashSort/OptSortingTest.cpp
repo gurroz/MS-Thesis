@@ -80,9 +80,9 @@ void OptSortingTest::runSortFunction(int** data, int arrayLength, SortFunction& 
     unordered_map<string, int> signaturesMap;
     
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
-        int index = sortFunction.optimizedSort(data[j], arrayLength, signaturesMap, j);
-        if(index > 0) {
-            cout << "Found Sorted before:"<< index << endl;
-        }
+        sortFunction.optimizedSort(data[j], arrayLength, signaturesMap, j);
+//        if(index > 0) {
+//            cout << "Found Sorted before:"<< index << endl;
+//        }
     }
 }

@@ -6,14 +6,16 @@
 //  Copyright © 2019 Gonzalo Urroz. All rights reserved.
 //
 
-#include "HashingSortTest.hpp"
 #include <string>
+#include "HashingSortTest.hpp"
 
 #include "InsertionSort.hpp"
 #include "MergeSort.hpp"
 #include "MatrixGenerator.hpp"
 
-#include "PrimeHashFunction.hpp"
+//#include "PrimeHashFunction.hpp"
+
+#include "BenchHash.hpp"
 #include "MemoryUtil.cpp"
 
 using namespace std;
@@ -27,9 +29,9 @@ string HashingSortTest::run(Configuration conf) {
     long memoryInsert = 0;
     long memoryMerge = 0;
     
-    PrimeHashFunction hashFunc;
-//    XorHashFunction hashFunc3;
-    
+    BenchHash hashFunc;
+//    PrimeHashFunction hashFunc;
+
     InsertionSort insertionSort;
     MergeSort mergeSort;
     MatrixGenerator dataGenerator;
@@ -52,7 +54,7 @@ string HashingSortTest::run(Configuration conf) {
     
     // ONLY HASHING
     hi_res_time_point start = std::chrono::high_resolution_clock::now();
-    runHashMap(hashData1, hashFunc, conf.arrayLength);
+    runHashMap(originalData, hashFunc, conf.arrayLength);
     hi_res_time_point finish = std::chrono::high_resolution_clock::now();
     auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalHash = int_ms.count();
@@ -88,8 +90,8 @@ string HashingSortTest::run(Configuration conf) {
     cout << conf.toString() <<endl;
     cout << "********************************************"<< endl;
     
-    cout << "Hash: " << to_string(totalHash) << "Insertion: " <<  to_string(totalHashInsertSort) << "Merge: " <<  to_string(totalHashMergeSort) << endl;
-    cout << "MemoryInsertion: " << to_string(memoryInsert) << "MemoryMerge: " <<  to_string(memoryMerge) << endl;
+    cout << "Hash: " << to_string(totalHash) << " Insertion: " <<  to_string(totalHashInsertSort) << " Merge: " <<  to_string(totalHashMergeSort) << endl;
+    cout << "MemoryInsertion: " << to_string(memoryInsert) << " MemoryMerge: " <<  to_string(memoryMerge) << endl;
 
     
     return "DONE";
@@ -97,7 +99,8 @@ string HashingSortTest::run(Configuration conf) {
 
 int HashingSortTest::runHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, string name) {
     unordered_map<string, int> signaturesMap;
-    
+    signaturesMap.reserve(TOTAL_LIST_NUMBER);
+
     int deadCodeReturn = 0;
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
         string signature = hashFunc.hash(data[j], arrayLength);
@@ -113,12 +116,15 @@ int HashingSortTest::runHashSort(int** data, HashFunction& hashFunc, int arrayLe
 
 int HashingSortTest::runHashMap(int** data, HashFunction& hashFunc, int arrayLength) {
     unordered_map<string, int> signaturesMap;
-    
+    signaturesMap.reserve(TOTAL_LIST_NUMBER);
+
     int deadCodeReturn = 0;
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
         string signature = hashFunc.hash(data[j], arrayLength);
-        
+//        cout << "runHashMap Signature: " << signature << endl;
+
         if(signaturesMap.find(signature) == signaturesMap.end()) {
+//            cout << "Not FOUND: " << endl;
             signaturesMap.insert(make_pair(signature, 1));
             deadCodeReturn++;
         }

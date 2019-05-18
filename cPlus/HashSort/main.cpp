@@ -7,24 +7,32 @@
 #include "Configuration.hpp"
 #include "SortingTest.hpp"
 #include "HashingSortTest.hpp"
+#include "OptSortingTest.hpp"
 #include "SegmentedNaiveTest.hpp"
 #include "SegmentedHashTest.hpp"
 #include "SegmentedOptHashTest.hpp"
 #include "HashTest.hpp"
+#include "HashTableTest.hpp"
+
 #include "MemoryUtil.cpp"
 
 using namespace std;
 
 int main (int argc,char* argv[]) {
-	if(argc < 9) {
-        printf("\nNeed to pass array length, distribution, uniqueness, list order, amount of copied elements as paramete, blocks to read, test to execute and debug");
+	if(argc < 10) {
+        printf("\nNeed to pass array length, distribution, uniqueness, list order, amount of copied elements as paramete, blocks to read, test to execute, debug and memory check");
         return 0;
 	}
     
     srand (3141618);
 
-    Configuration configuration = {atoi(argv[1]), atoi(argv[2]), strtod(argv[3],NULL), atoi(argv[4]), strtod(argv[5],NULL), atoi(argv[6]), atoi(argv[8])};
+    Configuration configuration = {atoi(argv[1]), atoi(argv[2]), strtod(argv[3],NULL), atoi(argv[4]), strtod(argv[5],NULL), atoi(argv[6])
+        , atoi(argv[8]), atoi(argv[9])};
 
+    if(atoi(argv[8])) { // Debug
+        cout << "Length: " <<  atoi(argv[1]) << " Dist: " << atoi(argv[2]) << " UNIQ: " << strtod(argv[3],NULL) << " ORDER: " << atoi(argv[4]) <<  " COPIES: " << strtod(argv[5],NULL) << " BLOCKS: " << atoi(argv[6]) << " TEST: " << atoi(argv[7]) << " DEBUG: " << atoi(argv[8]) << " MEMORY: " <<  atoi(argv[9]) << endl;
+    }
+    
     int testType = atoi(argv[7]);
     switch (testType) {
         case 0: {
@@ -63,11 +71,23 @@ int main (int argc,char* argv[]) {
             segmentedOptHashTest.run(configuration);
             break;
         }
+        case 6: {
+            printf("Running HashTableTest\n");
+            HashTableTest hasTableTest;
+            hasTableTest.run(configuration);
+            break;
+        }
+        case 7: {
+            printf("Running OptSortingTest\n");
+            OptSortingTest optSortingTest;
+            optSortingTest.run(configuration);
+            break;
+        }
         default:
             printf("Running default: %d", testType);
             break;
     }
     
-    printf("Exiting");
+    printf("Exiting\n\n");
 	return 0;
 }

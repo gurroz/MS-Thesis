@@ -59,7 +59,9 @@ public:
 //        cout << "Getting the memory" << endl;
         long totalMemory = 0;
         if(getMemoryStats(&memoryStat)) {
-            totalMemory =  memoryStat.phys.app / 1000;
+//            totalMemory =  memoryStat.phys.app / 1000;
+            totalMemory =  memoryStat.phys.app;
+
         };
         return totalMemory;
     }
