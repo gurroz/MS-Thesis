@@ -1,0 +1,142 @@
+\newcommand{\etalchar}[1]{$^{#1}$}
+\begin{thebibliography}{HLWF17}
+
+\bibitem[ABH03]{acar2003selective}
+Umut~A Acar, Guy~E Blelloch, and Robert Harper.
+\newblock {\em Selective memoization}, volume~38.
+\newblock ACM, 2003.
+
+\bibitem[App]{MurMur3}
+Austin Appleby.
+\newblock {MurMur3} murmur3.
+\newblock
+  \url{https://github.com/aappleby/smhasher/blob/master/src/MurmurHash3.cpp}.
+\newblock Accessed: 2019-05-01.
+
+\bibitem[Arc15]{Arch2015}
+Jesse Archer.
+\newblock Sorting many similar small lists for faster order independent
+  transparency.
+\newblock 2015.
+
+\bibitem[Bat68]{batcher1968sorting}
+Kenneth~E Batcher.
+\newblock Sorting networks and their applications.
+\newblock In {\em Proceedings of the April 30--May 2, 1968, spring joint
+  computer conference}, pages 307--314. ACM, 1968.
+
+\bibitem[BFCM06]{bender2006insertion}
+Michael~A Bender, Martin Farach-Colton, and Miguel~A Mosteiro.
+\newblock Insertion sort is o (n log n).
+\newblock {\em Theory of Computing Systems}, 39(3):391--397, 2006.
+
+\bibitem[CNL{\etalchar{+}}08]{chhugani2008efficient}
+Jatin Chhugani, Anthony~D Nguyen, Victor~W Lee, William Macy, Mostafa Hagog,
+  Yen-Kuang Chen, Akram Baransi, Sanjeev Kumar, and Pradeep Dubey.
+\newblock Efficient implementation of sorting on multi-core simd cpu
+  architecture.
+\newblock {\em Proceedings of the VLDB Endowment}, 1(2):1313--1324, 2008.
+
+\bibitem[CW79]{carter1979universal}
+J~Lawrence Carter and Mark~N Wegman.
+\newblock Universal classes of hash functions.
+\newblock {\em Journal of computer and system sciences}, 18(2):143--154, 1979.
+
+\bibitem[Gra]{SortBenchmark}
+Jim Gray.
+\newblock {SortBenchmark} sortbenchmark.org.
+\newblock \url{http://sortbenchmark.org}.
+\newblock Accessed: 2019-04-15.
+
+\bibitem[HL88]{Huang:1988:PIM:42392.42403}
+Bing-Chao Huang and Michael~A. Langston.
+\newblock Practical in-place merging.
+\newblock {\em Commun. ACM}, 31(3):348--352, March 1988.
+
+\bibitem[HLWF17]{hou2017fast}
+Kaixi Hou, Weifeng Liu, Hao Wang, and Wu-chun Feng.
+\newblock Fast segmented sort on gpus.
+\newblock In {\em Proceedings of the International Conference on
+  Supercomputing}, page~12. ACM, 2017.
+
+\bibitem[HM97]{hall1997improving}
+Marty Hall and J~Paul McNamee.
+\newblock Improving software performance with automatic memoization.
+\newblock {\em Johns Hopkins APL Technical Digest}, 18(2):255, 1997.
+
+\bibitem[HT02]{han2002integer}
+Yijie Han and Mikkel Thorup.
+\newblock Integer sorting in o (n/spl radic/(log log n)) expected time and
+  linear space.
+\newblock In {\em The 43rd Annual IEEE Symposium on Foundations of Computer
+  Science, 2002. Proceedings.}, pages 135--144. IEEE, 2002.
+
+\bibitem[Knu97a]{knuth1997artInsert}
+Donald~Ervin Knuth.
+\newblock {\em The art of computer programming: sorting and searching. 5.2.1:
+  Sorting by Insertion}, volume~3.
+\newblock Pearson Education, 1997.
+
+\bibitem[Knu97b]{knuth1997artMerge}
+Donald~Ervin Knuth.
+\newblock {\em The art of computer programming: sorting and searching. 5.2.4:
+  Sorting by Merging}, volume~3.
+\newblock Pearson Education, 1997.
+
+\bibitem[Knu97c]{knuth1997artShell}
+Donald~Ervin Knuth.
+\newblock {\em The art of computer programming: sorting and searching. Shell's
+  method}, volume~3.
+\newblock Pearson Education, 1997.
+
+\bibitem[LL99]{lamarca1999influence}
+Anthony LaMarca and Richard~E Ladner.
+\newblock The influence of caches on the performance of sorting.
+\newblock {\em Journal of Algorithms}, 31(1):66--104, 1999.
+
+\bibitem[Mus97]{musser1997introspective}
+David~R Musser.
+\newblock Introspective sorting and selection algorithms.
+\newblock {\em Software: Practice and Experience}, 27(8):983--993, 1997.
+
+\bibitem[Pet]{Timsort}
+Tim Peters.
+\newblock {Timsort} python-dev sorting.
+\newblock
+  \url{https://mail.python.org/pipermail/python-dev/2002-July/026837.html}.
+\newblock Accessed: 2019-04-15.
+
+\bibitem[Riv92]{rivest1992md5}
+Ronald Rivest.
+\newblock The md5 message-digest algorithm.
+\newblock Technical report, 1992.
+
+\bibitem[SHG09]{satish2009designing}
+Nadathur Satish, Mark Harris, and Michael Garland.
+\newblock Designing efficient sorting algorithms for manycore gpus.
+\newblock In {\em 2009 IEEE International Symposium on Parallel \& Distributed
+  Processing}, pages 1--10. IEEE, 2009.
+
+\bibitem[Spr77]{sprugnoli1977perfect}
+Renzo Sprugnoli.
+\newblock Perfect hashing functions: a single probe retrieving method for
+  static sets.
+\newblock {\em Communications of the ACM}, 20(11):841--850, 1977.
+
+\bibitem[Tho19]{thorup2015high}
+Mikkel Thorup.
+\newblock High speed hashing for integers and strings.
+\newblock {\em arXiv preprint arXiv:1504.06804v6}, 2019.
+
+\bibitem[WY05]{wang2005break}
+Xiaoyun Wang and Hongbo Yu.
+\newblock How to break md5 and other hash functions.
+\newblock In {\em Annual international conference on the theory and
+  applications of cryptographic techniques}, pages 19--35. Springer, 2005.
+
+\bibitem[XZK00]{xiao2000improving}
+Li~Xiao, Xiaodong Zhang, and Stefan~A Kubricht.
+\newblock Improving memory performance of sorting algorithms.
+\newblock {\em Journal of Experimental Algorithmics (JEA)}, 5:3, 2000.
+
+\end{thebibliography}

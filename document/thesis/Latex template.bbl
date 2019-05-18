@@ -1,0 +1,13 @@
+\begin{thebibliography}{JB03}
+
+\bibitem[JB03]{key1}
+A.~B. Foo{,}~Smith John and C.D. Bar.
+\newblock Title of paper.
+\newblock {\em The Journal of XXX}, 1(2):143--186, 2003.
+
+\bibitem[za10]{key2}
+zahir and author2.
+\newblock papertitle.
+\newblock In {\em Proceedings of confname}, pages 1643--1644, 2010.
+
+\end{thebibliography}
