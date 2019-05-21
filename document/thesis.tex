@@ -66,7 +66,7 @@ This work addresses the following research questions:
 
 \begin{itemize}
 \item {\bf RQ1:} What are the benefits of utilising memoization techniques to improve repeated list sorting? When does it happen?
-\item {\bf RQ2:} What are the benefit of utilising memoization techniques to improve list sorting when there is repeated blocks within similar lists? When does it happen?
+\item {\bf RQ2:} What are the benefit of utilising memoization techniques to improve list sorting when there is repeated blocks of elements within different similar lists? When does it happen?
 \item {\bf RQ3:} Which hash function fits better to produce a signature over a list of integers?
 \item {\bf RQ4:} What are some posibles enhancement techniques that can be applied to improve memoization in sorting?
 \end{itemize}
@@ -149,6 +149,8 @@ Finally, each array's data is generated accordingly to the scenario that it is b
 For RQ1 different scenarios will be tested on each array length size. Each scenario is as follow:
 \\
 
+\begin{figure}[H]
+\centering
 \begin{tabular}{|l|l|} \toprule
 	{$Repetition $} & {$Description$}  \\ \midrule
 	100\% & Only one original list \\
@@ -157,10 +159,13 @@ For RQ1 different scenarios will be tested on each array length size. Each scena
 	25\% & 750,000 originals list \\
 	0\% & All lists are different \\ \midrule
 \end{tabular}
+\caption{RQ1 test bed}
+\end{figure}
 
 For RQ2 the different scenarios are the following:
 \\
-
+\begin{figure}[H]
+\centering
 \begin{tabular}{|l|l|} \toprule
 	{$Repetition $} & {$Description$}  \\ \midrule
 	100\% & Only one  original block, repeated for the rest of the data \\
@@ -169,6 +174,8 @@ For RQ2 the different scenarios are the following:
 	25\% & 750,000 originals list \\
 	0\% & All blocks are different \\ \midrule
 \end{tabular}
+\caption{RQ2 test bed}
+\end{figure}
 
 For each of this scenarios, different length of blocks will be tested, still to be defined but given the preliminary results, choosing small length blocks will produce an overhead in memory and in operations and choosing a higher block will convert it into a RQ1 scenario. \\
 
@@ -193,6 +200,7 @@ As reviewed by \cite{thorup2015high}, one of the fastest technique to construct 
 Where {\it d}  is the length of the set and it is assumed to be even. The set {\it a} is a set of uniformly random distributed integers in the  range $[0,2^w]$ where w is the amount of bits of the keys,{\it b}  is just a constant in the range $[0,2^w]$. The seed {\it l}  is the bits of the hash value. {\it W}  is at least the sum of w + l -1 or higher. \\
 Then the hash function proposed is named {\bf PairMultiplyShift}, and has the following pseudo-code:
 
+\begin{figure}[H]
 \begin{verbatim}
 int hash(int[] data, int l, int[] a, int b, int w, int d) {
     hash = 0;
@@ -203,6 +211,8 @@ int hash(int[] data, int l, int[] a, int b, int w, int d) {
     return hash;
 }
 \end{verbatim}
+\caption{Proposed PairMultiplyShift hash function}
+\end{figure}
 
 For our case, the keys used are 32 bit integers (4 bytes) and the algorithm involves multiplication then we need to handle 64 bits results, so in order to maintain a low probability of collisions and taking advantage that the 64 bit multiplication automatically discards overflow,  the hash value is defined as 64 bits (8 bytes)
 \\
@@ -218,6 +228,7 @@ The following hash function are compared:
 \item {\bf PrimeAdd:} The naive approach of just adding the value of each element and multiplying by a prime number. The objective is to do simple operations, multiplication and addition, and exploiting the know properties of prime numbers of producing number with less common factors. \\ 
 The proposed algorithm is:
 
+\begin{figure}[H]
 \begin{verbatim}
 int hash(int list[], int length) {
  long hashVal = 17;
@@ -228,6 +239,8 @@ int hash(int list[], int length) {
     return to_string(hashVal);
 }
 \end{verbatim}
+\caption{Proposed PrimeAdd hash function}
+\end{figure}
  
 
 \item {\bf MurMur3:} A non-cryptographic hash function suitable for general hash-based lookup. Implemented based on the source code available online \cite{MurMur3}. This hash function works by rotating, shifting and Xoring chunks of bytes. It provides 3 methods, 1 for hash values of 32 bits and 2 for 128 bits (for x86 and 64 bits architectures). The one used is MurmurHash3\_x64\_128, but 64 of the 128 bits are discarded to maintain the same value to compare to other functions.
@@ -262,58 +275,47 @@ void InsertionSort::sort(int list[], int length) {
 \end{figure}
 
 
-The case for Mergesort is more interesting, because the natural approach is to have depth first  recursive calls. The way that was implemented in this study is by bottom up approach, which is an iterative double loop that operates in place and merges the arrays in pair, doubling the range of each tuple in each loop. The advantages for this choice of implementation is to avoid the recursive function call overhead and the ability to access in place to all elements, which gives the opportunity for further modifications when considering memoization over the algorithm.
+The case for Mergesort is more interesting, because the natural approach is to have depth first  recursive calls. The way that was implemented in this study is by bottom up approach, which is an iterative double loop that operates in place and merges the arrays in pair, doubling the range of each tuple in each loop. A slight improvement is made by using a temporary array to merge the sublists outside the merge step, saving some copy operations. The advantages for this choice of implementation is to avoid the recursive function call overhead and the ability to access in place to all elements, which gives the opportunity for further modifications when considering memoization over the algorithm.
 
 \begin{figure}[H]
 \begin{small}
 \begin{verbatim}
-void MergeSort::mergeSort(int list[], int length) {
+void MergeSort::mergeSort(int list[], int tmp[], int length) {
    for(int mergingArraySize = 1; mergingArraySize < length;
-    		mergingArraySize = (2 * mergingArraySize)) { 
+   			 mergingArraySize = (2 * mergingArraySize)) { 
 
-       for(int startIndex = 0; startIndex < length-1; 
-       		startIndex += (2 * mergingArraySize)) { 
-           int half = startIndex + mergingArraySize - 1; 
-           int endIndex = min((startIndex + (2 * mergingArraySize) - 1), length-1);
+       for(int startIndex = 0; startIndex < length; 
+       				   startIndex += (2 * mergingArraySize)) {
+           int left = startIndex;
+           int middle = startIndex + mergingArraySize;
+           int right = startIndex + (2 * mergingArraySize);
 
-           merge(list, startIndex, half, endIndex); 
-       } 
-   } 
+           merge(list, tmp, left, middle, right);
+       }
+       
+       for(int i = 0; i < length; i++) {
+           list[i] = tmp[i];
+       }
+   }
 }
 
-void MergeSort::merge(int list[], int startIndex, int half, int endIndex) {
-  int leftListLength = half - startIndex + 1; 
-  int rightListLength = endIndex - half; 
+void MergeSort::merge(int list[], int tmp[], int iLeft, int iMiddle, int iRight) {
+  int i = iLeft;
+  int j = iMiddle;
+  int globalIndex = iLeft;
 
-  for(int i = 0; i < leftListLength; i++) {
-    leftList[i] = list[startIndex + i]; 
+  while (i < iMiddle || j < iRight) {
+      if ( i < iMiddle && j < iRight ) {
+          if ( list[i] < list[j] )
+              tmp[globalIndex++] = list[i++];
+          else
+              tmp[globalIndex++] = list[j++];
+      }
+      else if ( i == iMiddle )
+          tmp[globalIndex++] = list[j++];
+      else if ( j == iRight )
+          tmp[globalIndex++] = list[i++];
   }
-
-  for(int i = 0; i < rightListLength; i++)  {
-    rightList[i] = list[half + 1 + i]; 
-  }
-
-  int i = 0;
-  int j = 0;
-  int globalIndex = startIndex; 
-
-  while (i < leftListLength && j < rightListLength) { 
-      if (leftList[i] <= rightList[j]) { 
-          list[globalIndex] = leftList[i]; 
-          i++; 
-      }  else { 
-          list[globalIndex] = rightList[j]; 
-          j++; 
-      } 
-      
-      globalIndex++; 
-  } 
-  
-  while (i < leftListLength) { 
-      list[globalIndex] = leftList[i]; 
-      i++; 
-      globalIndex++; 
-  } 
 }
 \end{verbatim}
 \end{small}
@@ -324,6 +326,7 @@ void MergeSort::merge(int list[], int startIndex, int half, int endIndex) {
 As stated before, the selected underlying hash table used to store the signature is the one offered as part as the containers library in c++ named unordered\_map, which is a structure that holds the pair (key, value) and it has O(1) in the average case for the search, insert and delete operation.
 
 This hash table expands automatically because it keeps count of the amount of items holding and grows it size and rehash all elements when it reaches the load factor, which is the ratio between the number of elements and the size of the hash table. 
+
 \begin{figure}[H]
 \centering
 \subcaptionbox{Insertion}{\includegraphics[height=4.5cm,keepaspectratio]{./images/insertHashTable.png}}%
@@ -335,7 +338,9 @@ This hash table expands automatically because it keeps count of the amount of it
 
 Empirically the operations of insertion and look up values can be viewed in Figure \ref{fig:hashTableFig}, where 1024 random integers were inserted and immediately searched. The insertion operation have spikes that are bigger as the hash table is filled, which is explained by the resizing process explained before. 
 
-It can be viewed that both insertion and search operation generally maintains a constant time.
+It can be viewed that both insertion and search operation generally maintains a constant time. \\
+
+In order to avoid this costly re size it is a good practice to  reserve or set up front the expected size of the hash table. 
 
 \subsection{MemoSort for repeating lists}
 To be able to take advantage of the possible repeating nature of the problem being studied we use the described hash table and hash function to implement a memoization technique. We propose \textbf{MemoSort} which is the algorithm being studied to establish its real benefits, and its defined by the following pseudo algorithm: 
@@ -392,11 +397,15 @@ From this, the following cases can be defined:
 
 The same analysis can be made for the case of Mergesort where sorting is for worst case is O(n logn). \\
 
-\subsection{MemoSort optimised for repeating lists}
-The intuition to this approach comes from the fact that when sorting there is the need to visit each element at least once, as in the current approach of calculating the signature, so merging both process may result in a faster approach.
+\subsection{Optimised MemoSort for repeating lists} \label{OptMemoSort}
+The intuition to this approach comes from the fact that when sorting there is the need to visit each element at least once, as is the same in the current approach of calculating the signature, so merging both process may result in a faster algorithm.
 For each case the hash table holding the current calculated signatures need to be passed as a reference to the sorting method and queried as soon as the signature is calculated. If the signature is not present, the signature is stored in the hash table with the reference to the ordered list. \\
 
-In Insertion sort, only after half of the array is processed the signature can be calculated, so it saves at least half of the operations. Different is the case of Mergesort where after the first pass of the merge step all elements have been visited and the signature can be calculated, thus saving al the subsequent merging steps.
+To be able to calculate the signature, the hash function needs to be able to construct the hash value in an incremental way. For this reason is why nor {\it Murmur3} or {\it PairMultShift}  are suitable because they do not operate with only one element at a time, so the chosen hash function is {\it PrimeAdd} which behaves in a similar way to the named hash functions.
+
+The modifications made to Insertionsort are minimal, given that calculating the signature is possible only when the last element is read, which happens at the end of the algorithm.
+
+Different is the case of Mergesort where after the first pass of the merge step all elements have been visited and the signature can be calculated, thus saving all the subsequent merging steps.
 
 \subsection{MemoBlockSort for similar lists}
 * Define pseudo algorithm
@@ -417,6 +426,7 @@ In Insertion sort, only after half of the array is processed the signature can b
 * Define pseudo algorithm
 
 \section{Results}
+
 \subsection{Benchmarking}
 
 The first activity that was developed was to design and build a software framework that could guarantee correct and trustworthy calculation of the execution of certain algorithms. The first approach was to develop the software in Java language version 8, but it proved to be a not so reliable language for benchmarking given that the Java Virtual Machine environment on which the program runs, uses JIT  compilation and handles memory through a garbage collector in a unpredictable way, thus when running the experiments the results vary in a big percentage. The first measure to mitigate this was to run each test ten times and calculate an average on the result. Also, to prevent the compilation of code throughout the test, the code had to be {\it warmed up} by executing it a number of times so it would be forcefully compiled. 
@@ -432,7 +442,7 @@ Even after taking this safeguarding, the tests took a long time to run, and stil
     \label{fig:InsrtVsMerge}
 \end{figure}
 
-The first experiment executed was to compare algorithms Insertionsort and Mergesort given the synthetic data set created, which comprehends all three scenarios (worst, best and average) using the same parameters for each one. As the literature confirms, Insertionsort has a better performance on smaller length list. By using the parameter $-o2$ to compile the code, better results are obtained and Insertionsort sorts in less time until length of 512 elements. After this length of list, Mergesort has a better performance.
+The first experiment executed was to compare algorithms Insertionsort and Mergesort given the synthetic data set created, which comprehends all three scenarios (worst, best and average) using the same parameters for each one. As the literature confirms, Insertionsort has a better performance on smaller length list. By using the parameter $-o2$ to compile the code, better results are obtained and Insertionsort sorts in less time until length of 256 elements. After this length of list, Mergesort has a better performance.
 
 The time taken to sort the lists in milliseconds is displayed in Figure \ref{fig:InsrtVsMerge}. Only the average case (random order) for both algorithms are displayed and they exhibit the expected behaviour, this is  O(${n}^2$) for sorted array in Insertionsort and O(n logn) time complexity for Mergesort. This is explained because Insertionsort performs less operations and most importantly has less read and write operations over the array. In contrast, merge sorts reads and writes through the data for each merge, making it more expensive to sort when the overhead of this operations takes almost all the time of the sorting, which happens when the amount of elements is small.
 
@@ -455,17 +465,26 @@ It must be stated that all of the functions presented 0 collisions for each of t
 
 TODO: Compare memory.
 
+\subsection{Memoization costs}
+
+In order to better compare what is the performance of the memoization techniques, a base cost must be stablished in the use of a hash table, by determining the time spent inserting and searching from it. An experiment was conducted to determine how much time did it take in the operation of inserting the expected amount of signatures, and how much time did it take to search for each all signatures in a fully loaded hash table. \\
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|}  \toprule
+	{$Operation$} & {$0.25M$} & {$0.5M$} & {$0.75M$} & {$1M$} \\ \midrule
+	Look up & 61 ms & 127 ms& 199 ms & 270 ms\\ 
+	Insertion & 90 ms & 173 ms& 269 ms& 363 ms\\ \bottomrule
+\end{tabular}
+\caption{Hash table operation time}
+\label{ref:MemCostTable}
+\end{figure}
+
+The readings shown in Figure \ref{ref:MemCostTable} are the sum of the time taken by each operation while constructing the hash table. Both operations increased in time with the amount of elements stored in the hash, inserting being around 20\% - 30\% more expensive than reading from the hash table. Has to be noted that in MemoSort algorithm both operation do not execute the same amount of times, except in the case where there is no repetition, because look up is executed for the total amount of lists and insertion only happens when the signature is not present, which depend on the repetition of lists.
 
 \subsection{MemoSort for repeating lists}
 
-In order to better compare what is the performance of the memoization techniques, a base cost must be stablished in the use of a hash table, by determining the time spent inserting and searching from it. An experiment was conducted to determine how much time did it take in the operation of inserting all possible signatures, and how much time did it take to search for one after the hash table was full:
-
-\begin{itemize}
-\item Inserting all signature: 823 milliseconds
-\item Searching for one signature in full table: 257 nanoseconds
-\end{itemize}
-
-The following result represent the test over uniformly distributed random data after applying the memoization technique using a hash table, and using the selected hash function to generate the signature of each of the unique list. \\
+The following result represent the test over uniformly distributed random data after applying the memoization technique using a hash table, and using the proposed hash function {\it PairMultShift}  to generate the signature of each of the unique list. \\
 
 \begin{figure}[H]
 \centering
@@ -485,11 +504,15 @@ The following result represent the test over uniformly distributed random data a
 
 
 The results displayed in Figure \ref{fig:MemPerfRepeat} shows the performance comparison in a ratio to the case of brute force sorting all list for each algorithm with uniform random data, where it can be seen that there is a severe penalty for using this approach in small length lists for Insertionsort. There starts to be an improved performance after lists with length of 128, mainly because the sorting performance below this length surpass the overhead of calculating and looking up the signature of the list. \\
-As it is expected, when there is no repetition, there is only overhead in applying this approach. The trend tends to be that the bigger the list length, the more gain there is. Can be concluded the that in a general case, there is a gain when there is 50\% or more list repetition.
+As it is expected, when there is no repetition, there is only overhead in applying this approach. The trend tends to be that the bigger the list length, the more gain there is. Can be concluded that in a general case, there is a gain when there is 50\% or more list repetition.
 
 The same behaviour is shown for Mergesort, but the gain is not given much by the length of the array, as only for the amount of repeated lists given that the increase or decrease is not so drastic as with Insertionsort.
 
-\subsection{MemoSort Optimisation for repeating lists}
+\subsection{Optimised MemoSort for repeating lists}
+
+As discussed in section \ref{OptMemoSort} and viewed in Figure \ref{OptMemoSortIns}, there is no improvement from just running only Insertionsort nor using MemoSort on the different scenarios. This is because this algorithm doesn't apply the full potential of memoization as it only looks for previous sorted lists only at the end of the process of sorting each list, adding the overhead of the memoization technique to the time required to sort the rest of the list. \\
+
+For Mergesort the case is different, as can be viewed in Figure \ref{OptMemoSortMerge}, there is improvement compared to just brute force sort all the list as well as just applying MemoSort. Interestingly, it does not improve as much as MemoSort when there is only repetition, but as repetition decrease this approach behaves the same and better (as can be viewed in Figure \ref{OptMemoSortMergeTable}). This can be explained by the fact that when the signature is calculated, already the first merge pass has been through and it does not has to go through the whole list twice as in MemoSort approach, so this little difference accumulates and is only visible when there is less repeated list.
 
 \subsection{MemoBlockSort in similar lists}
 

@@ -1,0 +1,33 @@
+\contentsline {section}{\numberline {1}Introduction}{3}
+\contentsline {section}{\numberline {2}Background}{5}
+\contentsline {subsection}{\numberline {2.1}Sorting Lists}{5}
+\contentsline {subsection}{\numberline {2.2}External Sort}{6}
+\contentsline {subsection}{\numberline {2.3}Segmented sort in GPU}{6}
+\contentsline {subsection}{\numberline {2.4}Memory Heriarchy}{6}
+\contentsline {subsection}{\numberline {2.5}Memoization and Hashing}{7}
+\contentsline {subsection}{\numberline {2.6}Compiling vs Interpreting code}{8}
+\contentsline {section}{\numberline {3}Design and Development}{9}
+\contentsline {subsection}{\numberline {3.1}Synthetic Data}{9}
+\contentsline {subsection}{\numberline {3.2}Test Cases}{10}
+\contentsline {subsection}{\numberline {3.3}Hash Function}{10}
+\contentsline {subsection}{\numberline {3.4}Implementation of Insertionsort and Mergesort}{12}
+\contentsline {subsection}{\numberline {3.5}Hash table: Unordered map}{14}
+\contentsline {subsection}{\numberline {3.6}MemoSort for repeating lists}{15}
+\contentsline {subsection}{\numberline {3.7}Optimised MemoSort for repeating lists}{17}
+\contentsline {subsection}{\numberline {3.8}MemoBlockSort for similar lists}{17}
+\contentsline {subsection}{\numberline {3.9}MemoBlockSort optimising by K-merging}{17}
+\contentsline {subsection}{\numberline {3.10}MemoBlockSort optimising by 2-merging}{17}
+\contentsline {subsection}{\numberline {3.11}MemoBlockSort optimising by 4-merging}{17}
+\contentsline {subsection}{\numberline {3.12}Optimising by use of memory for similar lists}{17}
+\contentsline {subsection}{\numberline {3.13}MemoBlockSort optimising for ordered blocks}{18}
+\contentsline {section}{\numberline {4}Results}{18}
+\contentsline {subsection}{\numberline {4.1}Benchmarking}{18}
+\contentsline {subsection}{\numberline {4.2}Mergesort vs Insertionsort}{19}
+\contentsline {subsection}{\numberline {4.3}Hash functions}{20}
+\contentsline {subsection}{\numberline {4.4}Memoization costs}{20}
+\contentsline {subsection}{\numberline {4.5}MemoSort for repeating lists}{21}
+\contentsline {subsection}{\numberline {4.6}Optimised MemoSort for repeating lists}{23}
+\contentsline {subsection}{\numberline {4.7}MemoBlockSort in similar lists}{23}
+\contentsline {section}{\numberline {5}Conclusions}{23}
+\contentsline {section}{\numberline {6}Future Work}{24}
+\contentsline {section}{\numberline {7}Apendix}{26}
