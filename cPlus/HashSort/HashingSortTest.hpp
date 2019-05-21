@@ -21,7 +21,7 @@ using namespace std;
 class HashingSortTest: public TestRun {
 public:
     string run(Configuration conf);
-    int runHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, string name);
-    int runHashMap(int** data, HashFunction& hashFunc, int arrayLength);
+    int runHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, string name, int totalUnique);
+    int runHashMap(int** data, HashFunction& hashFunc, int arrayLength, int totalUnique);
 };
 #endif /* HashingSortTest */

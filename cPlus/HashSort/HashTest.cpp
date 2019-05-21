@@ -49,6 +49,9 @@ string HashTest::run(Configuration conf) {
     int** hashData1 = new int*[TOTAL_LIST_NUMBER];
     int** hashData2 = new int*[TOTAL_LIST_NUMBER];
     int** hashData3 = new int*[TOTAL_LIST_NUMBER];
+    
+    int hashTableLength = TOTAL_LIST_NUMBER * conf.uniqueness;
+
 
     dataGenerator.generateMatrix(originalData, conf.arrayLength, conf.uniqueness, conf.distribution, conf.listOrder, conf.copiedElements);
 
@@ -56,7 +59,7 @@ string HashTest::run(Configuration conf) {
     dataGenerator.copyMatrix(originalData, hashData2, conf.arrayLength);
     dataGenerator.copyMatrix(originalData, hashData3, conf.arrayLength);
 
-    
+
     if(conf.debug == 1) {
         printArray(1, originalData, conf.arrayLength);
     }
@@ -71,7 +74,7 @@ string HashTest::run(Configuration conf) {
         memoryhashFunc1 = MemoryUtil::getVirtualMemoryProcess() - totalMemoryUsed;
     }
     
-    colissionhashFunc1 = checkColitions(originalData, hashFunc1, conf.arrayLength);
+    colissionhashFunc1 = checkColitions(originalData, hashFunc1, conf.arrayLength, hashTableLength);
     
     start = std::chrono::high_resolution_clock::now();
     runHash("hashFunc2",hashData1, hashFunc2, conf.arrayLength);
@@ -83,7 +86,7 @@ string HashTest::run(Configuration conf) {
         memoryhashFunc2 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc1;
     }
 
-    colissionhashFunc2 = checkColitions(originalData, hashFunc2, conf.arrayLength);
+    colissionhashFunc2 = checkColitions(originalData, hashFunc2, conf.arrayLength, hashTableLength);
     
     start = std::chrono::high_resolution_clock::now();
     runHash("hashFunc3",hashData2, hashFunc3, conf.arrayLength);
@@ -94,7 +97,7 @@ string HashTest::run(Configuration conf) {
     if(conf.memoryCheck == 1) {
         memoryhashFunc3 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc2;
     }
-    colissionhashFunc3 = checkColitions(hashData2, hashFunc3, conf.arrayLength);
+    colissionhashFunc3 = checkColitions(hashData2, hashFunc3, conf.arrayLength, hashTableLength);
     
     start = std::chrono::high_resolution_clock::now();
     runHash("hashFunc4",hashData3, hashFunc4, conf.arrayLength);
@@ -105,7 +108,7 @@ string HashTest::run(Configuration conf) {
     if(conf.memoryCheck == 1) {
         memoryhashFunc4 = MemoryUtil::getVirtualMemoryProcess() - memoryhashFunc3;
     }
-    colissionhashFunc4 = checkColitions(hashData3, hashFunc4, conf.arrayLength);
+    colissionhashFunc4 = checkColitions(hashData3, hashFunc4, conf.arrayLength, hashTableLength);
     
     cout << "********************************************"<< endl;
     cout << conf.toString() <<endl;
@@ -118,8 +121,9 @@ string HashTest::run(Configuration conf) {
     return "DONE";
 }
 
-int HashTest::checkColitions(int** data, HashFunction& hashFunc, int arrayLength) {
+int HashTest::checkColitions(int** data, HashFunction& hashFunc, int arrayLength, int hashTableLength) {
     unordered_map<string, int> signaturesMap;
+    signaturesMap.reserve(hashTableLength);
     
     int colitions = 0;
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
@@ -142,10 +146,11 @@ int HashTest::checkColitions(int** data, HashFunction& hashFunc, int arrayLength
     return colitions;
 }
 
-void HashTest::runHash(string name, int** data, HashFunction& hashFunc, int arrayLength) {
+string HashTest::runHash(string name, int** data, HashFunction& hashFunc, int arrayLength) {
     string signature = "";
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
         signature = hashFunc.hash(data[j], arrayLength);
 //        cout << name << "SIG: " <<  signature << endl;
     }
+    return signature;
 }

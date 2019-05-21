@@ -7,149 +7,115 @@ using namespace std;
 
 
 void MergeSort::sort(int list[], int length) {
-	mergeSort(list, length);
+    int tmp[length];
+	mergeSort(list, tmp, length);
 }
 
 int MergeSort::optimizedSort(int list[], int length, unordered_map<string, int> &signaturesMap, int actualIndex) {
-  return mergeSort(list, length, signaturesMap, actualIndex);
+    int tmp[length];
+  return mergeSort(list, tmp, length, signaturesMap, actualIndex);
 }
 
-void MergeSort::mergeSort(int list[], int length) {
+void MergeSort::mergeSort(int list[], int tmp[], int length) {
    for(int mergingArraySize = 1; mergingArraySize < length; mergingArraySize = (2 * mergingArraySize)) { 
 
-       for(int startIndex = 0; startIndex < length-1; startIndex += (2 * mergingArraySize)) { 
-           int half = startIndex + mergingArraySize - 1; 
-           int endIndex = min((startIndex + (2 * mergingArraySize) - 1), length-1);
+       for(int startIndex = 0; startIndex < length; startIndex += (2 * mergingArraySize)) {
+           int left = startIndex;
+           int middle = startIndex + mergingArraySize;
+           int right = startIndex + (2 * mergingArraySize);
 
-           merge(list, startIndex, half, endIndex); 
-       } 
-   } 
+           merge(list, tmp, left, middle, right);
+       }
+       
+       for(int i = 0; i < length; i++) {
+           list[i] = tmp[i];
+       }
+   }
 }
 
 
-int MergeSort::mergeSort(int list[], int length, unordered_map<string, int> &signaturesMap, int actualIndex) {
+int MergeSort::mergeSort(int list[], int tmp[],  int length, unordered_map<string, int> &signaturesMap, int actualIndex) {
    for(int mergingArraySize = 1; mergingArraySize < length; mergingArraySize = (2 * mergingArraySize)) { 
 
        long hashVal = 17;
        for(int startIndex = 0; startIndex < length-1; startIndex += (2 * mergingArraySize)) { 
-           int half = startIndex + mergingArraySize - 1; 
-           int endIndex = min((startIndex + (2 * mergingArraySize) - 1), length-1);
+           int left = startIndex;
+           int middle = startIndex + mergingArraySize;
+           int right = startIndex + (2 * mergingArraySize);
 
           // Only calculate hash in the first pass
           if(mergingArraySize == 1) {
-            hashVal = merge(list, startIndex, half, endIndex, hashVal); 
+            hashVal = merge(list, tmp, left, middle, right, hashVal);
           } else {
-            merge(list, startIndex, half, endIndex); 
+            merge(list, tmp, left, middle, right);
           }
        } 
 
-      string signature = to_string(hashVal);
 
       if(mergingArraySize == 1) { // means all elements checked. Perform hash check
+        string signature = to_string(hashVal);
         unordered_map<string, int>::const_iterator signatureFinder = signaturesMap.find(signature);
         if(signatureFinder == signaturesMap.end()) {
-          signaturesMap.insert(make_pair(signature, actualIndex));
-          // cout << "Inserting into merge HashTable: "<< signature << " " << actualIndex << endl; 
+            signaturesMap.insert(make_pair(signature, actualIndex));
         } else {
           int originalIndex = signatureFinder->second;
           return originalIndex;
         }
       }
+       
+       for(int i = 0; i < length; i++) {
+           list[i] = tmp[i];
+       }
    }
 
    return -1;
 }
 
 
-void MergeSort::merge(int list[], int startIndex, int half, int endIndex) {
-  int leftListLength = half - startIndex + 1; 
-  int rightListLength = endIndex - half; 
-  
-  int leftList[leftListLength];
-  int rightList[rightListLength]; 
+void MergeSort::merge(int list[], int tmp[], int iLeft, int iMiddle, int iRight) {
+  int i = iLeft;
+  int j = iMiddle;
+  int globalIndex = iLeft;
 
-  for(int i = 0; i < leftListLength; i++) {
-    leftList[i] = list[startIndex + i]; 
-  }
-
-  for(int i = 0; i < rightListLength; i++)  {
-    rightList[i] = list[half + 1 + i]; 
-  }
-
-  int i = 0;
-  int j = 0;
-  int globalIndex = startIndex; 
-
-  while (i < leftListLength && j < rightListLength) { 
-      if (leftList[i] <= rightList[j]) { 
-          list[globalIndex] = leftList[i]; 
-          i++; 
-      }  else { 
-          list[globalIndex] = rightList[j]; 
-          j++; 
-      } 
-      
-      globalIndex++; 
-  } 
-  
-  while (i < leftListLength) { 
-      list[globalIndex] = leftList[i]; 
-      i++; 
-      globalIndex++; 
-  } 
-
-  while (j < rightListLength) { 
-      list[globalIndex] = rightList[j]; 
-      j++; 
-      globalIndex++; 
+  while (i < iMiddle || j < iRight) {
+      if ( i < iMiddle && j < iRight ) {
+          if ( list[i] < list[j] )
+              tmp[globalIndex++] = list[i++];
+          else
+              tmp[globalIndex++] = list[j++];
+      }
+      else if ( i == iMiddle )
+          tmp[globalIndex++] = list[j++];
+      else if ( j == iRight )
+          tmp[globalIndex++] = list[i++];
   }
 }
 
 
-long MergeSort::merge(int list[], int startIndex, int half, int endIndex, long hashVal) {
-  int leftListLength = half - startIndex + 1; 
-  int rightListLength = endIndex - half; 
-  
-  int leftList[leftListLength];
-  int rightList[rightListLength]; 
+long MergeSort::merge(int list[], int tmp[], int iLeft, int iMiddle, int iRight, long hashVal) {
+    int i = iLeft;
+    int j = iMiddle;
+    int globalIndex = iLeft;
 
-  for(int i = 0; i < leftListLength; i++) {
-    leftList[i] = list[startIndex + i]; 
-    hashVal = hashVal * 19 + leftList[i];
-  }
-
-  for(int i = 0; i < rightListLength; i++)  {
-    rightList[i] = list[half + 1 + i]; 
-    hashVal = hashVal * 19 + leftList[i];
-  }
-
-  int i = 0;
-  int j = 0;
-  int globalIndex = startIndex; 
-
-  while (i < leftListLength && j < rightListLength) { 
-      if (leftList[i] <= rightList[j]) { 
-          list[globalIndex] = leftList[i]; 
-          i++; 
-      }  else { 
-          list[globalIndex] = rightList[j]; 
-          j++; 
-      } 
-      
-      globalIndex++; 
-  } 
-  
-  while (i < leftListLength) { 
-      list[globalIndex] = leftList[i]; 
-      i++; 
-      globalIndex++; 
-  } 
-
-  while (j < rightListLength) { 
-      list[globalIndex] = rightList[j]; 
-      j++; 
-      globalIndex++; 
-  }
+    while (i < iMiddle || j < iRight) {
+        if ( i < iMiddle && j < iRight ) {
+            if ( list[i] < list[j] ){
+                hashVal = hashVal * 19 + list[i];
+                tmp[globalIndex++] = list[i++];
+            } else {
+                hashVal = hashVal * 19 + list[j];
+                tmp[globalIndex++] = list[j++];
+            }
+        }
+        else if ( i == iMiddle ) {
+            hashVal = hashVal * 19 + list[j];
+            tmp[globalIndex++] = list[j++];
+        }
+        else if ( j == iRight ) {
+            hashVal = hashVal * 19 + list[i];
+            tmp[globalIndex++] = list[i++];
+        }
+    }
 
   return hashVal;
 }

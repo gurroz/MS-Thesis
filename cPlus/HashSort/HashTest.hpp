@@ -21,7 +21,7 @@ using namespace std;
 class HashTest: public TestRun {
 public:
     string run(Configuration conf);
-    int checkColitions(int** data, HashFunction& hashFunc, int arrayLength);
-    void runHash(string name, int** data, HashFunction& hashFunc, int arrayLength);
+    int checkColitions(int** data, HashFunction& hashFunc, int arrayLength, int hashTableLength);
+    string runHash(string name, int** data, HashFunction& hashFunc, int arrayLength);
 };
 #endif /* HashTest.hpp */

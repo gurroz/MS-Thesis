@@ -40,10 +40,12 @@ string OptSortingTest::run(Configuration conf) {
         printArray(1, originalData, conf.arrayLength);
     }
     
+    int hashTableLength = TOTAL_LIST_NUMBER * conf.uniqueness;
+
     long totalMemoryUsed = MemoryUtil::getVirtualMemoryProcess();
 
     hi_res_time_point start = std::chrono::high_resolution_clock::now();
-    runSortFunction(originalData, conf.arrayLength, insertionSort);
+    runSortFunction(originalData, conf.arrayLength, insertionSort, hashTableLength);
     hi_res_time_point finish = std::chrono::high_resolution_clock::now();
     auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalInsertion = int_ms.count();
@@ -53,7 +55,7 @@ string OptSortingTest::run(Configuration conf) {
     }
     
     start = std::chrono::high_resolution_clock::now();
-    runSortFunction(copiedData1, conf.arrayLength, mergeSort);
+    runSortFunction(copiedData1, conf.arrayLength, mergeSort, hashTableLength);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalMerge = int_ms.count();
@@ -76,8 +78,9 @@ string OptSortingTest::run(Configuration conf) {
     return "DONE";
 }
 
-void OptSortingTest::runSortFunction(int** data, int arrayLength, SortFunction& sortFunction){
+void OptSortingTest::runSortFunction(int** data, int arrayLength, SortFunction& sortFunction, int hashTableLength){
     unordered_map<string, int> signaturesMap;
+    signaturesMap.reserve(hashTableLength);
     
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
         sortFunction.optimizedSort(data[j], arrayLength, signaturesMap, j);

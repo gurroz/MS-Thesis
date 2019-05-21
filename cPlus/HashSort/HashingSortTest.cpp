@@ -49,12 +49,12 @@ string HashingSortTest::run(Configuration conf) {
         printArray(1, hashData1, conf.arrayLength);
     }
     
-    
+    int hashTableLength = TOTAL_LIST_NUMBER * conf.uniqueness;
     // **** HASH 1 ****
     
     // ONLY HASHING
     hi_res_time_point start = std::chrono::high_resolution_clock::now();
-    runHashMap(originalData, hashFunc, conf.arrayLength);
+    runHashMap(originalData, hashFunc, conf.arrayLength, hashTableLength);
     hi_res_time_point finish = std::chrono::high_resolution_clock::now();
     auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalHash = int_ms.count();
@@ -63,7 +63,7 @@ string HashingSortTest::run(Configuration conf) {
     int totalMemoryUsed = MemoryUtil::getVirtualMemoryProcess();
     // HASH SORT DINAMIC Intro
     start = std::chrono::high_resolution_clock::now();
-    runHashSort(hashData1, hashFunc, conf.arrayLength, insertionSort, "HASH1Insert");
+    runHashSort(hashData1, hashFunc, conf.arrayLength, insertionSort, "HASH1Insert", hashTableLength);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalHashInsertSort = int_ms.count();
@@ -73,7 +73,7 @@ string HashingSortTest::run(Configuration conf) {
     
     // HASH SORT DINAMIC Merge
     start = std::chrono::high_resolution_clock::now();
-    runHashSort(hashData2, hashFunc, conf.arrayLength, mergeSort,  "HASH1Merge");
+    runHashSort(hashData2, hashFunc, conf.arrayLength, mergeSort,  "HASH1Merge", hashTableLength);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalHashMergeSort = int_ms.count();
@@ -97,9 +97,9 @@ string HashingSortTest::run(Configuration conf) {
     return "DONE";
 }
 
-int HashingSortTest::runHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, string name) {
+int HashingSortTest::runHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, string name, int totalUnique) {
     unordered_map<string, int> signaturesMap;
-    signaturesMap.reserve(TOTAL_LIST_NUMBER);
+    signaturesMap.reserve(totalUnique);
 
     int deadCodeReturn = 0;
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
@@ -114,9 +114,9 @@ int HashingSortTest::runHashSort(int** data, HashFunction& hashFunc, int arrayLe
 }
 
 
-int HashingSortTest::runHashMap(int** data, HashFunction& hashFunc, int arrayLength) {
+int HashingSortTest::runHashMap(int** data, HashFunction& hashFunc, int arrayLength, int totalUnique) {
     unordered_map<string, int> signaturesMap;
-    signaturesMap.reserve(TOTAL_LIST_NUMBER);
+    signaturesMap.reserve(totalUnique);
 
     int deadCodeReturn = 0;
     for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {

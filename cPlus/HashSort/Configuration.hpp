@@ -15,7 +15,7 @@
 using namespace std;
 
 #define TOTAL_LIST_NUMBER 1036800
-//#define TOTAL_LIST_NUMBER 6
+//#define TOTAL_LIST_NUMBER 4
 
 struct Configuration
 {

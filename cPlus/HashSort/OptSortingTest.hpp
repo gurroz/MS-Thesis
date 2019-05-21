@@ -20,6 +20,6 @@ using namespace std;
 class OptSortingTest: public TestRun {
 public:
     string run(Configuration conf);
-    void runSortFunction(int** data, int arrayLength, SortFunction& sortFunction);
+    void runSortFunction(int** data, int arrayLength, SortFunction& sortFunction, int hashTableLength);
 };
 #endif /* OptSortingTest_hpp */
