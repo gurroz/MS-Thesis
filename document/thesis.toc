@@ -26,8 +26,8 @@
 \contentsline {subsection}{\numberline {4.3}Hash functions}{20}
 \contentsline {subsection}{\numberline {4.4}Memoization costs}{20}
 \contentsline {subsection}{\numberline {4.5}MemoSort for repeating lists}{21}
-\contentsline {subsection}{\numberline {4.6}Optimised MemoSort for repeating lists}{23}
-\contentsline {subsection}{\numberline {4.7}MemoBlockSort in similar lists}{23}
-\contentsline {section}{\numberline {5}Conclusions}{23}
-\contentsline {section}{\numberline {6}Future Work}{24}
-\contentsline {section}{\numberline {7}Apendix}{26}
+\contentsline {subsection}{\numberline {4.6}Optimised MemoSort for repeating lists}{24}
+\contentsline {subsection}{\numberline {4.7}MemoBlockSort in similar lists}{25}
+\contentsline {section}{\numberline {5}Conclusions}{26}
+\contentsline {section}{\numberline {6}Future Work}{26}
+\contentsline {section}{\numberline {7}Apendix}{28}

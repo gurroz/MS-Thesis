@@ -484,35 +484,128 @@ The readings shown in Figure \ref{ref:MemCostTable} are the sum of the time take
 
 \subsection{MemoSort for repeating lists}
 
-The following result represent the test over uniformly distributed random data after applying the memoization technique using a hash table, and using the proposed hash function {\it PairMultShift}  to generate the signature of each of the unique list. \\
+The following result represent the test over uniformly distributed random data after applying the memoization technique using a hash table, and utilsing the proposed hash function {\it PairMultShift}  to generate the signature of each of the unique list. \\
+
+%\begin{figure}[H]
+%\centering
+%\subcaptionbox{0 repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_0_repeat.png}}%
+%\hfill % <-- Seperation
+%\subcaptionbox{25\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_25_repeat.png}}%
+%\\ % <-- Line break
+%\subcaptionbox{50\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_50_repeat.png}}%
+%\hfill % <-- Seperation
+%\subcaptionbox{75\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_75_repeat.png}}
+%\\ % <-- Line break
+%\subcaptionbox{100\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_100_repeat.png}}%
+%\caption{Memoization performance}
+%\label{fig:MemPerfRepeat}
+%\end{figure}
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=8cm,keepaspectratio]{./images/MemoSortIns.png}
+    \caption{Times MemoSort is faster than brute force Insertionsort }
+    \label{fig:MemoSortInsGraph}
+\end{figure}
 
 \begin{figure}[H]
 \centering
-\subcaptionbox{0 repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_0_repeat.png}}%
-\hfill % <-- Seperation
-\subcaptionbox{25\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_25_repeat.png}}%
-\\ % <-- Line break
-\subcaptionbox{50\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_50_repeat.png}}%
-\hfill % <-- Seperation
-\subcaptionbox{75\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_75_repeat.png}}%
-\\ % <-- Line break
-\subcaptionbox{100\% repetition}{\includegraphics[height=4.3cm,keepaspectratio]{./images/list_100_repeat.png}}%
+\begin{tabular}{|c|c|c|c|c|c|c|c|}  \toprule
+	{Lists length} & {Only Insertionsort} & {$0\%$} & {$25\%$} & {$50\%$} & {$75\%$} & {$100\%$} \\ \midrule
+	16 &166&169&373 & 556 & 666 & 779\\ 
+	32 &418&194&443 & 694& 868& 1,041\\ 
+	64 &1,108&185 &1,639&1,021&1,416& 1,740\\ 
+	128 &3,005&206&1,217&2,011&2,865 &3,667\\ 
+	256 &8,943&313&2,785 &5,100&7,443&9,776\\ 
+	512 &29,805 & 360&8,078 &15,591 &23,193 &30,742\\ \bottomrule
+\end{tabular}
+\caption{MemoSort times (ms) using Insertionsort with different repetitions}
+\label{fig:MemoSortInsTable}
+\end{figure}
 
-\caption{Memoization performance}
-\label{fig:MemPerfRepeat}
+The results displayed in Figure \ref{fig:MemoSortInsGraph} shows the performance comparison between different scenarios of repetition, leaving out the border cases of 0\% and 100\% repetition as they behave as expected and their results distorts the graph, nevertheless they can be viewed in Figure \ref{fig:MemoSortInsTable}. \\
+
+The results shows the times MemoSort is faster than sorting by brute force the total of lists. We can view that there is a severe penalty for using this approach in small length lists for Insertionsort. There starts to be an improved performance after lists with length of 128 for most repetition scenarios, but at 64 there is an improvement if the data is repeated between 75 to 50\%. This is  mainly because the sorting performance below this length surpass the overhead of calculating and looking up the signature of the list. \\
+As it is expected, when there is no repetition, there is only overhead in applying this approach. The trend tends to be that the bigger the list length and higher repetition, the more performance improvement there is. \\
+
+The same behaviour is shown for Mergesort in Figure  \ref{fig:MemoSortMergeGraph} , but the gain is not given much by the length of the array, as only for the amount of repeated lists given that the increase or decrease is not so drastic as with Insertionsort. The border cases of 0\% and 100\% repetition can be viewed in Figure  \ref{fig:MemoSortMergeTable}, and it shows only a worst and better performance respectively for each lists length.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=8cm,keepaspectratio]{./images/MemoSortMerge.png}
+    \caption{Times MemoSort is faster than brute force Mergesort }
+    \label{fig:MemoSortMergeGraph}
 \end{figure}
 
 
-The results displayed in Figure \ref{fig:MemPerfRepeat} shows the performance comparison in a ratio to the case of brute force sorting all list for each algorithm with uniform random data, where it can be seen that there is a severe penalty for using this approach in small length lists for Insertionsort. There starts to be an improved performance after lists with length of 128, mainly because the sorting performance below this length surpass the overhead of calculating and looking up the signature of the list. \\
-As it is expected, when there is no repetition, there is only overhead in applying this approach. The trend tends to be that the bigger the list length, the more gain there is. Can be concluded that in a general case, there is a gain when there is 50\% or more list repetition.
-
-The same behaviour is shown for Mergesort, but the gain is not given much by the length of the array, as only for the amount of repeated lists given that the increase or decrease is not so drastic as with Insertionsort.
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}  \toprule
+	{Lists length} & {Only Mergesort} & {$0\%$} & {$25\%$} & {$50\%$} & {$75\%$} & {$100\%$} \\ \midrule
+	16 &364&172&431 & 674 & 839 & 1,023\\ 
+	32 &884&168&569 & 965& 1,258& 1,555\\ 
+	64 &2,078&190 &931&1,569&2,144&2,759\\ 
+	128 &4,705&228&1,625&2,903&4,183&5,439\\ 
+	256 &10,632&303&3,205&6,081&8,750&11,568\\ 
+	512 &23,709& 402&6,513&12,497&18,741&24,743\\ \bottomrule
+\end{tabular}
+\caption{MemoSort times (ms) using Mergesort with different repetitions}
+\label{ref:MemoSortMergeTable}
+\end{figure}
 
 \subsection{Optimised MemoSort for repeating lists}
 
-As discussed in section \ref{OptMemoSort} and viewed in Figure \ref{OptMemoSortIns}, there is no improvement from just running only Insertionsort nor using MemoSort on the different scenarios. This is because this algorithm doesn't apply the full potential of memoization as it only looks for previous sorted lists only at the end of the process of sorting each list, adding the overhead of the memoization technique to the time required to sort the rest of the list. \\
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=8cm,keepaspectratio]{./images/OptMemoSortIns.png}
+    \caption{Times Optimised MemoSort is faster than brute force Insertionsort}
+    \label{fig:OptMemoSortInsGraph}
+\end{figure}
 
-For Mergesort the case is different, as can be viewed in Figure \ref{OptMemoSortMerge}, there is improvement compared to just brute force sort all the list as well as just applying MemoSort. Interestingly, it does not improve as much as MemoSort when there is only repetition, but as repetition decrease this approach behaves the same and better (as can be viewed in Figure \ref{OptMemoSortMergeTable}). This can be explained by the fact that when the signature is calculated, already the first merge pass has been through and it does not has to go through the whole list twice as in MemoSort approach, so this little difference accumulates and is only visible when there is less repeated list.
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}  \toprule
+	{Lists length} & {Only Insertionsort} & {$0\%$} & {$25\%$} & {$50\%$} & {$75\%$} & {$100\%$} \\ \midrule
+	16 &166&207&547 & 585 & 752 & 846\\ 
+	32 &418&331&773 & 859& 1,034& 1,153\\ 
+	64 &1,108&873 &1,523&1,617&1,783& 1,868\\ 
+	128 &3,005&3,345&3,969&4,115&4,182 &4,243\\ 
+	256 &8,943&11,870&12,376 &12,508&12,630&12,705\\ 
+	512 &29,805 & 43,351&43,375 &43,625 &43,928 &43,782\\ \bottomrule
+\end{tabular}
+\caption{Optimised MemoSort times (ms) using Insertionsort with different repetitions}
+\label{ref:OptMemoSortInsTable}
+\end{figure}
+
+
+As discussed in section \ref{OptMemoSort} and viewed in Figure \ref{OptMemoSortInsGraph}, there is no improvement from just running the optimised version of MemoSort on the different scenarios. This is because this algorithm doesn't apply the full potential of memoization as it only looks for previous sorted lists only at the end of the process of sorting each list, adding the overhead of the memoization technique to the time required to sort the rest of the list. \\
+
+For Mergesort the case is different, as can be viewed in Figure \ref{OptMemoSortMergeGraph}, there is improvement compared to just brute force sort all the list as well as just applying MemoSort. Interestingly, it does not improve as much as MemoSort when there is only repetition, but as repetition decrease this approach behaves the same and better (as can be viewed by comparing Figure \ref{OptMemoSortMergeTable} and Figure \ref{MemoSortMergeTable} in case 100\% repetition). This can be explained by the fact that when the signature is calculated, already the first merge pass has been through and it does not has to go through the whole list twice as in MemoSort approach, so this little difference accumulates and is only visible when there is less repeated list.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[height=8cm,keepaspectratio]{./images/OptMemoSortMerge.png}
+    \caption{Times Optimised MemoSort is faster than brute force Mergesort}
+    \label{fig:OptMemoSortMergeGraph}
+\end{figure}
+
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{|c|c|c|c|c|c|c|c|}  \toprule
+	{Lists length} & {Only Mergesort} & {$0\%$} & {$25\%$} & {$50\%$} & {$75\%$} & {$100\%$} \\ \midrule
+	16 &364&196&545 & 640 &874&1,028\\ 
+	32 &884&240&669 & 941&1,283&1,548\\ 
+	64 &2,078&305 &1,126&1,674&2,200&2,726\\ 
+	128 &4,705&470&1,996&3,110&4,217&5,297\\ 
+	256 &10,632&774&3,900&6,358&8,808&11,230\\ 
+	512 &23,709& 1,417&7,921&13,241&18,588&23,864\\ \bottomrule
+\end{tabular}
+\caption{Optimised MemoSort times (ms) using Mergesort with different repetitions}
+\label{ref:OptMemoSortMergeTable}
+\end{figure}
 
 \subsection{MemoBlockSort in similar lists}
 
