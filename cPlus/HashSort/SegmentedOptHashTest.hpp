@@ -27,7 +27,6 @@ struct HashAndRange {
 class SegmentedOptHashTest: public TestRun {
 public:
     string run(Configuration conf);
-    int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength);
-    void runSortFunction(int** data, int arrayLength, SortFunction& sortFunction);
+    int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength, double arrayRepetition);
 };
 #endif /* SegmentedOptHashTest_hpp */

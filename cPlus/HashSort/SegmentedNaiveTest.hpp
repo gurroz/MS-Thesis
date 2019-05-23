@@ -21,7 +21,7 @@ using namespace std;
 class SegmentedNaiveTest: public TestRun {
 public:
     string run(Configuration conf);
-    int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength);
+    int runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength, double arrayRepetition);
     void runSortFunction(int** data, int arrayLength, SortFunction& sortFunction);
 };
 #endif /* SegmentedNaiveTest */

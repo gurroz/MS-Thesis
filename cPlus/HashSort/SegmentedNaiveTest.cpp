@@ -57,13 +57,13 @@ string SegmentedNaiveTest::run(Configuration conf) {
     totalMerge = totalMerge + int_ms.count();
     
     start = std::chrono::high_resolution_clock::now();
-    runSegmentedHashSort(copiedData2, hashFunc1, conf.arrayLength, insertionSort, conf.blocksLength);
+    runSegmentedHashSort(copiedData2, hashFunc1, conf.arrayLength, insertionSort, conf.blocksLength, conf.copiedElements);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalInsertionSeg = totalInsertionSeg + int_ms.count();
     
     start = std::chrono::high_resolution_clock::now();
-    runSegmentedHashSort(copiedData3, hashFunc1, conf.arrayLength, mergeSort, conf.blocksLength);
+    runSegmentedHashSort(copiedData3, hashFunc1, conf.arrayLength, mergeSort, conf.blocksLength, conf.copiedElements);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
     totalMergeSeg = totalMergeSeg + int_ms.count();
@@ -77,17 +77,22 @@ string SegmentedNaiveTest::run(Configuration conf) {
     cout << conf.toString() <<endl;
     cout << "********************************************"<< endl;
     
-    cout << "InSort: " <<  to_string(totalInsertion) << "MerSort: " <<  to_string(totalMerge) << "InSeg: " <<  to_string(totalInsertionSeg)  << "InSeg: " <<  to_string(totalMergeSeg)  << endl;
+    cout << "InSort: " <<  to_string(totalInsertion) << " MerSort: " <<  to_string(totalMerge) << " InSeg: " <<  to_string(totalInsertionSeg)  << " MergSeg: " <<  to_string(totalMergeSeg)  << endl;
     
     return "DONE";
 }
 
-int SegmentedNaiveTest::runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength){
+int SegmentedNaiveTest::runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength, double arrayRepetition) {
     unordered_map<string, int> signaturesMap;
+    
     int arraySegments = (arrayLength/blockLength);
     int totalSegmets = TOTAL_LIST_NUMBER *  arraySegments;
+    int hashTableLength = totalSegmets *  arrayRepetition;
+
     int** segmentMatrix = new int*[totalSegmets];
     
+    signaturesMap.reserve(hashTableLength);
+
     // loop through each array, per block
     // if found copy ordered result of block
     // if not found, sort and save signature with block elsewerse

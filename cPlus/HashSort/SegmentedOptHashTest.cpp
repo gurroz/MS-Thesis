@@ -13,20 +13,17 @@
 #include "MergeSort.hpp"
 #include "MatrixGenerator.hpp"
 
-#include "PrimeHashFunction.hpp"
+#include "PairMultiplyShift.hpp"
 
 using namespace std;
 using hi_res_time_point = std::chrono::time_point<std::chrono::high_resolution_clock>;
 
 
 string SegmentedOptHashTest::run(Configuration conf) {
-    long totalInsertionSeg = 0;
-    long totalMergeSeg = 0;
-    
     InsertionSort insertionSort;
     MergeSort mergeSort;
     MatrixGenerator dataGenerator;
-    PrimeHashFunction hashFunc1;
+    PairMultiplyShift hashFunc1;
     
     int** originalData = new int*[TOTAL_LIST_NUMBER];
     int** copiedData1 = new int*[TOTAL_LIST_NUMBER];
@@ -39,17 +36,16 @@ string SegmentedOptHashTest::run(Configuration conf) {
     }
     
     hi_res_time_point start = std::chrono::high_resolution_clock::now();
-    runSegmentedHashSort(originalData, hashFunc1, conf.arrayLength, insertionSort, conf.blocksLength);
+    runSegmentedHashSort(originalData, hashFunc1, conf.arrayLength, insertionSort, conf.blocksLength, conf.copiedElements);
     hi_res_time_point finish = std::chrono::high_resolution_clock::now();
     auto int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-    totalInsertionSeg = totalInsertionSeg + int_ms.count();
-    
+    long totalInsertionSeg = int_ms.count();
     
     start = std::chrono::high_resolution_clock::now();
-    runSegmentedHashSort(copiedData1, hashFunc1, conf.arrayLength, mergeSort, conf.blocksLength);
+    runSegmentedHashSort(copiedData1, hashFunc1, conf.arrayLength, mergeSort, conf.blocksLength, conf.copiedElements);
     finish = std::chrono::high_resolution_clock::now();
     int_ms = std::chrono::duration_cast<std::chrono::milliseconds>(finish - start);
-    totalMergeSeg = totalMergeSeg + int_ms.count();
+    long totalMergeSeg = int_ms.count();
     
     if(conf.debug == 1) {
         printArray(2, originalData, conf.arrayLength);
@@ -60,17 +56,20 @@ string SegmentedOptHashTest::run(Configuration conf) {
     cout << conf.toString() <<endl;
     cout << "********************************************"<< endl;
     
-    cout << "InsertionSegmeted average time: " <<  to_string(totalInsertionSeg) << endl;
-    cout << "MergeSegmented average time: " <<  to_string(totalMergeSeg) << endl;
+    cout << "InSeg: " <<  to_string(totalInsertionSeg)  << " MergSeg: " <<  to_string(totalMergeSeg)  << endl;
     
     return "DONE";
 }
 
-int SegmentedOptHashTest::runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength){
+int SegmentedOptHashTest::runSegmentedHashSort(int** data, HashFunction& hashFunc, int arrayLength, SortFunction& sortFunction, int blockLength, double arrayRepetition){
     unordered_map<string, int> signaturesMap;
     int arraySegments = (arrayLength/blockLength);
-    int totalSegmets = TOTAL_LIST_NUMBER *  arraySegments;
+    int totalSegmets = TOTAL_LIST_NUMBER * arraySegments;
+    int hashTableLength = totalSegmets * arrayRepetition;
+    
     int** segmentMatrix = new int*[totalSegmets];
+    signaturesMap.reserve(hashTableLength);
+
     
     // loop through each array, per block
     // if found copy ordered result of block
@@ -79,8 +78,10 @@ int SegmentedOptHashTest::runSegmentedHashSort(int** data, HashFunction& hashFun
     int deadCodeReturn = 0;
     int segmentsIndex = 0;
     for(int i = 0; i < TOTAL_LIST_NUMBER; i++) {
-        int indexes[arraySegments];
+        int orderedListsIndexes[arraySegments];
         int currentIndex = 0;
+        
+        // Generate array with all sorted unique blocks
         for(int j = 0; j < arrayLength; j = j + blockLength) {
             segmentMatrix[segmentsIndex] = new int[blockLength];
             
@@ -96,46 +97,54 @@ int SegmentedOptHashTest::runSegmentedHashSort(int** data, HashFunction& hashFun
                 sortFunction.sort(segmentMatrix[segmentsIndex], blockLength);
                 signaturesMap.insert(make_pair(signature, segmentsIndex));
                 
-                indexes[currentIndex] = segmentsIndex;
+                orderedListsIndexes[currentIndex] = segmentsIndex;
             } else {
                 int originalIndex = signatureFinder->second;
-                indexes[currentIndex] = originalIndex;
+                orderedListsIndexes[currentIndex] = originalIndex;
             }
             
             segmentsIndex++;
             currentIndex++;
         }
-        
-        // Merging all segments to data
-        int segmentsLastIndex[arraySegments];
-        for(int k = 0; k < arraySegments; k++) {
-            segmentsLastIndex[k] = 0;
+        // 2 way merge
+        int tmpMerge[arrayLength];
+        for(int k = 0; k < arrayLength; k++) {
+            tmpMerge[k] = INT_MAX;
         }
         
-        for(int lastDataIndex = 0; lastDataIndex < arrayLength; lastDataIndex++) {
-            int minVal = INT_MAX;
-            int usedSegment = 0;
-            for(int k = 0; k < arraySegments; k++) {
-                int segmentsIndex = indexes[k];
-                int lastIndex = segmentsLastIndex[k];
-                
-                if(lastIndex < blockLength && minVal > segmentMatrix[segmentsIndex][lastIndex]) {
-                    minVal = segmentMatrix[segmentsIndex][lastIndex];
-                    usedSegment = k;
+        for(int j = 0; j < arraySegments; j++) { // For each block
+            int secondTmpMerge[arrayLength];
+            for(int k = 0; k < arrayLength; k++) {
+                secondTmpMerge[k] = INT_MAX;
+            }
+            int segmentsIndex = orderedListsIndexes[j];
+
+            // Merge block with current tmp array
+            int currentSegmentIndex = 0;
+            int currentDataIndex = 0;
+            int globalIndex = 0;
+            while(currentDataIndex < arrayLength || currentSegmentIndex < blockLength) {
+                if(currentDataIndex < arrayLength && currentSegmentIndex < blockLength) {
+                    if(tmpMerge[currentDataIndex] < segmentMatrix[segmentsIndex][currentSegmentIndex]) {
+                        secondTmpMerge[globalIndex++] = tmpMerge[currentDataIndex++];
+                    } else {
+                        secondTmpMerge[globalIndex++] = segmentMatrix[segmentsIndex][currentSegmentIndex++];
+                    }
+                } else if(currentDataIndex == arrayLength) {
+                    secondTmpMerge[globalIndex++] = segmentMatrix[segmentsIndex][currentSegmentIndex++];
+                } else if(currentSegmentIndex == blockLength) {
+                    secondTmpMerge[globalIndex++] = tmpMerge[currentDataIndex++];
                 }
             }
-            
-            segmentsLastIndex[usedSegment] = segmentsLastIndex[usedSegment] + 1;
-            data[i][lastDataIndex] = minVal;
-        }
-        
-    }
-    
-    return deadCodeReturn;
-}
 
-void SegmentedOptHashTest::runSortFunction(int** data, int arrayLength, SortFunction& sortFunction){
-    for(int j = 0; j < TOTAL_LIST_NUMBER; j++) {
-        sortFunction.sort(data[j], arrayLength);
+            for(int k = 0; k < arrayLength; k++) { //Copies current order for next merge
+                tmpMerge[k] = secondTmpMerge[k];
+            }
+        }
+
+        for(int k = 0; k < arrayLength; k++) { // Copies final list
+           data[i][k] = tmpMerge[k];
+        }
     }
+    return deadCodeReturn;
 }
