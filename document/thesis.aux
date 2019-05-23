@@ -25,6 +25,7 @@
 \citation{hou2017fast}
 \citation{batcher1968sorting}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}External Sort}{6}}
+\newlabel{ExternalSorting}{{2.2}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Segmented sort in GPU}{6}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Memory Heriarchy}{6}}
 \citation{lamarca1999influence}
@@ -52,6 +53,7 @@
 \citation{MurMur3}
 \@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Proposed PrimeAdd hash function\relax }}{12}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Implementation of Insertionsort and Mergesort}{12}}
+\newlabel{SortingImplementation}{{3.4}{12}}
 \@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Insertionsort implementation\relax }}{13}}
 \@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Mergesort bottom up implementation\relax }}{14}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.5}Hash table: Unordered map}{14}}
@@ -63,48 +65,56 @@
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.7}Optimised MemoSort for repeating lists}{17}}
 \newlabel{OptMemoSort}{{3.7}{17}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.8}MemoBlockSort for similar lists}{17}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.9}MemoBlockSort optimising by K-merging}{17}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.10}MemoBlockSort optimising by 2-merging}{17}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.11}MemoBlockSort optimising by 4-merging}{17}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.12}Optimising by use of memory for similar lists}{17}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {3.13}MemoBlockSort optimising for ordered blocks}{18}}
-\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{18}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Benchmarking}{18}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Mergesort vs Insertionsort}{19}}
-\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces Insertionsort v/s Mergesort\relax }}{19}}
-\newlabel{fig:InsrtVsMerge}{{11}{19}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hash functions}{20}}
-\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Hash functions comparison\relax }}{20}}
-\newlabel{fig:HashesFunc}{{12}{20}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Memoization costs}{20}}
-\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Hash table operation time\relax }}{21}}
-\newlabel{ref:MemCostTable}{{13}{21}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}MemoSort for repeating lists}{21}}
-\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Times MemoSort is faster than brute force Insertionsort \relax }}{21}}
-\newlabel{fig:MemoSortInsGraph}{{14}{21}}
-\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces MemoSort times (ms) using Insertionsort with different repetitions\relax }}{22}}
-\newlabel{fig:MemoSortInsTable}{{15}{22}}
-\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces Times MemoSort is faster than brute force Mergesort \relax }}{23}}
-\newlabel{fig:MemoSortMergeGraph}{{16}{23}}
-\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces MemoSort times (ms) using Mergesort with different repetitions\relax }}{23}}
-\newlabel{ref:MemoSortMergeTable}{{17}{23}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Optimised MemoSort for repeating lists}{24}}
-\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces Times Optimised MemoSort is faster than brute force Insertionsort\relax }}{24}}
-\newlabel{fig:OptMemoSortInsGraph}{{18}{24}}
-\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Optimised MemoSort times (ms) using Insertionsort with different repetitions\relax }}{24}}
-\newlabel{ref:OptMemoSortInsTable}{{19}{24}}
-\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Times Optimised MemoSort is faster than brute force Mergesort\relax }}{25}}
-\newlabel{fig:OptMemoSortMergeGraph}{{20}{25}}
-\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Optimised MemoSort times (ms) using Mergesort with different repetitions\relax }}{25}}
-\newlabel{ref:OptMemoSortMergeTable}{{21}{25}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}MemoBlockSort in similar lists}{25}}
+\newlabel{MemoBlockSort}{{3.8}{17}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.9}Optimising MemoBlockSort with 2-way-merging}{18}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.10}Optimising MemoBlockSort with k-way-merging}{18}}
+\@writefile{lof}{\contentsline {figure}{\numberline {11}{\ignorespaces K-way merge\relax }}{19}}
+\newlabel{kWayMerge}{{11}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {3.11}Optimising by use of memory for similar lists}{19}}
+\@writefile{toc}{\contentsline {section}{\numberline {4}Results}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Benchmarking}{19}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Mergesort vs Insertionsort}{20}}
+\@writefile{lof}{\contentsline {figure}{\numberline {12}{\ignorespaces Insertionsort v/s Mergesort\relax }}{20}}
+\newlabel{fig:InsrtVsMerge}{{12}{20}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Hash functions}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {13}{\ignorespaces Hash functions comparison\relax }}{21}}
+\newlabel{fig:HashesFunc}{{13}{21}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Memoization costs}{21}}
+\@writefile{lof}{\contentsline {figure}{\numberline {14}{\ignorespaces Hash table operation time\relax }}{22}}
+\newlabel{ref:MemCostTable}{{14}{22}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.5}MemoSort for repeating lists}{22}}
+\@writefile{lof}{\contentsline {figure}{\numberline {15}{\ignorespaces Times MemoSort is faster than brute force Insertionsort \relax }}{22}}
+\newlabel{fig:MemoSortInsGraph}{{15}{22}}
+\@writefile{lof}{\contentsline {figure}{\numberline {16}{\ignorespaces MemoSort times (ms) using Insertionsort with different repetitions\relax }}{23}}
+\newlabel{fig:MemoSortInsTable}{{16}{23}}
+\@writefile{lof}{\contentsline {figure}{\numberline {17}{\ignorespaces Times MemoSort is faster than brute force Mergesort \relax }}{24}}
+\newlabel{fig:MemoSortMergeGraph}{{17}{24}}
+\@writefile{lof}{\contentsline {figure}{\numberline {18}{\ignorespaces MemoSort times (ms) using Mergesort with different repetitions\relax }}{24}}
+\newlabel{fig:MemoSortMergeTable}{{18}{24}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.6}Optimised MemoSort for repeating lists}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {19}{\ignorespaces Times Optimised MemoSort is faster than brute force Insertionsort\relax }}{25}}
+\newlabel{fig:OptMemoSortInsGraph}{{19}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {20}{\ignorespaces Optimised MemoSort times (ms) using Insertionsort with different repetitions\relax }}{25}}
+\newlabel{ref:OptMemoSortInsTable}{{20}{25}}
+\@writefile{lof}{\contentsline {figure}{\numberline {21}{\ignorespaces Times Optimised MemoSort is faster than brute force Mergesort\relax }}{26}}
+\newlabel{fig:OptMemoSortMergeGraph}{{21}{26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {22}{\ignorespaces Optimised MemoSort times (ms) using Mergesort with different repetitions\relax }}{26}}
+\newlabel{ref:OptMemoSortMergeTable}{{22}{26}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.7}MemoBlockSort with 2-way-merge in similar lists}{26}}
+\newlabel{MemoBlock2Res}{{4.7}{26}}
+\@writefile{lof}{\contentsline {figure}{\numberline {23}{\ignorespaces MemoBlockSort with 2-way merge performance\relax }}{27}}
+\newlabel{fig:MemoBlockSort2WayGraph}{{23}{27}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.8}MemoBlockSort with k-way-merge in similar lists}{29}}
+\@writefile{lof}{\contentsline {figure}{\numberline {24}{\ignorespaces MemoBlockSort with k-way merge performance\relax }}{29}}
+\newlabel{fig:MemoBlockSortKWayGraph}{{24}{29}}
 \citation{Arch2015}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.9}Optimised MemoBlockSort for memory}{30}}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{30}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Future Work}{30}}
 \bibstyle{alpha}
 \bibdata{references}
 \bibcite{acar2003selective}{ABH03}
 \bibcite{MurMur3}{App}
-\@writefile{toc}{\contentsline {section}{\numberline {5}Conclusions}{26}}
-\@writefile{toc}{\contentsline {section}{\numberline {6}Future Work}{26}}
 \bibcite{Arch2015}{Arc15}
 \bibcite{batcher1968sorting}{Bat68}
 \bibcite{bender2006insertion}{BFCM06}
@@ -127,4 +137,4 @@
 \bibcite{thorup2015high}{Tho19}
 \bibcite{wang2005break}{WY05}
 \bibcite{xiao2000improving}{XZK00}
-\@writefile{toc}{\contentsline {section}{\numberline {7}Apendix}{28}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Apendix}{32}}
