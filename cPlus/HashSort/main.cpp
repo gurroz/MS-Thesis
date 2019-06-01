@@ -11,6 +11,7 @@
 #include "SegmentedNaiveTest.hpp"
 #include "SegmentedHashTest.hpp"
 #include "SegmentedOptHashTest.hpp"
+
 #include "HashTest.hpp"
 #include "HashTableTest.hpp"
 
