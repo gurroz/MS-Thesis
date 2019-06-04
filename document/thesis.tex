@@ -23,9 +23,9 @@
 \maketitle
 
 \begin{abstract}
-Sorting is often considered to be the most fundamental problem in the study of algorithms. Some of the most important algorithms are Insertionsort and Mergesort, which have different approaches in solving the same problem and their characteristics makes them suitable for scenarios with lists with small and large amount of elements, respectively. Both algorithms are used in important sorting solutions, Insertionsort is used as part of the standard sorting algorithm implemented in the standard libraries of popular languages such as Java, Python and C++, while Mergesort is used to sort big amount of data in external sorting approaches.\\
-Specifically, sorting smaller lists is part of a problem which arises in computer graphics when rendering transparent images using a technique called order independent transparency, or OIT, and involves sorting of millions of small similar lists. The usual approach for this is just to brute force sorting each list one by one, but given the nature of the data, it has been detected that repetition occurs between and within lists. This implies that there may be a chance to store and use the results of previous calculated operations to avoid repetition thus improving performance. This approach is usually known as memoization. 
-This research explores several memoization techniques for different cases when there is repetition and similarities in lists, providing what we call the MemoSort and MemoBlockSort techniques which with synthetic data generated specifically to mimic different scenarios, gives performance improvement over brute force sorting starting from 25\% -- 50\% repetition in lists with 128 and 64 elements onwards.
+Sorting is often considered to be the most fundamental problem in the study of algorithms. Some of the most important algorithms are Insertionsort and Mergesort, which have different approaches in solving the same problem and their characteristics makes them suitable for scenarios with lists with small and large amount of elements, respectively. Both algorithms are used in important sorting solutions, like Timsort or Introsort, which are the default sorting algorithm implemented in the standard libraries of popular languages such as Java, Python and C++. These adaptive algorithms combine the power of the divide and conquer approach of Mergesort and the speed of Insertionsort for small lists depending on the nature of the data, improving the worst and average case.
+Sorting millions of small similar lists is part of a problem which arises in computer graphics when rendering transparent images using a technique called order independent transparency, or OIT. The usual approach for this is just to brute force sorting each list one by one, but given the nature of the data, it has been observed that repetition occurs between and within lists. This implies that there may be a chance to store and use the results of previous calculated operations to avoid repetition thus improving performance. This approach is usually known as memoization. 
+This research explores several memoization techniques for different cases when there is repetition and similarities in lists. We then provide what we call the MemoSort and MemoBlockSort techniques which with synthetic data generated specifically to model different scenarios, gives performance improvement over brute force sorting, starting from 25\% -- 50\% repetition in lists with 128 and 64 elements onwards.
 
 \end{abstract}
 
@@ -49,18 +49,18 @@ In external sorting, which handles big data sets sorting by using external memor
 \label{fig:Transp}
 \end{figure}
 
-A related kind of problem arises in the area of Computer Graphics \cite{Arch2015}, where on the display of computer generated scenes, each object or polygon to be rendered requires multiple computations to be made as quickly as possible to achieve faster graphic rendering, preferably at real time rates. One of these calculations is the transparency value for each polygon in each pixel that screen is displaying (Figure \ref{fig:Transp}). If we considered that nowadays a screen usually holds millions of pixels, therefore millions of calculations need to take place to use a technique called order independent transparency or OIT, which for each pixel must sort each list in depth order before the transparency operation can be performed. The current approach is to sort them by brute force, meaning that all of the lists are sorted independently.
+A related kind of problem arises in the area of Computer Graphics \cite{Arch2015}, where on the display of computer generated scenes, each object or polygon to be rendered requires multiple computations to be made as quickly as possible to achieve faster graphic rendering, preferably at real time rates. One of these calculations is the transparency value for each polygon at each pixel that screen is displaying (Figure \ref{fig:Transp}). If we considered that nowadays a screen usually holds millions of pixels, millions of calculations need to take place to use a technique called order independent transparency or OIT, where for each pixel must sort each list of fragments  in depth order before the transparency operation can be performed. The current approach is to sort them by brute force, meaning that all of the lists are sorted independently.
 
 The problem of sorting many small similar lists  has been studied, but not in great length, where most of the solutions involve parallel sorting with multi-threading in CPU \cite{han2002integer} and in GPU \cite{hou2017fast},  implementing hybrid algorithms combining the merging power of Mergesort with the speed of comparison based algorithms, like Insertionsort. 
 \\
 
-This research then aims to explore the existance other approaches that could aid in the performance in sorting many similar lists by taking advantage of potential repetition of elements by using memoization, which is a technique to utilise pre-calculated results, in this case the sorted lists. This involves generating a signature to uniquely identify a repeated list, by using the best suited hash function to produce it.
+This research then aims to explore the existence other approaches that could aid in the performance in sorting many similar lists by taking advantage of potential repetition of elements by using memoization, which is a technique to utilise pre-calculated results, in this case the sorted lists. This involves generating a signature to uniquely identify a repeated list, by using the best suited hash function to produce it.
 \\
 
-Due to time constraint during the design and development of this study, an abstraction of the original problem is being studied provided with synthetic data, in a way that it allows to simulate the behaviour of this techniques in different scenarios of the similarity between lists. In order to accomplish this, a testbed was developed that allowed the generation of different sets of data, according to the case that needed to be studied to outline the cases in which the potential of memoization on this problem could be of an advantage over the brute force approach.
+Due to time constraint during the design and development of this study, an abstraction of the original problem is being studied provided with synthetic data, in a way that it allows to simulate the behaviour of this techniques in different scenarios of the similarity between lists. In order to accomplish this, a testbed was developed that allowed the generation of different sets of data, according to the case that needed to be studied to outline the cases in which the potential of memoization for this problem could be of an advantage over the brute force approach.
 
 \subsection*{Research Questions}  \label{researchQuestions}
-Memoization (see section \ref{memoHash}) is a optimisation method used in divide and conquer algorithms that consists in the storage of the result of a sub problem for a later utilisation when the same sub problem arises. This gives better performance because it saves the repeated computation of the same sub problem. To achieve this the result must be stored, generally in a lookup table. Dynamic programming uses this kind of memoization to solve problems based in previous results. For our study, we will use a hash table that will hold the signature of a single list as the key and the reference to the sorted list as the value. The aim therefore is not to determine if this techniques optimises the problem, just because it is always faster performing the sorting operation only once, but to determine when does this technique haves better performance given the overhead of calculating the signature and looking up for the presence of the pre calculated value.\\
+Memoization (see section \ref{memoHash}) is a optimisation method used in divide and conquer algorithms that consists in the storage of the result of a sub problem for a later utilisation when the same sub problem arises. This gives better performance because it saves the repeated computation of the same sub problem. To achieve this the result must be stored, generally in a lookup table. Dynamic programming uses this kind of memoization to solve problems based in previous results. For our study, we will use a hash table that will hold the signature of a single list as the key and the reference to the sorted list as the value. The aim therefore is to determine when does this technique have better performance given the overhead of calculating the signature and looking up for the presence of the pre calculated value.\\
 
 This work addresses the following research questions:
 
@@ -79,9 +79,9 @@ The problem that is being explored in this research is not the focus of many stu
 The kind of algorithms for sorting can be grouped in different categories, with one of them being the internal sort. These are the kind of algorithms that work with all the data within the main memory through out the whole process.
 
 \begin{itemize}
-\item {\bf Insertionsort:}  In this category, {\it Insertionsort} is a simple comparison sorting algorithm that has an average and worse case time complexity of O(${n}^2$), but its best case scenario is O(n). Although it has a poor performance for large lists, we will study it because of its good performance in small lists. Being a stable algorithm, mainly because it sorts the elements in place, using only one auxiliary space in memory\cite{knuth1997artInsert}. Compared to other comparison sorting, like Selectionsort and Bubblesort, all have the same time complexity but in practice the efficiency of this algorithm in the average case is superior to the other quadratic algorithms because there are less comparisons steps. Optimisations over this algorithm have been made, such as Shellsort\cite{knuth1997artShell}, Librarysort\cite{bender2006insertion}. Insertion sort is also part of hybrid algorithms such as Timsort\cite{Timsort}, which is the default sorting algorithm in the standard libraries in popular languages such as Java and Python, and  Introsort\cite{musser1997introspective}  which is the default sorting algorithm for languages such as and the .NET framework.
+\item {\bf Insertionsort:}  In this category, {\it Insertionsort} is a simple comparison sorting algorithm that has an average and worse case time complexity of O(${n}^2$), but its best case scenario is O(n). Although it has a poor performance for large lists, we will study it because of its good performance in small lists. Being a stable algorithm, mainly because it sorts the elements in place, using only O(1) auxiliary space in memory\cite{knuth1997artInsert}. Compared to other comparison sorting algorithms, like Selectionsort and Bubblesort, all have the same time complexity but in practice the efficiency of this algorithm in the average case is superior to the other quadratic algorithms because there is less comparisons steps. Optimisations over this algorithm has been made, such as Shellsort\cite{knuth1997artShell}, Librarysort\cite{bender2006insertion}. Insertion sort is also part of hybrid algorithms such as Timsort\cite{Timsort}, which is the default sorting algorithm in the standard libraries in popular languages such as Java and Python, and  Introsort\cite{musser1997introspective}  which is the default sorting algorithm for languages such as C++ and the .NET framework.
 
-\item {\bf Mergesort:} The approach of this stable algorithm is sorting by divide and conquer, this by merging the result of the subsequent division of the input list into sub lists and recursively dividing and merging them. The standard implementation uses O(n) in space complexity and has average, best and worst case of O(n logn) in time complexity \cite{knuth1997artMerge}. It is suitable for medium and large data set. Multiple optimisations have been made, mainly to reduce the space complexity and the cost of copying \cite{Huang:1988:PIM:42392.42403}.  Other optimisation takes advantage of the nature of the divide and conquer process, by parallelising the execution with multiple threads \cite{chhugani2008efficient} on different architectures and cache optimised versions. Also it is extensible to be used in external sorting.
+\item {\bf Mergesort:} The approach of this stable algorithm is sorting by divide and conquer, this by merging the result of the subsequent division of the input list into sub lists and recursively dividing and merging them. The standard implementation uses O(n) in space complexity and has average, best and worst case of O(n logn) in time complexity \cite{knuth1997artMerge}. It is suitable for medium and large data set. Multiple optimisations have been made, mainly to reduce the space complexity and the cost of copying \cite{Huang:1988:PIM:42392.42403}.  Other optimisations take advantage of the nature of the divide and conquer process, by parallelising the execution with multiple threads \cite{chhugani2008efficient} on different architectures and cache optimised versions. Also it is extensible to be used in external sorting.
  \end{itemize}
 
 Even though these are some of the most important, popular and studied algorithms, for some cases there are better tuned algorithms suited for specific data, like the one proposed by \cite{han2002integer}  which sort integers and has {$O(n \sqrt{log log n})$} time and space complexity for average cases.
@@ -97,7 +97,7 @@ As much of the literature reviewed exposed, when studying an algorithm not only 
 
 \begin{figure}[H]
 \centering
-\includegraphics[height=7.5cm,keepaspectratio]{./images/ComputerMemoryHierarchy.png}
+\includegraphics[height=8.55cm,keepaspectratio]{./images/ComputerMemoryHierarchy.png}
 \caption{Memory hierarchy. (https://sites.google.com/site/cachememory2011/memory-hierarchy)}
 \label{fig:Memory}
 \end{figure}
@@ -127,10 +127,10 @@ Furthermore a hash function {\it h} is considered strongly universal if the prob
 When the size of the universe of keys is smaller or equals to the possible outcomes (M), there are ways to construct what is known as a perfect hash function  \cite{sprugnoli1977perfect}, where there is no collisions for any given key.  This might be the best solution to construct a lookup table, or hash table, to be able to apply the memoization technique. Given that the universe of the problem we are exploring consists of a pre defined length of lists and the range of the elements in the lists are limited, there should be a hash function that is perfect for this problem, but the size of M might be too big or the performance of it  could be worse compared to a sufficiently strongly universal or even only universal hash function in this particular study.
 
 
-\subsection{Compiling versus Interpreting code}
+\subsection{Compiling versus Interpreting Code}
 When developing a benchmark framework it is important to consider the precise tools for it. Programming languages have the capability to be interpreted or to be compiled, it all depends if there is a compiler or an interpreter available for the specific language. An interpreter is a program that executes the instruction written in the source code by reading each line of code, translating it to either intermediate code or machine code and executing it, making the source code the actual program. This allows that any machine that has the correspondingly interpreter can run the program, making it inter operable and also easier to debug. Some of the usual interpreters are built for scripting languages, such as Javascript.
 
-On the other hand, compilers produces code from the source code  reading the whole code and transforming it to assembly language, which is then assembled into binary code and packed into a program. This program can only be executed in the same machine architecture in which it was compiled, making it less portable, but generally is faster than interpreting code because each instruction is executed directly, instead of going through the process of being interpreted each time. Languages such as C or C++ are usually compiled.
+On the other hand, compilers produce code from the source code reading the whole program and transforming it to assembly language, which is then assembled into binary code and packed into a program. This program can only be executed in the same machine architecture in which it was compiled, making it less portable, but generally is faster than interpreting code because each instruction is executed directly, instead of going through the process of being interpreted each time. Languages such as C or C++ are usually compiled.
 
 There is another hybrid approach, where a runtime environment is provided in the machine where the program is set to run. This environment executes code by interpreting it or determining if some part of the code is heavily used, then it compiles it to later execute the compiled code instead of interpreting it. This is called  just in time compiling or JIT. Some of the languages that provides this environments are Java and Python.
 
@@ -141,9 +141,9 @@ Given the exploratory objective of this research on the feasibility of using mem
 
 In order for the data set to be representative of the original graphic transparency problem that this study takes inspiration from, the amount of lists correspond to half of what could be the expected amount of data to be processed. This comes from the fact that the sorting of transparency lists needs to be done for each pixel shown in a physical screen, so considering that nowadays most screens have a what is called full high definition (FHD) resolution, which display a resolution of 1,920 x 1,080, there is around 2 millions pixels to sort. For the purpose of this study  we will use half of the amount of available pixels (approximately 1 million) because it provides a good enough representation of a real case scenario but it still allows to run test in a environment without exceeding system memory or CPU specification.
 
-Each of the million lists to be tested is generated to hold uniformly distributed random generated integer numbers that range between 0 and RAND\_MAX using a C++ program. RAND\_MAX may depend on the particular implementation, but is normally  $2^{31}$-1, i.e. 2,147,483,647 on a 32 bit machine, just  to have a big enough pool to distribute it through the different lengths that are tested, which vary between cases. To generate the baseline on run time between sorting algorithms and also compare them using the new algorithms to use memoization in order to answer RQ1, the length of the lists considered were from 16 integers to 512. For RQ2 to be answered, this is sorting blocks within the lists, a larger length of the lists is needed because of the expected overhead that reading and merging blocks or sublists brings, so for smaller lists no better performance is expected given that brute force is already fast enough, so increasing the length size permits for an actual appreciation of what could be the benefits of applying this technique.\\
+Each of the million lists to be tested is generated to hold uniformly distributed random generated integer numbers that range between 0 and RAND\_MAX using a C++ program. RAND\_MAX may depend on the particular implementation, but is normally  $2^{31}$-1, i.e. 2,147,483,647 on a 32 bit machine, just  to have a big enough pool to distribute it through the different lengths that are tested, which vary between cases. To generate the baseline on run time between sorting algorithms and also compare them using the new algorithms to use memoization in order to answer RQ1, the length of the lists considered were from $2^4$ integers to $2^9$. For RQ2 to be answered, this is sorting blocks within the lists, a larger length of the lists is needed because of the expected overhead that reading and merging blocks or sublists brings, so for smaller lists no better performance is expected given that brute force is already fast enough, so increasing the length size permits for an actual evaluation of what could be the benefits of applying this technique.\\
 
-Finally, each list data is generated according to the scenario that it is being tested. Given that for RQ1 and RQ2 the behaviour that it is studied is on repeating list and similar list, it is then necessary to state how many or proportions of repeated lists and how similar they are. 
+Finally, each list data is generated according to the scenario that it is being tested. Given that for RQ1 and RQ2 the behaviour that it is studied is on repeating lists and similar lists, it is then necessary to state how many or proportions of repeated lists and how similar they are. 
 
 \subsection{Test Cases}
 
@@ -153,12 +153,12 @@ For RQ1 different scenarios will be tested on each list length size. Each scenar
 \begin{table}[H]
 \centering
 \begin{tabular}{|r|l|}  \hline
-	{$Repetition (\%) $} & {$Description$}  \\  \hline
-	100 & Only one original list \\
-	75 & 250,000 original list \\
-	50 & 500,000 original list \\
-	25 & 750,000 original list \\
-	0 & All list are different  \\  \hline
+	{$Repetition (\%) $} & {$Number of original list$}  \\  \hline
+	100 & 1 \\
+	75 & 250,000\\
+	50 & 500,000 \\
+	25 & 750,000\\
+	0 & All different \\  \hline
 \end{tabular}
 \caption{RQ1 test bed}
 \end{table}
@@ -168,23 +168,23 @@ For RQ2 the different scenarios are the following:
 \begin{table}[H]
 \centering
 \begin{tabular}{|r|l|}  \hline
-	{$Repetition (\%)$} & {$Description$}  \\  \hline
-	100 & Only one  original block \\
-	75& 250,000 original blocks   \\
-	50& 500,000 original blocks \\
-	25& 750,000 original blocks \\
-	0 & All blocks are different \\  \hline
+	{$Repetition (\%)$} & {$Number of original blocks$}  \\  \hline
+	100 & 1 \\
+	75& 250,000 \\
+	50& 500,000 \\
+	25& 750,000 \\
+	0 &  All different \\  \hline
 \end{tabular}
 \caption{RQ2 test bed}
 \end{table}
 
-For each of these scenarios, three blocks sizes will be tested,  8, 16 and 64. The idea is to study the impact of the block size to determine how it affects in the performance but only a subset of them are chosen because choosing a higher block will convert it into a RQ1 scenario and because of time constraint not all possible combinations can be tested. \\
+For each of these scenarios, three blocks sizes will be tested,  8, 16 and 64. The idea is to study the impact of the block size to determine how it affects in the performance but only a subset of them are chosen because choosing a higher block size will convert it into a RQ1 scenario and because of time constraint not all possible combinations can be tested. \\
 
-The testbed used is a 2017 MacBook Pro, with a 2.3 GHz Intel Core i5 and 16 GB 2133 MHz LPDDR for physical memory. Compiled with Apple LLVM version 10.0.1 (clang-1001.0.46.4) in macOs Mojave 10.14.4, with 32K/32K Level 1 cache.
+The testbed used is a 2017 MacBook Pro, with a 2.3 GHz Intel Core i5 and 16 GB 2133 MHz LPDDR for physical memory. Compiled with Apple LLVM version 10.0.1 (clang-1001.0.46.4) in MacOS Mojave 10.14.4, with 32K/32K Level 1 cache.
 
 \subsection{Hash Function}
 
-In order to consider which hash function to implement, the universe of possible inputs has to be considered. We are only working with sets of integers with elements between 0 and RAND\_MAX, and each list (or a block of it) is a key or input for the hash function. 
+In order to consider which hash function to implement, the universe of possible inputs has to be considered. We are working with sets of integers with elements between 0 and RAND\_MAX, and each list (or a block of it) is a key or input for the hash function. 
 Then the size of the universe of keys is the combination of the range of integers over the size of the lists $\binom{RAND\_MAX}{Max list length} $, which in the environment where the test bed will be run, where max list length is 512, it is in the order of $10^{3611}$.
 
 Given this universe size, considering a perfect universal hash function is impossible because the potential hash table needs $10^{3611}$ elements to map to. In consequence, a strongly universal hash function will be considered.
@@ -273,7 +273,7 @@ void InsertionSort::sort(int list[], int length) {
 \end{figure}
 
 
-The case for Mergesort is more interesting, because the natural approach is to have depth first  recursive calls. However, using a bottom up approach is faster, which is an iterative double loop that operates in place and merges the arrays in pair, doubling the range of each tuple in each loop. A slight improvement is made by using a temporary array to merge the sublists outside the merge step, saving some copy operations. The advantages for this choice of implementation is to avoid the recursive function call overhead and the ability to access in place to all elements, which gives the opportunity for further modifications when considering memoization over the algorithm.
+The case for Mergesort is more interesting, because the natural approach is to have depth first recursive calls. However, using a bottom up approach is faster, which is an iterative double loop that operates in place and merges the arrays in pairs, doubling the range of each tuple in each loop. A slight improvement is made by using a temporary array to merge the sublists outside the merge step, saving some copy operations. The advantages for this choice of implementation is to avoid the recursive function call overhead and the ability to access in place to all elements, which also gives the opportunity for further modifications when considering memoization over the algorithm.
 
 \begin{figure}[H]
 \begin{small}
@@ -318,7 +318,7 @@ void MergeSort::merge(int list[], int tmp[], int iLeft, int iMiddle, int iRight)
 \caption{Mergesort bottom up implementation}
 \end{figure}
 
-\subsection{Hash table: Unordered map} \label{hashTable}
+\subsection{Hash table: Unordered Map} \label{hashTable}
 As stated earlier, the selected underlying hash table used to store the signature is the one offered as part as the containers library in C++ named unordered\_map, which is a structure that holds the pair (key, value) and it has O(1) in the average case for the search, insert and delete operation.
 
 This hash table expands automatically because it keeps count of the number of items stored and grows its size and rehashes all elements when it reaches a defined load factor, which is the ratio between the number of elements and the size of the hash table. 
@@ -336,10 +336,10 @@ Empirically the operations of insertion and look up values can be viewed in Figu
 
 It can be viewed that both insertion and search operation generally maintains a constant time in average, but looking up for one element is order of magnitude faster than inserting. \\
 
-In order to avoid this costly resize operation, it is a good practice to reserve the expected size of the hash table before inserting elements. 
+In order to avoid this costly resize operation, it is a good practice and more performant to reserve the expected size of the hash table before inserting elements. 
 
 \subsection{MemoSort for Repeating Lists}
-To be able to take advantage of the possible repeating nature of the problem being studied we use the described hash table and hash function to implement a memoization technique. We propose \textbf{MemoSort} which is the algorithm being studied to establish its real benefits, and its outline can be viewed in Figure \ref{fig:MemoSortDiagram} and Figure \ref{fig:MemoSortDiagramHash}.
+To be able to take advantage of the possible repeating nature of the problem being studied we use the described hash table and hash function to implement a memoization technique. We propose \textbf{MemoSort} which is the algorithm being studied to investigate its real benefits, and its outline can be viewed in Figure \ref{fig:MemoSortDiagram} and Figure \ref{fig:MemoSortDiagramHash}.
 
 \begin{figure}[H]
     \centering
@@ -652,7 +652,7 @@ For Mergesort the case is different, as shown in Figure \ref{fig:OptMemoSortMerg
 \label{fig:OptMemoSortMergeTable}
 \end{table}
 
-\subsection{MemoBlockSort with 2-way-merge in similar lists}\label{MemoBlock2Res}
+\subsection{MemoBlockSort with 2-way-merge in Similar Lists}\label{MemoBlock2Res}
 
 As discussed in section \ref{MemoBlockSort}, the overall performance of MemoBlockSort is not as good as MemoSort, even though a direct comparison can not be established as they focus on slightly different problems. \\
 
@@ -683,7 +683,7 @@ Also by comparing the behaviour of MemoBlockSort with Insertionsort and MemoBloc
 
 Finally in Figure \ref{fig:MemoBlockSort2WayGraph} (e) and (f)  it can be seen that this approach has better performance for Insertionsort when the block size is 64 and starting at 256 of list size and 50\% repetition. For Mergesort, the same is true but only after 75\% repetition.
 
-\subsection{MemoBlockSort with k-way-merge in similar lists}
+\subsection{MemoBlockSort with k-way-merge in Similar Lists}
 
 \begin{figure}[H]
 \centering
@@ -749,15 +749,15 @@ Finally, there was a chance of enhancing the proposed algorithms to get better r
 
 \section{Future Work}
 
-While the objectives of this study serves as a initial exploration and they are reached by running the test cases with synthetic data, there is a need to find a suitable problem where the nature of the data fits the conclusions, so it can benefit of  the explored memoization techniques. The problem that served as inspiration \cite{Arch2015} is a possible candidate but some changes need to be done to fit the data of this problem, furthermore, some preliminary probing suggest that the data is not so repetitive to be able to benefit from the techniques studied.
+While the objectives of this study serves as a initial exploration and they are reached by running the test cases with synthetic data, there is a need to find a suitable problem where the nature of the data fits the conclusions, so it can benefit of  the explored memoization techniques. The problem that served as inspiration \cite{Arch2015} is a possible candidate but some changes need to be done to fit the data of this problem, furthermore, some preliminary probing suggest that the data is not so repetitive to be able to benefit from the techniques studied. What remains open is to see what if there is any improvement on using the memoization technique along with the edit distance solution for slightly similar lists discussed in \cite{Arch2015}.
 
 Because the limitation on time of this study, there are multiple different improvements or alterations to be made to test the techniques in different scenarios, like exploring the behaviour with cache friendly version of the sorting algorithms and the merging process in {\it MemoBlockSort} and using the power of parallelisation by multi threading in CPU or by implementing memoization techniques in GPU sorting.
 
 Also other memoization techniques can be constructed, like a probabilistic heuristic that samples elements of the lists between lists, instead of reading the whole list to match for previous sorted list.
 
-For the specific problem on choosing the correct hash function, from the multiple implementations of hash functions, there may be faster one that is not universal but still have no collisions within the problems data and makes the memoization techniques more beneficial.
+For the specific problem of choosing an appropiate hash function, from the multiple implementations of hash functions, there may be faster one that is not universal but still have no collisions within the problems data and makes the memoization techniques more beneficial.
 
-Other approaches to determine the similarities between list can be explored other than using a hash table, like local sensitive hashing, specifically the MinHash algorithm which can determine with a hash function the similar sets with a percentage of error.
+Other approaches to determine the similarities between lists can be explored rather than using a hash table, like local sensitive hashing, specifically the MinHash algorithm which can determine with a hash function the similar sets with a percentage of error.
 
 \bibliographystyle{alpha}
 % there are various bibliography styles you can set

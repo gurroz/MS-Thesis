@@ -5,13 +5,13 @@
 \contentsline {subsection}{\numberline {2.3}Segmented Sort in GPU}{6}
 \contentsline {subsection}{\numberline {2.4}Memory Heriarchy}{6}
 \contentsline {subsection}{\numberline {2.5}Memoization and Hashing}{7}
-\contentsline {subsection}{\numberline {2.6}Compiling versus Interpreting code}{8}
+\contentsline {subsection}{\numberline {2.6}Compiling versus Interpreting Code}{8}
 \contentsline {section}{\numberline {3}Design and Development}{9}
 \contentsline {subsection}{\numberline {3.1}Synthetic Data}{9}
 \contentsline {subsection}{\numberline {3.2}Test Cases}{10}
-\contentsline {subsection}{\numberline {3.3}Hash Function}{11}
+\contentsline {subsection}{\numberline {3.3}Hash Function}{10}
 \contentsline {subsection}{\numberline {3.4}Implementation of Insertionsort and Mergesort}{12}
-\contentsline {subsection}{\numberline {3.5}Hash table: Unordered map}{14}
+\contentsline {subsection}{\numberline {3.5}Hash table: Unordered Map}{14}
 \contentsline {subsection}{\numberline {3.6}MemoSort for Repeating Lists}{15}
 \contentsline {subsection}{\numberline {3.7}Optimised MemoSort for Repeating Lists}{17}
 \contentsline {subsection}{\numberline {3.8}MemoBlockSort for Similar Lists}{18}
@@ -24,8 +24,8 @@
 \contentsline {subsection}{\numberline {4.4}Memoization Costs}{23}
 \contentsline {subsection}{\numberline {4.5}MemoSort for Repeating Lists}{23}
 \contentsline {subsection}{\numberline {4.6}Optimised MemoSort for Repeating Lists}{26}
-\contentsline {subsection}{\numberline {4.7}MemoBlockSort with 2-way-merge in similar lists}{27}
-\contentsline {subsection}{\numberline {4.8}MemoBlockSort with k-way-merge in similar lists}{30}
+\contentsline {subsection}{\numberline {4.7}MemoBlockSort with 2-way-merge in Similar Lists}{27}
+\contentsline {subsection}{\numberline {4.8}MemoBlockSort with k-way-merge in Similar Lists}{30}
 \contentsline {section}{\numberline {5}Conclusions}{31}
 \contentsline {section}{\numberline {6}Future Work}{32}
 \contentsline {section}{\numberline {7}Appendix}{35}
