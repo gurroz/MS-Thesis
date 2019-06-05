@@ -9,14 +9,14 @@
 \contentsline {section}{\numberline {3}Design and Development}{9}
 \contentsline {subsection}{\numberline {3.1}Synthetic Data}{9}
 \contentsline {subsection}{\numberline {3.2}Test Cases}{10}
-\contentsline {subsection}{\numberline {3.3}Hash Function}{10}
+\contentsline {subsection}{\numberline {3.3}Hash Function}{11}
 \contentsline {subsection}{\numberline {3.4}Implementation of Insertionsort and Mergesort}{12}
 \contentsline {subsection}{\numberline {3.5}Hash table: Unordered Map}{14}
 \contentsline {subsection}{\numberline {3.6}MemoSort for Repeating Lists}{15}
 \contentsline {subsection}{\numberline {3.7}Optimised MemoSort for Repeating Lists}{17}
 \contentsline {subsection}{\numberline {3.8}MemoBlockSort for Similar Lists}{18}
 \contentsline {subsection}{\numberline {3.9}Optimising MemoBlockSort with 2-way-merging}{19}
-\contentsline {subsection}{\numberline {3.10}Optimising MemoBlockSort with k-way-merging}{20}
+\contentsline {subsection}{\numberline {3.10}Optimising MemoBlockSort with k-way-merging}{19}
 \contentsline {section}{\numberline {4}Results}{20}
 \contentsline {subsection}{\numberline {4.1}Benchmarking}{20}
 \contentsline {subsection}{\numberline {4.2}Mergesort versus Insertionsort}{21}
@@ -27,5 +27,5 @@
 \contentsline {subsection}{\numberline {4.7}MemoBlockSort with 2-way-merge in Similar Lists}{27}
 \contentsline {subsection}{\numberline {4.8}MemoBlockSort with k-way-merge in Similar Lists}{30}
 \contentsline {section}{\numberline {5}Conclusions}{31}
-\contentsline {section}{\numberline {6}Future Work}{32}
+\contentsline {section}{\numberline {6}Future Work}{33}
 \contentsline {section}{\numberline {7}Appendix}{35}

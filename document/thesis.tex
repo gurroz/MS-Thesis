@@ -9,6 +9,9 @@
 \usepackage{float}
 \usepackage{amsmath}
 
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash}m{#1}}
+
+
 \begin{document}
 
 \title{\uppercase{Sorting of many similar lists using memoization techniques}} 
@@ -152,8 +155,8 @@ For RQ1 different scenarios will be tested on each list length size. Each scenar
 
 \begin{table}[H]
 \centering
-\begin{tabular}{|r|l|}  \hline
-	{$Repetition (\%) $} & {$Number of original list$}  \\  \hline
+\begin{tabular}{|r|r|}  \hline
+	{$Repetition (\%) $} & {Number of original lists}  \\  \hline
 	100 & 1 \\
 	75 & 250,000\\
 	50 & 500,000 \\
@@ -167,8 +170,8 @@ For RQ2 the different scenarios are the following:
 \\
 \begin{table}[H]
 \centering
-\begin{tabular}{|r|l|}  \hline
-	{$Repetition (\%)$} & {$Number of original blocks$}  \\  \hline
+\begin{tabular}{|r|r|}  \hline
+	{$Repetition (\%)$} & {Number of original blocks}  \\  \hline
 	100 & 1 \\
 	75& 250,000 \\
 	50& 500,000 \\
@@ -355,7 +358,7 @@ To be able to take advantage of the possible repeating nature of the problem bei
     \label{fig:MemoSortDiagramHash}
 \end{figure}
 
-The algorithm is defined by the pseudo code that can be seen in  Figure \ref{fig:MemoSortAlgo}.
+The algorithm is defined by the pseudo code given in Figure \ref{fig:MemoSortAlgo}.
 
 \begin{figure}[H]
 \begin{small}
@@ -376,16 +379,16 @@ for(j = 0; j < listLength; j++) {
 \label{fig:MemoSortAlgo}
 \end{figure}
 
-The theoretical behaviour for each of the sorting algorithm gives us an idea on the amount of overhead that the construction and  execution of the look up in the hash table has to take. 
+The theoretical behaviour of each sorting algorithm gives us an idea on the amount of overhead that the construction and  execution of the look up in the hash table has to take. 
 
 For Insertionsort, the worst time complexity is O($n^2$), where n is the length of the list and if M is the total number of lists to sort in the brute force case, and M$'$ the amount of unique lists to sort when using memoization, then it follows that:
 
 \begin{equation}
-M * O_{sorting}(n^2)  \geq M' * O_{sorting}(n^2)  + Overhead
+M' * O_{sorting}(n^2)  + Overhead \leq  M * O_{sorting}(n^2) 
 \end{equation}
 Which implies
 \begin{equation}
-(M - M') *  O_{sorting}(n^2)  \geq Overhead
+ Overhead \leq  (M - M') *  O_{sorting}(n^2)
 \end{equation}
 
 As the memoization technique involves calculating the signature for each list, looking up each, and insert only the ones that are unique, then:
@@ -399,7 +402,7 @@ Accordingly the implementation of the hash table then has to be constant for bot
 In consequence for the memoization technique to be beneficial it must stand that:
 
 \begin{equation}
-(M - M') *  O_{sorting}(n^2) \geq M * O_{hashing}(n)+ M'
+ M * O_{hashing}(n)+ M' \leq  (M - M') *  O_{sorting}(n^2)
 \end{equation}
 
 From this, the following cases can be defined:
@@ -416,12 +419,12 @@ The new approach is that for each list the hash table holding the current calcul
 
 To be able to calculate the signature, the hash function needs to be able to construct the hash value in an incremental way. For this reason is why neither {\it Murmur3} or {\it PairMultShift}  are suitable because they do not operate with only one element at a time, so the chosen hash function is {\it PrimeAdd} which behaves in a similar way to the named hash functions but operates on one element at a time.
 
-The modifications made to Insertionsort are minimal, given that calculating the signature is possible only when the last element is read, which happens at the end of the algorithm.
+The particularity of Insertionsort is that it only visit the whole list after sorting all the other positions, so it is expected not to perform so well with the proposed optimisation. The modifications made then are minimal, given that calculating the signature is possible only when the last element is read, which happens at the end of the algorithm.
 
 Different is the case of Mergesort where after the first pass of the merge step all elements have been visited and the signature can be calculated, thus saving all the subsequent merging steps.
 
 \subsection{MemoBlockSort for Similar Lists} \label{MemoBlockSort}
-A broader case can be considered as a possibility to apply memoization techniques, where lists are different from others but parts or {\it blocks} repeat between the lists. The proposed algorithm, {\it MemoBlockSort}, works in a similar way to the proposed  {\it MemoSort} but instead of calculating signatures for whole lists, it uses blocks of elements of a predefined length in each list as it can be seen in Figure \ref{fig:MemoBlocSortDiagram} and the unique signature of each block is then calculated as seen in Figure \ref{fig:MemoBlocSortDiagramHash} . Then after the process of checking existence, sorting and inserting in the hash table, a third step takes place, which is the merging of the sorted blocks to re generate the list in a sorted order.\\
+A broader approach can be considered as a possibility to apply memoization techniques. In it, lists are different from others but parts or {\it blocks} repeat between the lists. The proposed algorithm, {\it MemoBlockSort}, works in a similar way to the proposed  {\it MemoSort} but instead of calculating signatures for whole lists, it uses blocks of elements of a predefined length in each list, as can be seen in Figure \ref{fig:MemoBlocSortDiagram}, with the unique signature of each block calculated as shown in Figure \ref{fig:MemoBlocSortDiagramHash} . Then after the process of checking existence, sorting and inserting in the hash table, a third step takes place, which is the merging of the sorted blocks to re generate the list in a sorted order.\\
 
 \begin{figure}[H]
     \centering
@@ -437,13 +440,13 @@ A broader case can be considered as a possibility to apply memoization technique
     \label{fig:MemoBlocSortDiagramHash}
 \end{figure}
 
-In order to test this approach, the list need to be constructed in a special way, because when we talk about repetition, is how many times a specific block is repeated. This repetition can happen in many ways, distributed between different list, or the simpler way when the repetition is in the list itself. So all blocks are distributed in equal manner in each list.\\
+In order to test this approach, the list need to be constructed in a special way, because when we talk about repetition, it is now how many times a specific block is repeated. This repetition can happen in many ways, distributed between different lists, or the simpler way when the repetition is in the list itself. So all blocks are distributed in equal manner in each list.\\
 
 Each of the unique blocks are generated with uniform random integers and the rest of the lists is filled with uniform random integers. This generates lists that do not have a uniform random distribution, given the repetition of blocks. This characteristic impacts in the sorting performance of Insertionsort and Mergesort, so for each scenario the brute force sorting of the whole list is calculated to be able to compare correctly. 
 
 The test bed to determine the behaviour of this approach includes different block and list sizes, comparing both for Insertionsort and Mergesort. \\
 
-The first overhead that can be distinguished is the amount of possible signatures created, if L is the length of the lists, M the amount of lists, B the length of the blocks and U the factor of repetition, the amount of signatures calculated is given by the equation :
+The first overhead that can be distinguished is the number of possible signatures created, if L is the length of the lists, M the amount of lists, B the length of the blocks and U the factor of repetition, the number of signatures calculated is given by the equation:
 
 \begin{equation}
 Number of signatures \leq  M * (L / B) * U
@@ -452,14 +455,14 @@ Number of signatures \leq  M * (L / B) * U
 Then the overhead is affected by the factor (L/B) and U, which not only impacts the size of the hash table, but also the number of iterations and reading and writing of data. So it is expected that the overhead of managing blocks will make this approach less optimal compared to the previous scenario of just sorting repeating lists, but at the same time broadens the applications of this memoization technique.
 
 \subsection{Optimising MemoBlockSort with 2-way-merging}
-One of the main optimisations to MemoBlockSort is in the process of merging the blocks to produce the sorted result of the original list. The procedure includes taking all the references to the different already sorted blocks in the original list and merge them. The naive way of doing this is just copying each block back to the list in the sorted order, and later run a the sorting algorithm to this semi ordered list to sort it completely. Clearly this approach works, but it is similar to just sort the list without the whole process.
+One of the main optimisations to MemoBlockSort is in the process of merging the blocks to produce the sorted result of the original list. The procedure includes taking all the references to the different already sorted blocks in the original list and merging them. The naive way of doing this is just copying each block back to the list in the sorted order, and later run a the sorting algorithm to this semi ordered list to sort it completely. Clearly this approach works, but it is similar to just sort the list without the whole process.
 
 So a better way to merge this comes from the Merge phase of the Mergesort algorithm (see section \ref{SortingImplementation}), which merges the different sublists by pairs. Similarly, the approach taken here is to iteratively merge each block with a temporary list, and by this merging just two sub lists at a time. At the end of all blocks merging, the temporary list is copied to the original list.
 
 \subsection{Optimising MemoBlockSort with k-way-merging}
 Another way to merge the blocks can be found in external sorting problems (see section \ref{ExternalSorting}) which involves merging k sublists into a new list, in this case merge all the blocks where k =  (L/B) into the original list.\\
 
-The procedure for this is taking advantage that the blocks are already sorted, so for each position in the original list the minimum value is calculated as described in Figure \ref{kWayMerge}.
+The procedure for this is taking advantage that the blocks are already sorted, so for each position in the original list the minimum value is calculated as given in Figure \ref{kWayMerge}.
 
 \begin{figure}[H]
 \begin{small}
@@ -490,9 +493,9 @@ for(i = 0; i < listLength; i++) {
 
 The first activity that was developed was to design and build a software framework that could guarantee correct and trustworthy calculation of the execution of certain algorithms. The first approach was to develop the software in Java language version 8, but it proved to be a not so reliable language for benchmarking given that the Java Virtual Machine environment on which the program runs, uses JIT  compilation and handles memory through a garbage collector in a unpredictable way, thus when running experiments results varied to a large degree. The first measure to mitigate this was to run each test ten times and calculate an average on the result. Also, to prevent the compilation of code throughout the test, the code had to be {\it warmed up} by executing it a number of times so it would be forcefully compiled. 
 
-Even after taking these measures, the tests took a long time to run, and the results were still not as solid as required to confidently compare algorithms. For that reason, the code was re written in C++. With this new code the test where  executed and it prove to give more concise and uniform results. This allowed to execute the test a couple of times without having a big difference, producing consistent results in overall, so the measures presented are the execution of a single test.
+Even after taking these measures, the tests took a long time to run, and the results were still not as solid as required to confidently compare algorithms. For that reason, the code was re written in C++. With this new code the tests were  executed and it proved to give more consistent and uniform results. This allowed to execute the test a couple of times without having a big difference, producing consistent results overall, so the measures presented are the execution of a single test.
 
-\subsection{Mergesort versus Insertionsort}
+\subsection{Mergesort versus Insertionsort} \label{InsrtVsMerge}
 
 \begin{figure}[H]
     \centering
@@ -501,11 +504,11 @@ Even after taking these measures, the tests took a long time to run, and the res
     \label{fig:InsrtVsMerge}
 \end{figure}
 
-The first experiment executed was to compare algorithms Insertionsort and Mergesort given the synthetic data set created, sorting a million lists in different , using the same parameters for each one. As the literature confirms, Insertionsort has a better performance on smaller length list. By using the parameter $-O2$ to compile the code with level 2 optimisation, better results are obtained and Insertionsort sorts in less time up to length of 256 elements. After this list length, Mergesort has a better performance.
+The first experiment executed was to compare algorithms Insertionsort and Mergesort given the synthetic data set created, sorting a million lists in different , using the same parameters for each one. As the literature confirms, Insertionsort has a better performance on smaller length list. By using the parameter --O2 to compile the code with level 2 optimisation, better results are obtained and Insertionsort sorts in less time up to length of 256 elements. After this list length, Mergesort has a better performance.
 
-The time taken to sort the lists in milliseconds is displayed in Figure \ref{fig:InsrtVsMerge}. Only the average case (random order) for both algorithms is displayed and they exhibit the expected behaviour, this is  O(${n}^2$) for sorted array in Insertionsort and O(n logn) time complexity for Mergesort.  But for smaller lengths as 16 and 32 elements, Insertionsort is 2 times faster than Mergesort but at 256 only 0.2 times faster. 
+The time taken to sort the lists in milliseconds is displayed in Figure \ref{fig:InsrtVsMerge}. Only the average case (random order) for both algorithms is displayed and they exhibit the expected behaviour, this is  O(${n}^2$) for sorted array in Insertionsort and O(n logn) time complexity for Mergesort.  But for smaller lengths as 16 and 32 elements, Insertionsort is 2 times faster than Mergesort but at 256 only 1.2 times faster. Then for 512, Mergesort is 1.2 times faster than Insertionsort.
 
-This is explained because Insertionsort performs less operations and most importantly has less read and write operations over the array. In contrast, Mergesorts reads and writes through the data for each merge, making it more expensive to sort when the overhead of this operations takes almost all the time of the sorting, which happens when the amount of elements is small.
+This is explained because Insertionsort performs less operations and most importantly has less read and write operations over the array. In contrast, Mergesorts reads and writes through the data for each merge, making it more expensive to sort when the overhead of these read/write operations takes almost all the time of the sorting, which happens when the amount of elements is small.
 
 \subsection{Hash Functions}
 
@@ -516,19 +519,19 @@ This is explained because Insertionsort performs less operations and most import
     \label{fig:HashesFunc}
 \end{figure}
 
-From Figure \ref{fig:HashesFunc} is it clear that all hashing function have a linear behaviour as expected, but they do show performance differences between them. It is obvious that MD5 is not a viable hash function to use for this study because of the time it takes compared to the other functions, being near an order of magnitude of difference, i.e. 10x. This confirms that this functions is not designed for use in a hash table.
+From Figure \ref{fig:HashesFunc} is it clear that all hashing function have a linear behaviour as expected, but they do show performance differences. It is obvious that MD5 is not a viable hash function to use for this study because of the time it takes compared to the other functions, being near an order of magnitude of difference, i.e. 10 times. This confirms that this functions is not designed for use in a hash table.
 
 Then when comparing the other three hash functions, {\it PrimeShift} hash function behaves as wells as the others two, but it begins to be slower after the array length is bigger than 64 elements. The difference continues to increase as there are more elements in the lists.
 
-Both {\it Murmu3} and {\it PairMultShift} behave in a similar way, growing by a really small amount and having a small difference between them, that could be part of the randomness of the tests. Both approaches are radically different but behaves as well for list of integers.
+Both {\it Murmu3} and {\it PairMultShift} behave in a similar way, growing by a really small amount and having a small difference between them, that could be part of the randomness of the tests. Both approaches are radically different but behave as well as each other for list of integers.
 
 It must be stated that all of the hash functions presented 0 collisions for each of the runs.\\
 
-These result shows that the cost of hash function can be considered small if compared to operations such as sorting the list, even more for bigger list sizes like 256 and 512, where the time to hash the list is almost the same as for smaller list. For smaller sizes it still behaves better than sorting but the cost is comparable for sizes such as 16 and 32 elements.
+These results shows that the cost of hash function can be considered small if compared to operations such as sorting the list, even more so for bigger list sizes like 256 and 512, where the time to hash the list is almost the same as for smaller list. For smaller sizes it still behaves better than sorting but the cost of hashing and sorting are comparable for sizes such as 16 and 32 elements.
 
 \subsection{Memoization Costs}
 
-In order to better compare the performance of the memoization techniques, a base cost must be stablished in the use of a hash table, by determining the time spent inserting and searching from it. An experiment was conducted to determine how much time did it take in the operation of inserting the expected amount of signatures, and how much time it takes to search for each signature while the hash table was being populated. \\
+In order to better compare the performance of the memoization techniques, a base cost must be stablished in the use of a hash table, by determining the time spent inserting and searching from it. An experiment was conducted to determine how much time it takes in the operation of inserting the expected amount of signatures, and how much time it takes to search for each signature while the hash table was being populated. \\
 
 \begin{table}[H]
 \centering
@@ -541,7 +544,7 @@ In order to better compare the performance of the memoization techniques, a base
 \label{ref:MemCostTable}
 \end{table}
 
-The readings shown in Table \ref{ref:MemCostTable} are the sum of the time taken by each operation while constructing the hash table. Both operations increased in time with the number of elements stored in the hash, inserting being around 20\%--30\% more expensive than reading from the hash table. Has to be noted that in MemoSort algorithm the operations are not executed the same number of times, except in the case where there is no repetition, because look up is executed for the total amount of lists and insertion only happens when the signature is not  already present, which depend on the repetition of lists.
+The readings shown in Table \ref{ref:MemCostTable} are the sum of the time taken by each operation while constructing the hash table. Both operations increased in time with the number of elements stored in the hash, inserting being around 20\%--30\% more expensive than reading from the hash table. It has to be noted that in the MemoSort algorithm the operations are not executed the same number of times, except in the case where there is no repetition, because look up is executed for the total amount of lists and insertion only happens when the signature is not  already present, which depend on the repetition of lists.
 
 \subsection{MemoSort for Repeating Lists}
 
@@ -558,12 +561,12 @@ The following result represents the test over uniformly distributed random data 
 \centering
 \begin{tabular}{|r|r|r|r|r|r|r|}   \hline
 	{Length}  & {$100\%$} & {$75\%$} & {$50\%$} & {$25\%$} & {$0\%$} \\  \hline
-	16  &0.982& 0.445 & 0.299  & 0.249 &  0.213 \\ 
-	32 & 2.155 & 0.944 & 0.602 &  0.482 & 0.402 \\ 
-	64 &  5.989 & 1.734 & 1.085 & 0.782 & 0.637 \\ 
-	128 &14.587 & 2.469 & 1.494 & 1.049  & 0.819 \\ 
-	256 & 28.572& 3.211 & 1.754 & 1.202 & 0.915 \\ 
-	512 & 82.792& 3.690 & 1.912 & 1.285 & 0.970 \\  \hline
+	16  &0.9& 0.5 & 0.3  & 0.3 &  0.2 \\ 
+	32 & 2.2 & 0.9 & 0.6 &  0.5 & 0.4 \\ 
+	64 &  5.9 & 1.7 & 1.1 & 0.8 & 0.6 \\ 
+	128 &14.6 & 2.5 & 1.5 & 1.1  & 0.8 \\ 
+	256 & 28.6& 3.2 & 1.8 & 1.2 & 0.9 \\ 
+	512 & 82.8& 3.7 & 1.9 & 1.3 & 0.9 \\  \hline
 \end{tabular}
 \caption{MemoSort speed factor using Insertionsort with different repetitions}
 \label{fig:MemoSortInsTable}
@@ -571,11 +574,12 @@ The following result represents the test over uniformly distributed random data 
 
 The results displayed in Figure \ref{fig:MemoSortInsGraph} shows the performance comparison between different scenarios of repetition, leaving out the border cases of 0\% and 100\% repetition as they behave as expected and their results distorts the graph, nevertheless they can be viewed in Table \ref{fig:MemoSortInsTable}. \\
 
-The results shows the times MemoSort is faster than sorting by brute force all lists. We can see that there is a severe penalty for using this approach in small lists length, like 16 and 32 element for Insertionsort. There starts to be an improved performance after lists with length of 128 for most repetition scenarios, but at 64 there is an improvement if the data is repeated between 50\%--75\%. This is  mainly because the sorting performance below this length surpass the overhead of calculating and looking up the signature of the list. \\
-As it is expected, when there is no repetition, there is only overhead in applying this approach. The trend tends to be that the bigger the list length and higher repetition, the more performance improvement there is, as would be expected.\\
+The results shows the times MemoSort is faster than sorting by brute force all lists. We can see that there is a severe penalty for using this approach in small lists length, like 16 and 32 element for Insertionsort. There starts to be an improved performance after lists with length of 128 for most repetition scenarios, but at 64 there is an improvement if the data is repeated between 50\%--75\%. This is  mainly because the sorting performance below this length surpasses the overhead of calculating and looking up the signature of the list. \\
+As it is expected, when there is no repetition, there is only overhead in applying this approach. The trend tends to be, as expected, that the bigger the list length and higher repetition, the more performance improvement there is.\\
 
 The same behaviour is shown for Mergesort in Figure  \ref{fig:MemoSortMergeGraph} , but the performance improvement is not given much by the length of the list, as only for the amount of repetition given that the increase or decrease is not so drastic as with Insertionsort. The border cases of 0\% and 100\% repetition can be viewed in Table \ref{fig:MemoSortMergeTable}, where it shows only worst and better performance respectively for each lists length.
 
+It can be seen that Memosort has a similar behaviour for both sorting algorithms, reaching nearly the same improvement for both at higher list size. The main difference is in smaller lists, where Insertionsort is more penalised than Mergesort, because of its discussed speed in smaller lists. This also explains why in bigger list both algorithms perform almost identically, as the benefit is absorbed by the cost of sorting the lists, and both algorithms are very similar in performance in longer lists (up to 512).
 \begin{figure}[H]
     \centering
     \includegraphics[height=8cm,keepaspectratio]{./images/MemoSortMerge.png}
@@ -588,12 +592,12 @@ The same behaviour is shown for Mergesort in Figure  \ref{fig:MemoSortMergeGraph
 \centering
 \begin{tabular}{|r|r|r|r|r|r|r|}   \hline
 	{Length} &  {$100\%$} & {$75\%$} & {$50\%$} & {$25\%$} & {$0\%$} \\  \hline
-	16 & 2.116&0.845 & 0.540 & 0.434 &0.356\\ 
-	32 & 5.262&1.554 & 0.916&0.703& 0.568\\ 
-	64 & 10.937 &2.232&1.324&0.969&0.753\\ 
-	128 & 20.636&2.895&1.621&1.125&0.865\\ 
-	256 & 35.089&3.317&1.748&1.215&0.919\\ 
-	512 &  58.978&3.640&1.897&1.265&0.958\\  \hline
+	16 & 2.1&0.8 & 0.5 & 0.4 &0.3\\ 
+	32 & 5.3&1.5 & 0.9&0.7& 0.5\\ 
+	64 & 10.9 &2.2&1.3&0.9&0.7\\ 
+	128 & 20.6&2.8&1.6&1.1&0.8\\ 
+	256 & 35.1&3.3&1.7&1.2&0.9\\ 
+	512 &  58.9&3.6&1.9&1.2&0.9\\  \hline
 \end{tabular}
 \caption{MemoSort speed factor using Mergesort with different repetitions}
 \label{fig:MemoSortMergeTable}
@@ -612,21 +616,21 @@ The same behaviour is shown for Mergesort in Figure  \ref{fig:MemoSortMergeGraph
 \centering
 \begin{tabular}{|r|r|r|r|r|r|r|}   \hline
 	{Length} & {$100\%$} & {$75\%$} & {$50\%$} & {$25\%$} & {$0\%$} \\  \hline
-	16 &0.802&0.303 & 0.284 & 0.221 & 0.196\\ 
-	32 &1.263&0.541 & 0.487& 0.404& 0.363\\ 
-	64 &1.269 &0.728&0.685&0.621& 0.593\\ 
-	128 &0.898&0.757&0.730&0.719 &0.708\\ 
-	256 &0.753&0.723&0.715&0.708&0.704\\ 
-	512 & 0.688&0.687&0.683 &0.678 &0.681\\  \hline
+	16 &0.8&0.3 & 0.2 & 0.2 & 0.1\\ 
+	32 &1.2&0.5& 0.4& 0.4& 0.3\\ 
+	64 &1.2 &0.7&0.6&0.6& 0.6\\ 
+	128 &0.9&0.7&0.7&0.7&0.7\\ 
+	256 &0.7&0.7&0.7&0.7&0.7\\ 
+	512 & 0.7&0.7&0.8&0.7&0.7\\  \hline
 \end{tabular}
 \caption{Optimised MemoSort  speed factor using Insertionsort with different repetitions}
 \label{fig:OptMemoSortInsTable}
 \end{table}
 
 
-As discussed in section \ref{OptMemoSort} and shown in Figure \ref{fig:OptMemoSortInsGraph}, there is no improvement from just running the optimised version of MemoSort on the different scenarios. This is because this algorithm does not apply the full potential of memoization as it only looks for previous sorted lists only at the end of the process of sorting each list, adding the overhead of the memoization technique to the time required to sort the rest of the list. \\
+As discussed in section \ref{OptMemoSort} and shown in Figure \ref{fig:OptMemoSortInsGraph}, there is no improvement from just running the optimised version of MemoSort for Insertionsort on the different scenarios. This is because this algorithm does not apply the full potential of memoization as it only looks for previous sorted lists only at the end of the process of sorting each list, adding the overhead of the memoization technique to the time required to sort the rest of the list.\\
 
-For Mergesort the case is different, as shown in Figure \ref{fig:OptMemoSortMergeGraph}, there is improvement compared to just brute force sort all the list as well as just applying MemoSort. Interestingly, it does not improve as much as MemoSort when there is only repetition, but as repetition decrease this approach behaves the same and better (as can be seen by comparing Table \ref{fig:OptMemoSortMergeTable} and Table \ref{fig:MemoSortMergeTable} in case 0\% repetition). This can be explained by the fact that when the signature is calculated, already the first merge pass has been made and it does not have to go through the whole list twice as in MemoSort approach, so this little difference accumulates and is only visible when there is less repetition of lists.
+For Mergesort the case is different, as shown in Figure \ref{fig:OptMemoSortMergeGraph}, there is improvement compared to just brute force sort all the list as well as just applying MemoSort. Interestingly, it does not improve as much as MemoSort for Mergesort when there is only repetition, but as repetition decrease this approach behaves the same and better (as can be seen by comparing Table \ref{fig:OptMemoSortMergeTable} and Table \ref{fig:MemoSortMergeTable} in case 0\% repetition). This can be explained by the fact that when the signature is calculated, already the first merge pass has been made and it does not have to go through the whole list twice as in MemoSort approach, so this little difference accumulates and is only visible when there is less repetition of lists.
 
 
 \begin{figure}[H]
@@ -641,12 +645,12 @@ For Mergesort the case is different, as shown in Figure \ref{fig:OptMemoSortMerg
 \centering
 \begin{tabular}{|r|r|r|r|r|r|r|r|}   \hline
 	{Length}  & {$100\%$} & {$75\%$} & {$50\%$} & {$25\%$} & {$0\%$} \\  \hline
-	16 &1.857&0.668 & 0.569 &0.416&0.354\\ 
-	32 &3.683&1.321 & 0.939&0.689&0.571\\ 
-	64 &6.813 &1.845&1.241&0.945&0.762\\ 
-	128 &10.011&2.357&1.513&1.116&0.888\\ 
-	256 &13.736&2.726&1.672&1.207&0.947\\ 
-	512 & 16.732&2.993&1.791&1.276&0.994\\  \hline
+	16 &1.8&0.6& 0.5 &0.4&0.3\\ 
+	32 &3.6&1.3 & 0.9&0.6&0.5\\ 
+	64 &6.8 &1.8&1.2&0.9&0.7\\ 
+	128 &10&2.3&1.5&1.1&0.8\\ 
+	256 &13.7&2.7&1.6&1.2&0.9\\ 
+	512 & 16.7&2.9&1.7&1.2&0.9\\  \hline
 \end{tabular}
 \caption{Optimised MemoSort speed factor using Mergesort with different repetitions}
 \label{fig:OptMemoSortMergeTable}
@@ -655,6 +659,8 @@ For Mergesort the case is different, as shown in Figure \ref{fig:OptMemoSortMerg
 \subsection{MemoBlockSort with 2-way-merge in Similar Lists}\label{MemoBlock2Res}
 
 As discussed in section \ref{MemoBlockSort}, the overall performance of MemoBlockSort is not as good as MemoSort, even though a direct comparison can not be established as they focus on slightly different problems. \\
+
+The different approaches involves merging the sorted blocks to form the sorted lists in different ways, where 2-way merging involves repeating pair wise merging, and k-way merges all of the blocks per final position in the lists. \\
 
 \begin{figure}[H]
 \centering
@@ -678,7 +684,7 @@ As a general trend, the higher the repetition and the bigger the list size the b
 
 This can be viewed directly by comparing Figure \ref{fig:MemoBlockSort2WayGraph} (c) and (d), in which both Insertionsort and Mergesort MemoBlockSort have the same starting penalty with small list size and Insertionsort grows more steeply for bigger list size. This is explained because of the quadratic nature of Insertionsort for bigger size list, which allows for MemoBlockSort speed to comparatively be better. In contrast, MemoBlockSort with Mergesort maintains its penalty almost in a constant, because of the O(nlogn) time complexity of the brute force sorting all lists with merge sort.\\
 
-Also by comparing the behaviour of MemoBlockSort with Insertionsort and MemoBlockSort with Mergesort, the Insertionsort approach has better performance in all scenarios. This is because the lists that are sorted have a small length of the blocks (purposely done for this study), and as it has been already proven in Figure \ref{fig:InsrtVsMerge}, Insertionsort performs better than Mergesort for this case of relatively short lists.\\
+Also by comparing the behaviour of MemoBlockSort with Insertionsort and MemoBlockSort with Mergesort, the Insertionsort approach has better performance in all scenarios. This is because the lists that are sorted have a small length of the blocks (purposely done for this study), and as it has been already shown in Figure \ref{fig:InsrtVsMerge}, Insertionsort performs better than Mergesort for relatively short lists.\\
 
 
 Finally in Figure \ref{fig:MemoBlockSort2WayGraph} (e) and (f)  it can be seen that this approach has better performance for Insertionsort when the block size is 64 and starting at 256 of list size and 50\% repetition. For Mergesort, the same is true but only after 75\% repetition.
@@ -702,17 +708,19 @@ Finally in Figure \ref{fig:MemoBlockSort2WayGraph} (e) and (f)  it can be seen t
 \label{fig:MemoBlockSortKWayGraph}
 \end{figure}
 
-The same analysis as in section \ref{MemoBlock2Res} is maintained here, except that with a k-way merge approach the algorithm behaves better. As Figure \ref{fig:MemoBlockSortKWayGraph} shows, there is a drastic improvement by just changing the way the algorithm merges the blocks. 
+The same analysis as in section \ref{MemoBlock2Res} is repeated here, except that with a k-way merge approach the MemoBlockSort algorithm behaves better. As Figure \ref{fig:MemoBlockSortKWayGraph} shows, there is a drastic improvement by just changing the way the algorithm merges the blocks. 
 This confirms that for MemoBlockSort the real cost is not so much in the sorting algorithm as this only affects the sorting of each block, or the cost of the hashing function, but it  is more related to the reading and writing of blocks and the way they are managed.\\
 
-Then it is clear that as displayed in Figure \ref{fig:MemoBlockSortKWayGraph} (e) and (f), this approach gives an improvement since the block size of 64 and from 256 list size onward and 50\% repetition, the same as 2-way merge approach, but performs much better.
+Then it is clear that as displayed in Figure \ref{fig:MemoBlockSortKWayGraph} (e) and (f), this approach gives an improvement for the block size of 64 and from 256 list size onward and 50\% repetition, the same as 2-way merge approach, but performs much better.\\
+
+Summarising, MemoBlockSort is expected to allow improved performance based on blocks, rather than whole lists. However, it is only in high repetition in longer lists with larger block size that a performance improvement is seen, due to the overhead of block merging, as more unique blocks there are, the higher the overhead.
 
 \section{Conclusions}
-The carried out study allowed us to model the behaviour of memoization techniques when sorting many similar lists of integer in different repetition scenarios. What we can conclude of this exercise is that the specific memoization technique utilised, the look  up table to find previous sorted lists, needs the definition of a hash function, a data structure to serve as a hash table and an algorithm to take advantage of the repetition.\\
+The study carried out  allowed us to model the behaviour of memoization techniques when sorting many similar lists of integers in different repetition scenarios. What we can conclude for this exercise is that the specific memoization technique utilised, the look  up table to find previous sorted lists, needs the definition of a hash function, a data structure to serve as a hash table and an algorithm to take advantage of the repetition.\\
 
 What we found when looking for a suitable hash function for the study was that there are different kinds of hash function that can effectively work, just by providing a unique signature for a list of integers without collisions even with different approaches to calculate it but some are not necessarily the best fit for the use that we intended, as we showed that cryptographic functions do not perform well in this case, mainly because they were not design for speed performance as they perform multiple operation so it is hard to guess the probable result. Then we showed that a good fit hash function to use over a list of integers, in response to the research question RQ4 formulated in section \ref{researchQuestions}, could be either  {\it MurMur3}  or the proposed  {\it PairMultShift}, which both have a similar performance.\\
 
-We also proposed a new approach to optimise sorting, {\it MemoSort} which applies the memoization technique to obtain a better performance than brute force sorting lists in different scenarios. We showed that this algorithm provides improvement up to 80 times when all list were the same, but in more realistic scenarios the performance improved according to the sorting algorithm, the length of the list and the repetition. Practically, it provided a slightly bigger improvement using Mergesort than Insertionsort as the sorting algorithm, although they behaved in a similar way. To answer RQ1 we then can summarise the finding in Table \ref{fig:MemoSortResults}.
+We also proposed an approach to optimise sorting using memoization, {\it MemoSort} which applies the memoization technique to obtain a better performance than brute force sorting lists in different scenarios. We showed that this algorithm provides improvement up to 80 times when all list are the same, but in more realistic scenarios the performance improved according to the sorting algorithm, the length of the list and the repetition. Practically, it provided a slightly bigger improvement using Mergesort than Insertionsort as the sorting algorithm, although they behaved in a similar way. To answer RQ1 we then can summarise the finding in Table \ref{fig:MemoSortResults}, where both algorithms performs almost identical in bigger size lists, given by the fact that both sorting algorithms are also the same speed at these sizes in the brute force case, as seen in section \ref{InsrtVsMerge}.
 
 \begin{table}[H]
 \centering
@@ -726,7 +734,7 @@ We also proposed a new approach to optimise sorting, {\it MemoSort} which applie
 \end{table}
 
 
-We then showed a broader problem using memoization techniques when the repetition is between sub lists or blocks of the lists, it can also improve performance by introducing the {\it MemoBlockSort} algorithm. This algorithm did not prove to be so effective as {\it MemoSort}, but it allows for the problem to be broaden for different data scenario, also opening possibles applications on lists with different size.  It has however practical improvements for specific scenarios, which allows us to answer RQ2 with the findings summarised in Table \ref{fig:MemoBlockSortResults}.
+We then showed a broader approach using memoization techniques when the repetition is between sub lists or blocks of the lists, it can also improve performance by introducing the {\it MemoBlockSort} algorithm. This algorithm did not prove to be as effective as {\it MemoSort}, but it allows for the problem to be broadened for different data scenario, also opening possibles applications on lists with different sizes.  It has however practical improvements for specific scenarios, which allows us to answer RQ2 with the findings summarised in Table \ref{fig:MemoBlockSortResults}.
 
 \begin{table}[H]
 \centering
@@ -745,17 +753,17 @@ We then showed a broader problem using memoization techniques when the repetitio
 
 This study also allowed us to conclude that Insertionsort even being a simple comparison sort, is one of the best algorithm to use in order to sort small lists, and its importance is sometimes overlooked but it must be kept in mind that it is part of the most used sorting algorithms, like Timsort and Introsort, both the standard sorting algorithms for popular languages as Java, Python, C\# and C++.
 
-Finally, there was a chance of enhancing the proposed algorithms to get better results and answering question RQ4. We showed one possible approach for  {\it MemoSort} where the calculation of the signature is part of the operations in the sorting of the list. This approach did not improve the performance over {\it MemoSort}, but it did over brute force sorting the lists only for the case when sorting with Mergesort. \\
+Finally, there was a chance of enhancing the proposed algorithms to get better results and answering question RQ4. We showed one possible approach for  {\it MemoSort} where the calculation of the signature is integrated with the operations of the sorting of the list in the first pass. This approach did not improve the performance over {\it MemoSort}, but it did over brute force sorting the lists only for the case when sorting with Mergesort. \\
 
 \section{Future Work}
 
 While the objectives of this study serves as a initial exploration and they are reached by running the test cases with synthetic data, there is a need to find a suitable problem where the nature of the data fits the conclusions, so it can benefit of  the explored memoization techniques. The problem that served as inspiration \cite{Arch2015} is a possible candidate but some changes need to be done to fit the data of this problem, furthermore, some preliminary probing suggest that the data is not so repetitive to be able to benefit from the techniques studied. What remains open is to see what if there is any improvement on using the memoization technique along with the edit distance solution for slightly similar lists discussed in \cite{Arch2015}.
 
-Because the limitation on time of this study, there are multiple different improvements or alterations to be made to test the techniques in different scenarios, like exploring the behaviour with cache friendly version of the sorting algorithms and the merging process in {\it MemoBlockSort} and using the power of parallelisation by multi threading in CPU or by implementing memoization techniques in GPU sorting.
+Because the time limitation of this study, there are multiple different improvements or alterations to be made to test the techniques in different scenarios, like exploring the behaviour with cache friendly version of the sorting algorithms and the merging process in {\it MemoBlockSort} and using the power of parallelisation by multi threading in CPU or by implementing memoization techniques in GPU sorting.
 
 Also other memoization techniques can be constructed, like a probabilistic heuristic that samples elements of the lists between lists, instead of reading the whole list to match for previous sorted list.
 
-For the specific problem of choosing an appropiate hash function, from the multiple implementations of hash functions, there may be faster one that is not universal but still have no collisions within the problems data and makes the memoization techniques more beneficial.
+For the specific problem of choosing an appropriate hash function, from the multiple implementations of hash functions, there may be faster one that is not universal but still have no collisions within the problems data and makes the memoization techniques more beneficial.
 
 Other approaches to determine the similarities between lists can be explored rather than using a hash table, like local sensitive hashing, specifically the MinHash algorithm which can determine with a hash function the similar sets with a percentage of error.
 
